@@ -1,0 +1,23 @@
+================================================================================
+ SCRIPT 6a: BOOTSTRAP HYPOTHESIS TESTING (MODERN P90 vs. 1982 CONSTANTS)
+================================================================================
+Number of compared shared islands: 7
+Bootstrap iterations:              10000
+
+--- 1. ARCHIPELAGO-WIDE STRATIFIED BOOTSTRAP RESULTS ---
+[ Hard Coral Cover (%) ]
+  • Mean Decadal Shift (Delta):        -26.77%
+  • Stratified Bootstrap SE:           2.03%
+  • 95% Bootstrap Percentile CI:       [-31.70%, -23.88%]
+  • Empirical Bootstrap p-value:       p = 0.0000 (Significant)
+
+[ Gross Carbonate Production (kg m^-2 yr^-1) ]
+  • Mean Decadal Shift (Delta):        -2.93 kg m^-2 yr^-1
+  • Stratified Bootstrap SE:           0.53 kg m^-2 yr^-1
+  • 95% Bootstrap Percentile CI:       [-4.03, -1.97] kg m^-2 yr^-1
+  • Empirical Bootstrap p-value:       p = 0.0000 (Significant)
+
+--- 2. ISLAND-BY-ISLAND TESTS AGAINST FIXED 1982 CONSTANTS ---
+Coral Cover: 7 of 7 islands significantly differ from 1982 constant (p < 0.05)
+Gross Prod:  6 of 7 islands significantly differ from 1982 constant (p < 0.05)
+================================================================================

@@ -1,0 +1,14 @@
+LOCATION,LOCATIONCODE,LATITUDE,CORAL_COVER_PERC,GROSS_PROD
+Hawaii,HAW,19.5,93,15.3
+Maui,MAI,20.8,76,11.5
+Oahu,OAH,21.3,61,10.5
+Nihoa,NIH,23.1,38,4.5
+Necker,NEC,23.6,22,3.2
+French Frigate Shoals,FFS,23.8,67,9
+Gardner,GAR,25,7,0.5
+Maro,HMAR,25.4,64,6.2
+Laysan,LAY,25.8,33,3.5
+Lisianski,LIS,26.1,21,2.5
+Pearl and Hermes,PHR,27.8,22,1
+Midway,MID,28.2,9,0.5
+Kure,KUR,28.4,10,0.2

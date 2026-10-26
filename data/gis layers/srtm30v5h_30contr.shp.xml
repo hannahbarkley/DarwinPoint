@@ -1,0 +1,3 @@
+<?xml version="1.0"?>
+<!--<!DOCTYPE metadata SYSTEM "http://www.esri.com/metadata/esriprof80.dtd">-->
+<metadata xml:lang="en"><Esri><MetaID>{22473C61-395B-4F8B-BF23-459149B70288}</MetaID><CreaDate>20090512</CreaDate><CreaTime>11264100</CreaTime><SyncOnce>TRUE</SyncOnce><DataProperties><lineage><Process ToolSource="C:\Program Files\ArcGIS\ArcToolbox\Toolboxes\Spatial Analyst Tools.tbx\Contour" Date="20090512" Time="112641">Contour srtm30v5 Q:\Ehses\Isobath\NWHI\allIslands\srtm30v5h_30contr.shp 1000000 -30 1</Process></lineage></DataProperties></Esri></metadata>

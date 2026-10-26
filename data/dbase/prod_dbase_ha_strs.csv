@@ -1,0 +1,289 @@
+SUBSTRATE_CLASS,CORAL_GROUP_NAME,CORAL_GROUP,SUBSTRATE_NAME,SUBSTRATE_CODE,MORPHOLOGY,MORPHOLOGYCODE,TAXA_LEVEL,EXTENSION_CM_YR,EXTENSION_CM_YR_CI,DENSITY_G_CM3,DENSITY_G_CM3_CI,CONVERSION_FACTOR,LOCATIONCODE,LATITUDE,LATITUDE_REF
+CCA,Crustose Coralline Algae,CCA,Crustose Coralline Algae,CCA,,,,0.028,0.002,1,,,FFS,23.79099,23.79099
+CORAL,Branching Acropora,ACBR,Acropora sp,ACSP,Branching - Fast Growth,BRFA,GENUS,8.98,0.34,1.455,0.01,0.059,FFS,23.79099,23.79099
+CORAL,Branching Acropora,ACBR,Acropora sp,ACSP,Branching - Slow Growth,BRSL,GENUS,2.282,2.032,1.769,0.402,0.253,FFS,23.79099,16.74147
+CORAL,Branching Acropora,ACBR,Acropora sp,ACSP,Encrusting Mounding,EM,GENUS,2.282,2.032,1.769,0.402,,FFS,23.79099,16.74147
+CORAL,Branching hard coral,BR,Branching hard coral,BR,Branching,BR,MORPHOLOGY,2.18,0.451,1.437,0.037,0.272,FFS,23.79099,21.48649
+CORAL,Branching Montipora,MOBR,Montipora sp,MOSP,Branching,BR,GENUS,2.264,0.527,1.206,0,0.256,FFS,23.79099,21.48649
+CORAL,Branching Pocillopora,POCS,Pocillopora sp,POCS,Branching,BR,GENUS,1.224,0.509,1.451,0.03,0.364,FFS,23.79099,16.74147
+CORAL,Branching Pocillopora,POCS,Pocillopora sp,POCS,Encrusting Mounding,EM,GENUS,1.224,0.509,1.451,0.03,,FFS,23.79099,16.74147
+CORAL,Branching Porites,POBR,Porites sp,POSP,Branching,BR,GENUS,1.099,0.28,1.516,0,0.221,FFS,23.79099,21.48649
+CORAL,Encrusting hard coral,ENC,Encrusting hard coral,ENC,Encrusting,EM,MORPHOLOGY,0.782,0.162,1.484,0.032,,FFS,23.79099,21.48649
+CORAL,Encrusting Montipora,MOEN,Montipora sp,MOSP,Encrusting Mounding,EM,GENUS,0.823,0.095,1.448,0.346,,FFS,23.79099,16.74147
+CORAL,Encrusting Pavona,PAEN,Pavona sp,PAVS,Encrusting Mounding,EM,GENUS,0.681,0.165,2.351,0.144,,FFS,23.79099,16.74147
+CORAL,Encrusting Porites,POEN,Porites sp,POSP,Encrusting Mounding,EM,GENUS,0.667,0.12,1.396,0.057,,FFS,23.79099,21.48649
+CORAL,Foliose Montipora,MOFO,Montipora sp,MOSP,Foliose,FO,GENUS,2.264,0.527,1.206,0,,FFS,23.79099,21.48649
+CORAL,Free-living corals,FREE,Fungia sp,FUSP,Free-living,FR,GENUS,0.605,0.285,2.387,0,,FFS,23.79099,16.74147
+CORAL,Laminar columnar Porites,POLC,Porites sp,POSP,Laminar Columnar,LC,GENUS,1.153,0.14,1.366,0.054,0.214,FFS,23.79099,21.48649
+CORAL,Massive hard coral,MASS,Massive hard coral,MASS,Massive,MD,MORPHOLOGY,0.708,0.055,1.388,0.036,,FFS,23.79099,21.48649
+CORAL,Massive Pavona,PAMA,Pavona sp,PAVS,Mounding lobate,ML,GENUS,0.613,0.15,1.972,0.157,,FFS,23.79099,16.74147
+CORAL,Massive Porites,POMA,Porites sp,POSP,Mounding,MD,GENUS,0.88,0.27,1.396,0.057,,FFS,23.79099,21.48649
+CORAL,Other encrusting corals,ENC,Cyphastrea sp,CYPS,Encrusting Mounding,EM,GENUS,0.227,0.064,1.197,0.236,,FFS,23.79099,21.48649
+CORAL,Other encrusting corals,ENC,Leptastrea sp,LEPT,Encrusting Mounding,EM,GENUS,0.265,0.05,1.724,0.317,,FFS,23.79099,21.48649
+CORAL,Other encrusting corals,ENC,Leptoseris sp,LESP,Encrusting Mounding,EM,GENUS,0.782,0.162,1.484,0.032,,FFS,23.79099,21.48649
+CORAL,Other encrusting corals,ENC,Psammocora sp,PSSP,Encrusting Mounding,EM,GENUS,0.413,0.025,1.535,0.123,,FFS,23.79099,21.48649
+CORAL,Table Acropora,ACTA,Acropora sp,ACSP,Table,TB,GENUS,8.98,0.34,1.455,0.01,,FFS,23.79099,23.79099
+CCA,Crustose Coralline Algae,CCA,Crustose Coralline Algae,CCA,,,,0.033,0.001,1,,,HAW,19.52631,19.52631
+CORAL,Branching Acropora,ACBR,Acropora sp,ACSP,Branching - Fast Growth,BRFA,GENUS,14.279,0.34,1.309,0.01,0.059,HAW,19.52631,23.79099
+CORAL,Branching Acropora,ACBR,Acropora sp,ACSP,Branching - Slow Growth,BRSL,GENUS,3.629,2.032,1.591,0.402,0.253,HAW,19.52631,16.74147
+CORAL,Branching Acropora,ACBR,Acropora sp,ACSP,Encrusting Mounding,EM,GENUS,3.629,2.032,1.591,0.402,,HAW,19.52631,16.74147
+CORAL,Branching hard coral,BR,Branching hard coral,BR,Branching,BR,MORPHOLOGY,3.466,0.451,1.293,0.037,0.272,HAW,19.52631,21.48649
+CORAL,Branching Montipora,MOBR,Montipora sp,MOSP,Branching,BR,GENUS,3.6,0.527,1.084,0,0.256,HAW,19.52631,21.48649
+CORAL,Branching Pocillopora,POCS,Pocillopora sp,POCS,Branching,BR,GENUS,1.946,0.509,1.305,0.03,0.364,HAW,19.52631,16.74147
+CORAL,Branching Pocillopora,POCS,Pocillopora sp,POCS,Encrusting Mounding,EM,GENUS,1.946,0.509,1.305,0.03,,HAW,19.52631,16.74147
+CORAL,Branching Porites,POBR,Porites sp,POSP,Branching,BR,GENUS,1.748,0.28,1.364,0,0.221,HAW,19.52631,21.48649
+CORAL,Encrusting hard coral,ENC,Encrusting hard coral,ENC,Encrusting,EM,MORPHOLOGY,1.243,0.162,1.334,0.032,,HAW,19.52631,21.48649
+CORAL,Encrusting Montipora,MOEN,Montipora sp,MOSP,Encrusting Mounding,EM,GENUS,1.308,0.095,1.302,0.346,,HAW,19.52631,16.74147
+CORAL,Encrusting Pavona,PAEN,Pavona sp,PAVS,Encrusting Mounding,EM,GENUS,1.083,0.165,2.114,0.144,,HAW,19.52631,16.74147
+CORAL,Encrusting Porites,POEN,Porites sp,POSP,Encrusting Mounding,EM,GENUS,1.061,0.12,1.255,0.057,,HAW,19.52631,21.48649
+CORAL,Foliose Montipora,MOFO,Montipora sp,MOSP,Foliose,FO,GENUS,3.6,0.527,1.084,0,,HAW,19.52631,21.48649
+CORAL,Free-living corals,FREE,Fungia sp,FUSP,Free-living,FR,GENUS,0.962,0.285,2.147,0,,HAW,19.52631,16.74147
+CORAL,Laminar columnar Porites,POLC,Porites sp,POSP,Laminar Columnar,LC,GENUS,1.833,0.14,1.229,0.054,0.214,HAW,19.52631,21.48649
+CORAL,Massive hard coral,MASS,Massive hard coral,MASS,Massive,MD,MORPHOLOGY,1.126,0.055,1.249,0.036,,HAW,19.52631,21.48649
+CORAL,Massive Pavona,PAMA,Pavona sp,PAVS,Mounding lobate,ML,GENUS,0.974,0.15,1.774,0.157,,HAW,19.52631,16.74147
+CORAL,Massive Porites,POMA,Porites sp,POSP,Mounding,MD,GENUS,1.399,0.27,1.255,0.057,,HAW,19.52631,21.48649
+CORAL,Other encrusting corals,ENC,Cyphastrea sp,CYPS,Encrusting Mounding,EM,GENUS,0.362,0.064,1.077,0.236,,HAW,19.52631,21.48649
+CORAL,Other encrusting corals,ENC,Leptastrea sp,LEPT,Encrusting Mounding,EM,GENUS,0.422,0.05,1.55,0.317,,HAW,19.52631,21.48649
+CORAL,Other encrusting corals,ENC,Leptoseris sp,LESP,Encrusting Mounding,EM,GENUS,1.243,0.162,1.334,0.032,,HAW,19.52631,21.48649
+CORAL,Other encrusting corals,ENC,Psammocora sp,PSSP,Encrusting Mounding,EM,GENUS,0.657,0.025,1.381,0.123,,HAW,19.52631,21.48649
+CORAL,Table Acropora,ACTA,Acropora sp,ACSP,Table,TB,GENUS,14.279,0.34,1.309,0.01,,HAW,19.52631,23.79099
+CCA,Crustose Coralline Algae,CCA,Crustose Coralline Algae,CCA,,,,0.033,0.002,1,,,KAH,20.554766,20.554766
+CORAL,Branching Acropora,ACBR,Acropora sp,ACSP,Branching - Fast Growth,BRFA,GENUS,13.001,0.34,1.344,0.01,0.059,KAH,20.554766,23.79099
+CORAL,Branching Acropora,ACBR,Acropora sp,ACSP,Branching - Slow Growth,BRSL,GENUS,3.304,2.032,1.634,0.402,0.253,KAH,20.554766,16.74147
+CORAL,Branching Acropora,ACBR,Acropora sp,ACSP,Encrusting Mounding,EM,GENUS,3.304,2.032,1.634,0.402,,KAH,20.554766,16.74147
+CORAL,Branching hard coral,BR,Branching hard coral,BR,Branching,BR,MORPHOLOGY,3.156,0.451,1.327,0.037,0.272,KAH,20.554766,21.48649
+CORAL,Branching Montipora,MOBR,Montipora sp,MOSP,Branching,BR,GENUS,3.278,0.527,1.114,0,0.256,KAH,20.554766,21.48649
+CORAL,Branching Pocillopora,POCS,Pocillopora sp,POCS,Branching,BR,GENUS,1.771,0.509,1.341,0.03,0.364,KAH,20.554766,16.74147
+CORAL,Branching Pocillopora,POCS,Pocillopora sp,POCS,Encrusting Mounding,EM,GENUS,1.771,0.509,1.341,0.03,,KAH,20.554766,16.74147
+CORAL,Branching Porites,POBR,Porites sp,POSP,Branching,BR,GENUS,1.592,0.28,1.401,0,0.221,KAH,20.554766,21.48649
+CORAL,Encrusting hard coral,ENC,Encrusting hard coral,ENC,Encrusting,EM,MORPHOLOGY,1.132,0.162,1.37,0.032,,KAH,20.554766,21.48649
+CORAL,Encrusting Montipora,MOEN,Montipora sp,MOSP,Encrusting Mounding,EM,GENUS,1.191,0.095,1.337,0.346,,KAH,20.554766,16.74147
+CORAL,Encrusting Pavona,PAEN,Pavona sp,PAVS,Encrusting Mounding,EM,GENUS,0.986,0.165,2.171,0.144,,KAH,20.554766,16.74147
+CORAL,Encrusting Porites,POEN,Porites sp,POSP,Encrusting Mounding,EM,GENUS,0.966,0.12,1.289,0.057,,KAH,20.554766,21.48649
+CORAL,Foliose Montipora,MOFO,Montipora sp,MOSP,Foliose,FO,GENUS,3.278,0.527,1.114,0,,KAH,20.554766,21.48649
+CORAL,Free-living corals,FREE,Fungia sp,FUSP,Free-living,FR,GENUS,0.876,0.285,2.205,0,,KAH,20.554766,16.74147
+CORAL,Laminar columnar Porites,POLC,Porites sp,POSP,Laminar Columnar,LC,GENUS,1.669,0.14,1.262,0.054,0.214,KAH,20.554766,21.48649
+CORAL,Massive hard coral,MASS,Massive hard coral,MASS,Massive,MD,MORPHOLOGY,1.025,0.055,1.282,0.036,,KAH,20.554766,21.48649
+CORAL,Massive Pavona,PAMA,Pavona sp,PAVS,Mounding lobate,ML,GENUS,0.887,0.15,1.821,0.157,,KAH,20.554766,16.74147
+CORAL,Massive Porites,POMA,Porites sp,POSP,Mounding,MD,GENUS,1.273,0.27,1.289,0.057,,KAH,20.554766,21.48649
+CORAL,Other encrusting corals,ENC,Cyphastrea sp,CYPS,Encrusting Mounding,EM,GENUS,0.329,0.064,1.106,0.236,,KAH,20.554766,21.48649
+CORAL,Other encrusting corals,ENC,Leptastrea sp,LEPT,Encrusting Mounding,EM,GENUS,0.384,0.05,1.592,0.317,,KAH,20.554766,21.48649
+CORAL,Other encrusting corals,ENC,Leptoseris sp,LESP,Encrusting Mounding,EM,GENUS,1.132,0.162,1.37,0.032,,KAH,20.554766,21.48649
+CORAL,Other encrusting corals,ENC,Psammocora sp,PSSP,Encrusting Mounding,EM,GENUS,0.598,0.025,1.418,0.123,,KAH,20.554766,21.48649
+CORAL,Table Acropora,ACTA,Acropora sp,ACSP,Table,TB,GENUS,13.001,0.34,1.344,0.01,,KAH,20.554766,23.79099
+CCA,Crustose Coralline Algae,CCA,Crustose Coralline Algae,CCA,,,,0.052,0.006,1,,,KAU,22.09119,22.09119
+CORAL,Branching Acropora,ACBR,Acropora sp,ACSP,Branching - Fast Growth,BRFA,GENUS,11.092,0.34,1.397,0.01,0.059,KAU,22.09119,23.79099
+CORAL,Branching Acropora,ACBR,Acropora sp,ACSP,Branching - Slow Growth,BRSL,GENUS,2.819,2.032,1.698,0.402,0.253,KAU,22.09119,16.74147
+CORAL,Branching Acropora,ACBR,Acropora sp,ACSP,Encrusting Mounding,EM,GENUS,2.819,2.032,1.698,0.402,,KAU,22.09119,16.74147
+CORAL,Branching hard coral,BR,Branching hard coral,BR,Branching,BR,MORPHOLOGY,2.693,0.451,1.379,0.037,0.272,KAU,22.09119,21.48649
+CORAL,Branching Montipora,MOBR,Montipora sp,MOSP,Branching,BR,GENUS,2.797,0.527,1.157,0,0.256,KAU,22.09119,21.48649
+CORAL,Branching Pocillopora,POCS,Pocillopora sp,POCS,Branching,BR,GENUS,1.511,0.509,1.393,0.03,0.364,KAU,22.09119,16.74147
+CORAL,Branching Pocillopora,POCS,Pocillopora sp,POCS,Encrusting Mounding,EM,GENUS,1.511,0.509,1.393,0.03,,KAU,22.09119,16.74147
+CORAL,Branching Porites,POBR,Porites sp,POSP,Branching,BR,GENUS,1.358,0.28,1.456,0,0.221,KAU,22.09119,21.48649
+CORAL,Encrusting hard coral,ENC,Encrusting hard coral,ENC,Encrusting,EM,MORPHOLOGY,0.966,0.162,1.424,0.032,,KAU,22.09119,21.48649
+CORAL,Encrusting Montipora,MOEN,Montipora sp,MOSP,Encrusting Mounding,EM,GENUS,1.016,0.095,1.39,0.346,,KAU,22.09119,16.74147
+CORAL,Encrusting Pavona,PAEN,Pavona sp,PAVS,Encrusting Mounding,EM,GENUS,0.841,0.165,2.257,0.144,,KAU,22.09119,16.74147
+CORAL,Encrusting Porites,POEN,Porites sp,POSP,Encrusting Mounding,EM,GENUS,0.824,0.12,1.34,0.057,,KAU,22.09119,21.48649
+CORAL,Foliose Montipora,MOFO,Montipora sp,MOSP,Foliose,FO,GENUS,2.797,0.527,1.157,0,,KAU,22.09119,21.48649
+CORAL,Free-living corals,FREE,Fungia sp,FUSP,Free-living,FR,GENUS,0.747,0.285,2.291,0,,KAU,22.09119,16.74147
+CORAL,Laminar columnar Porites,POLC,Porites sp,POSP,Laminar Columnar,LC,GENUS,1.424,0.14,1.311,0.054,0.214,KAU,22.09119,21.48649
+CORAL,Massive hard coral,MASS,Massive hard coral,MASS,Massive,MD,MORPHOLOGY,0.875,0.055,1.333,0.036,,KAU,22.09119,21.48649
+CORAL,Massive Pavona,PAMA,Pavona sp,PAVS,Mounding lobate,ML,GENUS,0.757,0.15,1.893,0.157,,KAU,22.09119,16.74147
+CORAL,Massive Porites,POMA,Porites sp,POSP,Mounding,MD,GENUS,1.086,0.27,1.34,0.057,,KAU,22.09119,21.48649
+CORAL,Other encrusting corals,ENC,Cyphastrea sp,CYPS,Encrusting Mounding,EM,GENUS,0.281,0.064,1.149,0.236,,KAU,22.09119,21.48649
+CORAL,Other encrusting corals,ENC,Leptastrea sp,LEPT,Encrusting Mounding,EM,GENUS,0.328,0.05,1.655,0.317,,KAU,22.09119,21.48649
+CORAL,Other encrusting corals,ENC,Leptoseris sp,LESP,Encrusting Mounding,EM,GENUS,0.966,0.162,1.424,0.032,,KAU,22.09119,21.48649
+CORAL,Other encrusting corals,ENC,Psammocora sp,PSSP,Encrusting Mounding,EM,GENUS,0.51,0.025,1.474,0.123,,KAU,22.09119,21.48649
+CORAL,Table Acropora,ACTA,Acropora sp,ACSP,Table,TB,GENUS,11.092,0.34,1.397,0.01,,KAU,22.09119,23.79099
+CCA,Crustose Coralline Algae,CCA,Crustose Coralline Algae,CCA,,,,0.02,0.001,1,,,KUR,28.4234,28.4234
+CORAL,Branching Acropora,ACBR,Acropora sp,ACSP,Branching - Fast Growth,BRFA,GENUS,3.224,0.34,1.614,0.01,0.059,KUR,28.4234,23.79099
+CORAL,Branching Acropora,ACBR,Acropora sp,ACSP,Branching - Slow Growth,BRSL,GENUS,0.819,2.032,1.962,0.402,0.253,KUR,28.4234,16.74147
+CORAL,Branching Acropora,ACBR,Acropora sp,ACSP,Encrusting Mounding,EM,GENUS,0.819,2.032,1.962,0.402,,KUR,28.4234,16.74147
+CORAL,Branching hard coral,BR,Branching hard coral,BR,Branching,BR,MORPHOLOGY,0.783,0.451,1.594,0.037,0.272,KUR,28.4234,21.48649
+CORAL,Branching Montipora,MOBR,Montipora sp,MOSP,Branching,BR,GENUS,0.813,0.527,1.337,0,0.256,KUR,28.4234,21.48649
+CORAL,Branching Pocillopora,POCS,Pocillopora sp,POCS,Branching,BR,GENUS,0.439,0.509,1.61,0.03,0.364,KUR,28.4234,16.74147
+CORAL,Branching Pocillopora,POCS,Pocillopora sp,POCS,Encrusting Mounding,EM,GENUS,0.439,0.509,1.61,0.03,,KUR,28.4234,16.74147
+CORAL,Branching Porites,POBR,Porites sp,POSP,Branching,BR,GENUS,0.395,0.28,1.682,0,0.221,KUR,28.4234,21.48649
+CORAL,Encrusting hard coral,ENC,Encrusting hard coral,ENC,Encrusting,EM,MORPHOLOGY,0.281,0.162,1.646,0.032,,KUR,28.4234,21.48649
+CORAL,Encrusting Montipora,MOEN,Montipora sp,MOSP,Encrusting Mounding,EM,GENUS,0.295,0.095,1.606,0.346,,KUR,28.4234,16.74147
+CORAL,Encrusting Pavona,PAEN,Pavona sp,PAVS,Encrusting Mounding,EM,GENUS,0.244,0.165,2.608,0.144,,KUR,28.4234,16.74147
+CORAL,Encrusting Porites,POEN,Porites sp,POSP,Encrusting Mounding,EM,GENUS,0.24,0.12,1.548,0.057,,KUR,28.4234,21.48649
+CORAL,Foliose Montipora,MOFO,Montipora sp,MOSP,Foliose,FO,GENUS,0.813,0.527,1.337,0,,KUR,28.4234,21.48649
+CORAL,Free-living corals,FREE,Fungia sp,FUSP,Free-living,FR,GENUS,0.217,0.285,2.648,0,,KUR,28.4234,16.74147
+CORAL,Laminar columnar Porites,POLC,Porites sp,POSP,Laminar Columnar,LC,GENUS,0.414,0.14,1.516,0.054,0.214,KUR,28.4234,21.48649
+CORAL,Massive hard coral,MASS,Massive hard coral,MASS,Massive,MD,MORPHOLOGY,0.254,0.055,1.54,0.036,,KUR,28.4234,21.48649
+CORAL,Massive Pavona,PAMA,Pavona sp,PAVS,Mounding lobate,ML,GENUS,0.22,0.15,2.187,0.157,,KUR,28.4234,16.74147
+CORAL,Massive Porites,POMA,Porites sp,POSP,Mounding,MD,GENUS,0.316,0.27,1.548,0.057,,KUR,28.4234,21.48649
+CORAL,Other encrusting corals,ENC,Cyphastrea sp,CYPS,Encrusting Mounding,EM,GENUS,0.082,0.064,1.328,0.236,,KUR,28.4234,21.48649
+CORAL,Other encrusting corals,ENC,Leptastrea sp,LEPT,Encrusting Mounding,EM,GENUS,0.095,0.05,1.912,0.317,,KUR,28.4234,21.48649
+CORAL,Other encrusting corals,ENC,Leptoseris sp,LESP,Encrusting Mounding,EM,GENUS,0.281,0.162,1.646,0.032,,KUR,28.4234,21.48649
+CORAL,Other encrusting corals,ENC,Psammocora sp,PSSP,Encrusting Mounding,EM,GENUS,0.148,0.025,1.703,0.123,,KUR,28.4234,21.48649
+CORAL,Table Acropora,ACTA,Acropora sp,ACSP,Table,TB,GENUS,3.224,0.34,1.614,0.01,,KUR,28.4234,23.79099
+CCA,Crustose Coralline Algae,CCA,Crustose Coralline Algae,CCA,,,,0.031,0.001,1,,,LAN,20.8211,20.8211
+CORAL,Branching Acropora,ACBR,Acropora sp,ACSP,Branching - Fast Growth,BRFA,GENUS,12.67,0.34,1.353,0.01,0.059,LAN,20.8211,23.79099
+CORAL,Branching Acropora,ACBR,Acropora sp,ACSP,Branching - Slow Growth,BRSL,GENUS,3.22,2.032,1.645,0.402,0.253,LAN,20.8211,16.74147
+CORAL,Branching Acropora,ACBR,Acropora sp,ACSP,Encrusting Mounding,EM,GENUS,3.22,2.032,1.645,0.402,,LAN,20.8211,16.74147
+CORAL,Branching hard coral,BR,Branching hard coral,BR,Branching,BR,MORPHOLOGY,3.076,0.451,1.336,0.037,0.272,LAN,20.8211,21.48649
+CORAL,Branching Montipora,MOBR,Montipora sp,MOSP,Branching,BR,GENUS,3.194,0.527,1.121,0,0.256,LAN,20.8211,21.48649
+CORAL,Branching Pocillopora,POCS,Pocillopora sp,POCS,Branching,BR,GENUS,1.726,0.509,1.35,0.03,0.364,LAN,20.8211,16.74147
+CORAL,Branching Pocillopora,POCS,Pocillopora sp,POCS,Encrusting Mounding,EM,GENUS,1.726,0.509,1.35,0.03,,LAN,20.8211,16.74147
+CORAL,Branching Porites,POBR,Porites sp,POSP,Branching,BR,GENUS,1.551,0.28,1.41,0,0.221,LAN,20.8211,21.48649
+CORAL,Encrusting hard coral,ENC,Encrusting hard coral,ENC,Encrusting,EM,MORPHOLOGY,1.103,0.162,1.38,0.032,,LAN,20.8211,21.48649
+CORAL,Encrusting Montipora,MOEN,Montipora sp,MOSP,Encrusting Mounding,EM,GENUS,1.161,0.095,1.346,0.346,,LAN,20.8211,16.74147
+CORAL,Encrusting Pavona,PAEN,Pavona sp,PAVS,Encrusting Mounding,EM,GENUS,0.961,0.165,2.186,0.144,,LAN,20.8211,16.74147
+CORAL,Encrusting Porites,POEN,Porites sp,POSP,Encrusting Mounding,EM,GENUS,0.941,0.12,1.298,0.057,,LAN,20.8211,21.48649
+CORAL,Foliose Montipora,MOFO,Montipora sp,MOSP,Foliose,FO,GENUS,3.194,0.527,1.121,0,,LAN,20.8211,21.48649
+CORAL,Free-living corals,FREE,Fungia sp,FUSP,Free-living,FR,GENUS,0.854,0.285,2.22,0,,LAN,20.8211,16.74147
+CORAL,Laminar columnar Porites,POLC,Porites sp,POSP,Laminar Columnar,LC,GENUS,1.626,0.14,1.271,0.054,0.214,LAN,20.8211,21.48649
+CORAL,Massive hard coral,MASS,Massive hard coral,MASS,Massive,MD,MORPHOLOGY,0.999,0.055,1.291,0.036,,LAN,20.8211,21.48649
+CORAL,Massive Pavona,PAMA,Pavona sp,PAVS,Mounding lobate,ML,GENUS,0.864,0.15,1.834,0.157,,LAN,20.8211,16.74147
+CORAL,Massive Porites,POMA,Porites sp,POSP,Mounding,MD,GENUS,1.241,0.27,1.298,0.057,,LAN,20.8211,21.48649
+CORAL,Other encrusting corals,ENC,Cyphastrea sp,CYPS,Encrusting Mounding,EM,GENUS,0.321,0.064,1.113,0.236,,LAN,20.8211,21.48649
+CORAL,Other encrusting corals,ENC,Leptastrea sp,LEPT,Encrusting Mounding,EM,GENUS,0.374,0.05,1.603,0.317,,LAN,20.8211,21.48649
+CORAL,Other encrusting corals,ENC,Leptoseris sp,LESP,Encrusting Mounding,EM,GENUS,1.103,0.162,1.38,0.032,,LAN,20.8211,21.48649
+CORAL,Other encrusting corals,ENC,Psammocora sp,PSSP,Encrusting Mounding,EM,GENUS,0.583,0.025,1.428,0.123,,LAN,20.8211,21.48649
+CORAL,Table Acropora,ACTA,Acropora sp,ACSP,Table,TB,GENUS,12.67,0.34,1.353,0.01,,LAN,20.8211,23.79099
+CCA,Crustose Coralline Algae,CCA,Crustose Coralline Algae,CCA,,,,0.024,0.001,1,,,LIS,26.00917,26.00917
+CORAL,Branching Acropora,ACBR,Acropora sp,ACSP,Branching - Fast Growth,BRFA,GENUS,6.224,0.34,1.531,0.01,0.059,LIS,26.00917,23.79099
+CORAL,Branching Acropora,ACBR,Acropora sp,ACSP,Branching - Slow Growth,BRSL,GENUS,1.582,2.032,1.862,0.402,0.253,LIS,26.00917,16.74147
+CORAL,Branching Acropora,ACBR,Acropora sp,ACSP,Encrusting Mounding,EM,GENUS,1.582,2.032,1.862,0.402,,LIS,26.00917,16.74147
+CORAL,Branching hard coral,BR,Branching hard coral,BR,Branching,BR,MORPHOLOGY,1.511,0.451,1.512,0.037,0.272,LIS,26.00917,21.48649
+CORAL,Branching Montipora,MOBR,Montipora sp,MOSP,Branching,BR,GENUS,1.569,0.527,1.269,0,0.256,LIS,26.00917,21.48649
+CORAL,Branching Pocillopora,POCS,Pocillopora sp,POCS,Branching,BR,GENUS,0.848,0.509,1.527,0.03,0.364,LIS,26.00917,16.74147
+CORAL,Branching Pocillopora,POCS,Pocillopora sp,POCS,Encrusting Mounding,EM,GENUS,0.848,0.509,1.527,0.03,,LIS,26.00917,16.74147
+CORAL,Branching Porites,POBR,Porites sp,POSP,Branching,BR,GENUS,0.762,0.28,1.596,0,0.221,LIS,26.00917,21.48649
+CORAL,Encrusting hard coral,ENC,Encrusting hard coral,ENC,Encrusting,EM,MORPHOLOGY,0.542,0.162,1.561,0.032,,LIS,26.00917,21.48649
+CORAL,Encrusting Montipora,MOEN,Montipora sp,MOSP,Encrusting Mounding,EM,GENUS,0.57,0.095,1.523,0.346,,LIS,26.00917,16.74147
+CORAL,Encrusting Pavona,PAEN,Pavona sp,PAVS,Encrusting Mounding,EM,GENUS,0.472,0.165,2.474,0.144,,LIS,26.00917,16.74147
+CORAL,Encrusting Porites,POEN,Porites sp,POSP,Encrusting Mounding,EM,GENUS,0.462,0.12,1.469,0.057,,LIS,26.00917,21.48649
+CORAL,Foliose Montipora,MOFO,Montipora sp,MOSP,Foliose,FO,GENUS,1.569,0.527,1.269,0,,LIS,26.00917,21.48649
+CORAL,Free-living corals,FREE,Fungia sp,FUSP,Free-living,FR,GENUS,0.419,0.285,2.512,0,,LIS,26.00917,16.74147
+CORAL,Laminar columnar Porites,POLC,Porites sp,POSP,Laminar Columnar,LC,GENUS,0.799,0.14,1.438,0.054,0.214,LIS,26.00917,21.48649
+CORAL,Massive hard coral,MASS,Massive hard coral,MASS,Massive,MD,MORPHOLOGY,0.491,0.055,1.461,0.036,,LIS,26.00917,21.48649
+CORAL,Massive Pavona,PAMA,Pavona sp,PAVS,Mounding lobate,ML,GENUS,0.425,0.15,2.075,0.157,,LIS,26.00917,16.74147
+CORAL,Massive Porites,POMA,Porites sp,POSP,Mounding,MD,GENUS,0.61,0.27,1.469,0.057,,LIS,26.00917,21.48649
+CORAL,Other encrusting corals,ENC,Cyphastrea sp,CYPS,Encrusting Mounding,EM,GENUS,0.158,0.064,1.26,0.236,,LIS,26.00917,21.48649
+CORAL,Other encrusting corals,ENC,Leptastrea sp,LEPT,Encrusting Mounding,EM,GENUS,0.184,0.05,1.814,0.317,,LIS,26.00917,21.48649
+CORAL,Other encrusting corals,ENC,Leptoseris sp,LESP,Encrusting Mounding,EM,GENUS,0.542,0.162,1.561,0.032,,LIS,26.00917,21.48649
+CORAL,Other encrusting corals,ENC,Psammocora sp,PSSP,Encrusting Mounding,EM,GENUS,0.286,0.025,1.616,0.123,,LIS,26.00917,21.48649
+CORAL,Table Acropora,ACTA,Acropora sp,ACSP,Table,TB,GENUS,6.224,0.34,1.531,0.01,,LIS,26.00917,23.79099
+CCA,Crustose Coralline Algae,CCA,Crustose Coralline Algae,CCA,,,,0.029,0.003,1,,,MAI,20.81507,20.81507
+CORAL,Branching Acropora,ACBR,Acropora sp,ACSP,Branching - Fast Growth,BRFA,GENUS,12.677,0.34,1.353,0.01,0.059,MAI,20.81507,23.79099
+CORAL,Branching Acropora,ACBR,Acropora sp,ACSP,Branching - Slow Growth,BRSL,GENUS,3.222,2.032,1.645,0.402,0.253,MAI,20.81507,16.74147
+CORAL,Branching Acropora,ACBR,Acropora sp,ACSP,Encrusting Mounding,EM,GENUS,3.222,2.032,1.645,0.402,,MAI,20.81507,16.74147
+CORAL,Branching hard coral,BR,Branching hard coral,BR,Branching,BR,MORPHOLOGY,3.078,0.451,1.336,0.037,0.272,MAI,20.81507,21.48649
+CORAL,Branching Montipora,MOBR,Montipora sp,MOSP,Branching,BR,GENUS,3.196,0.527,1.121,0,0.256,MAI,20.81507,21.48649
+CORAL,Branching Pocillopora,POCS,Pocillopora sp,POCS,Branching,BR,GENUS,1.727,0.509,1.349,0.03,0.364,MAI,20.81507,16.74147
+CORAL,Branching Pocillopora,POCS,Pocillopora sp,POCS,Encrusting Mounding,EM,GENUS,1.727,0.509,1.349,0.03,,MAI,20.81507,16.74147
+CORAL,Branching Porites,POBR,Porites sp,POSP,Branching,BR,GENUS,1.552,0.28,1.41,0,0.221,MAI,20.81507,21.48649
+CORAL,Encrusting hard coral,ENC,Encrusting hard coral,ENC,Encrusting,EM,MORPHOLOGY,1.104,0.162,1.38,0.032,,MAI,20.81507,21.48649
+CORAL,Encrusting Montipora,MOEN,Montipora sp,MOSP,Encrusting Mounding,EM,GENUS,1.161,0.095,1.346,0.346,,MAI,20.81507,16.74147
+CORAL,Encrusting Pavona,PAEN,Pavona sp,PAVS,Encrusting Mounding,EM,GENUS,0.961,0.165,2.186,0.144,,MAI,20.81507,16.74147
+CORAL,Encrusting Porites,POEN,Porites sp,POSP,Encrusting Mounding,EM,GENUS,0.942,0.12,1.298,0.057,,MAI,20.81507,21.48649
+CORAL,Foliose Montipora,MOFO,Montipora sp,MOSP,Foliose,FO,GENUS,3.196,0.527,1.121,0,,MAI,20.81507,21.48649
+CORAL,Free-living corals,FREE,Fungia sp,FUSP,Free-living,FR,GENUS,0.854,0.285,2.219,0,,MAI,20.81507,16.74147
+CORAL,Laminar columnar Porites,POLC,Porites sp,POSP,Laminar Columnar,LC,GENUS,1.627,0.14,1.27,0.054,0.214,MAI,20.81507,21.48649
+CORAL,Massive hard coral,MASS,Massive hard coral,MASS,Massive,MD,MORPHOLOGY,1,0.055,1.291,0.036,,MAI,20.81507,21.48649
+CORAL,Massive Pavona,PAMA,Pavona sp,PAVS,Mounding lobate,ML,GENUS,0.865,0.15,1.833,0.157,,MAI,20.81507,16.74147
+CORAL,Massive Porites,POMA,Porites sp,POSP,Mounding,MD,GENUS,1.242,0.27,1.298,0.057,,MAI,20.81507,21.48649
+CORAL,Other encrusting corals,ENC,Cyphastrea sp,CYPS,Encrusting Mounding,EM,GENUS,0.321,0.064,1.113,0.236,,MAI,20.81507,21.48649
+CORAL,Other encrusting corals,ENC,Leptastrea sp,LEPT,Encrusting Mounding,EM,GENUS,0.375,0.05,1.603,0.317,,MAI,20.81507,21.48649
+CORAL,Other encrusting corals,ENC,Leptoseris sp,LESP,Encrusting Mounding,EM,GENUS,1.104,0.162,1.38,0.032,,MAI,20.81507,21.48649
+CORAL,Other encrusting corals,ENC,Psammocora sp,PSSP,Encrusting Mounding,EM,GENUS,0.583,0.025,1.428,0.123,,MAI,20.81507,21.48649
+CORAL,Table Acropora,ACTA,Acropora sp,ACSP,Table,TB,GENUS,12.677,0.34,1.353,0.01,,MAI,20.81507,23.79099
+CCA,Crustose Coralline Algae,CCA,Crustose Coralline Algae,CCA,,,,0.038,0.002,1,,,MOL,21.14063,21.14063
+CORAL,Branching Acropora,ACBR,Acropora sp,ACSP,Branching - Fast Growth,BRFA,GENUS,12.273,0.34,1.364,0.01,0.059,MOL,21.14063,23.79099
+CORAL,Branching Acropora,ACBR,Acropora sp,ACSP,Branching - Slow Growth,BRSL,GENUS,3.119,2.032,1.659,0.402,0.253,MOL,21.14063,16.74147
+CORAL,Branching Acropora,ACBR,Acropora sp,ACSP,Encrusting Mounding,EM,GENUS,3.119,2.032,1.659,0.402,,MOL,21.14063,16.74147
+CORAL,Branching hard coral,BR,Branching hard coral,BR,Branching,BR,MORPHOLOGY,2.979,0.451,1.347,0.037,0.272,MOL,21.14063,21.48649
+CORAL,Branching Montipora,MOBR,Montipora sp,MOSP,Branching,BR,GENUS,3.094,0.527,1.13,0,0.256,MOL,21.14063,21.48649
+CORAL,Branching Pocillopora,POCS,Pocillopora sp,POCS,Branching,BR,GENUS,1.672,0.509,1.361,0.03,0.364,MOL,21.14063,16.74147
+CORAL,Branching Pocillopora,POCS,Pocillopora sp,POCS,Encrusting Mounding,EM,GENUS,1.672,0.509,1.361,0.03,,MOL,21.14063,16.74147
+CORAL,Branching Porites,POBR,Porites sp,POSP,Branching,BR,GENUS,1.503,0.28,1.422,0,0.221,MOL,21.14063,21.48649
+CORAL,Encrusting hard coral,ENC,Encrusting hard coral,ENC,Encrusting,EM,MORPHOLOGY,1.068,0.162,1.391,0.032,,MOL,21.14063,21.48649
+CORAL,Encrusting Montipora,MOEN,Montipora sp,MOSP,Encrusting Mounding,EM,GENUS,1.124,0.095,1.357,0.346,,MOL,21.14063,16.74147
+CORAL,Encrusting Pavona,PAEN,Pavona sp,PAVS,Encrusting Mounding,EM,GENUS,0.931,0.165,2.204,0.144,,MOL,21.14063,16.74147
+CORAL,Encrusting Porites,POEN,Porites sp,POSP,Encrusting Mounding,EM,GENUS,0.912,0.12,1.309,0.057,,MOL,21.14063,21.48649
+CORAL,Foliose Montipora,MOFO,Montipora sp,MOSP,Foliose,FO,GENUS,3.094,0.527,1.13,0,,MOL,21.14063,21.48649
+CORAL,Free-living corals,FREE,Fungia sp,FUSP,Free-living,FR,GENUS,0.827,0.285,2.238,0,,MOL,21.14063,16.74147
+CORAL,Laminar columnar Porites,POLC,Porites sp,POSP,Laminar Columnar,LC,GENUS,1.575,0.14,1.281,0.054,0.214,MOL,21.14063,21.48649
+CORAL,Massive hard coral,MASS,Massive hard coral,MASS,Massive,MD,MORPHOLOGY,0.968,0.055,1.302,0.036,,MOL,21.14063,21.48649
+CORAL,Massive Pavona,PAMA,Pavona sp,PAVS,Mounding lobate,ML,GENUS,0.837,0.15,1.849,0.157,,MOL,21.14063,16.74147
+CORAL,Massive Porites,POMA,Porites sp,POSP,Mounding,MD,GENUS,1.202,0.27,1.309,0.057,,MOL,21.14063,21.48649
+CORAL,Other encrusting corals,ENC,Cyphastrea sp,CYPS,Encrusting Mounding,EM,GENUS,0.311,0.064,1.122,0.236,,MOL,21.14063,21.48649
+CORAL,Other encrusting corals,ENC,Leptastrea sp,LEPT,Encrusting Mounding,EM,GENUS,0.363,0.05,1.616,0.317,,MOL,21.14063,21.48649
+CORAL,Other encrusting corals,ENC,Leptoseris sp,LESP,Encrusting Mounding,EM,GENUS,1.068,0.162,1.391,0.032,,MOL,21.14063,21.48649
+CORAL,Other encrusting corals,ENC,Psammocora sp,PSSP,Encrusting Mounding,EM,GENUS,0.565,0.025,1.439,0.123,,MOL,21.14063,21.48649
+CORAL,Table Acropora,ACTA,Acropora sp,ACSP,Table,TB,GENUS,12.273,0.34,1.364,0.01,,MOL,21.14063,23.79099
+CCA,Crustose Coralline Algae,CCA,Crustose Coralline Algae,CCA,,,,0.046,0.005,1,,,NII,21.897922,21.897922
+CORAL,Branching Acropora,ACBR,Acropora sp,ACSP,Branching - Fast Growth,BRFA,GENUS,11.332,0.34,1.39,0.01,0.059,NII,21.897922,23.79099
+CORAL,Branching Acropora,ACBR,Acropora sp,ACSP,Branching - Slow Growth,BRSL,GENUS,2.88,2.032,1.69,0.402,0.253,NII,21.897922,16.74147
+CORAL,Branching Acropora,ACBR,Acropora sp,ACSP,Encrusting Mounding,EM,GENUS,2.88,2.032,1.69,0.402,,NII,21.897922,16.74147
+CORAL,Branching hard coral,BR,Branching hard coral,BR,Branching,BR,MORPHOLOGY,2.751,0.451,1.373,0.037,0.272,NII,21.897922,21.48649
+CORAL,Branching Montipora,MOBR,Montipora sp,MOSP,Branching,BR,GENUS,2.857,0.527,1.152,0,0.256,NII,21.897922,21.48649
+CORAL,Branching Pocillopora,POCS,Pocillopora sp,POCS,Branching,BR,GENUS,1.544,0.509,1.386,0.03,0.364,NII,21.897922,16.74147
+CORAL,Branching Pocillopora,POCS,Pocillopora sp,POCS,Encrusting Mounding,EM,GENUS,1.544,0.509,1.386,0.03,,NII,21.897922,16.74147
+CORAL,Branching Porites,POBR,Porites sp,POSP,Branching,BR,GENUS,1.387,0.28,1.449,0,0.221,NII,21.897922,21.48649
+CORAL,Encrusting hard coral,ENC,Encrusting hard coral,ENC,Encrusting,EM,MORPHOLOGY,0.986,0.162,1.417,0.032,,NII,21.897922,21.48649
+CORAL,Encrusting Montipora,MOEN,Montipora sp,MOSP,Encrusting Mounding,EM,GENUS,1.038,0.095,1.383,0.346,,NII,21.897922,16.74147
+CORAL,Encrusting Pavona,PAEN,Pavona sp,PAVS,Encrusting Mounding,EM,GENUS,0.859,0.165,2.246,0.144,,NII,21.897922,16.74147
+CORAL,Encrusting Porites,POEN,Porites sp,POSP,Encrusting Mounding,EM,GENUS,0.842,0.12,1.334,0.057,,NII,21.897922,21.48649
+CORAL,Foliose Montipora,MOFO,Montipora sp,MOSP,Foliose,FO,GENUS,2.857,0.527,1.152,0,,NII,21.897922,21.48649
+CORAL,Free-living corals,FREE,Fungia sp,FUSP,Free-living,FR,GENUS,0.763,0.285,2.28,0,,NII,21.897922,16.74147
+CORAL,Laminar columnar Porites,POLC,Porites sp,POSP,Laminar Columnar,LC,GENUS,1.454,0.14,1.305,0.054,0.214,NII,21.897922,21.48649
+CORAL,Massive hard coral,MASS,Massive hard coral,MASS,Massive,MD,MORPHOLOGY,0.894,0.055,1.326,0.036,,NII,21.897922,21.48649
+CORAL,Massive Pavona,PAMA,Pavona sp,PAVS,Mounding lobate,ML,GENUS,0.773,0.15,1.884,0.157,,NII,21.897922,16.74147
+CORAL,Massive Porites,POMA,Porites sp,POSP,Mounding,MD,GENUS,1.11,0.27,1.334,0.057,,NII,21.897922,21.48649
+CORAL,Other encrusting corals,ENC,Cyphastrea sp,CYPS,Encrusting Mounding,EM,GENUS,0.287,0.064,1.144,0.236,,NII,21.897922,21.48649
+CORAL,Other encrusting corals,ENC,Leptastrea sp,LEPT,Encrusting Mounding,EM,GENUS,0.335,0.05,1.647,0.317,,NII,21.897922,21.48649
+CORAL,Other encrusting corals,ENC,Leptoseris sp,LESP,Encrusting Mounding,EM,GENUS,0.986,0.162,1.417,0.032,,NII,21.897922,21.48649
+CORAL,Other encrusting corals,ENC,Psammocora sp,PSSP,Encrusting Mounding,EM,GENUS,0.521,0.025,1.467,0.123,,NII,21.897922,21.48649
+CORAL,Table Acropora,ACTA,Acropora sp,ACSP,Table,TB,GENUS,11.332,0.34,1.39,0.01,,NII,21.897922,23.79099
+CCA,Crustose Coralline Algae,CCA,Crustose Coralline Algae,CCA,,,,0.038,0.002,1,,,OAH,21.48649,21.48649
+CORAL,Branching Acropora,ACBR,Acropora sp,ACSP,Branching - Fast Growth,BRFA,GENUS,11.843,0.34,1.376,0.01,0.059,OAH,21.48649,23.79099
+CORAL,Branching Acropora,ACBR,Acropora sp,ACSP,Branching - Slow Growth,BRSL,GENUS,3.01,2.032,1.673,0.402,0.253,OAH,21.48649,16.74147
+CORAL,Branching Acropora,ACBR,Acropora sp,ACSP,Encrusting Mounding,EM,GENUS,3.01,2.032,1.673,0.402,,OAH,21.48649,16.74147
+CORAL,Branching hard coral,BR,Branching hard coral,BR,Branching,BR,MORPHOLOGY,2.875,0.451,1.359,0.037,0.272,OAH,21.48649,21.48649
+CORAL,Branching Montipora,MOBR,Montipora sp,MOSP,Branching,BR,GENUS,2.986,0.527,1.14,0,0.256,OAH,21.48649,21.48649
+CORAL,Branching Pocillopora,POCS,Pocillopora sp,POCS,Branching,BR,GENUS,1.614,0.509,1.372,0.03,0.364,OAH,21.48649,16.74147
+CORAL,Branching Pocillopora,POCS,Pocillopora sp,POCS,Encrusting Mounding,EM,GENUS,1.614,0.509,1.372,0.03,,OAH,21.48649,16.74147
+CORAL,Branching Porites,POBR,Porites sp,POSP,Branching,BR,GENUS,1.45,0.28,1.434,0,0.221,OAH,21.48649,21.48649
+CORAL,Encrusting hard coral,ENC,Encrusting hard coral,ENC,Encrusting,EM,MORPHOLOGY,1.031,0.162,1.403,0.032,,OAH,21.48649,21.48649
+CORAL,Encrusting Montipora,MOEN,Montipora sp,MOSP,Encrusting Mounding,EM,GENUS,1.085,0.095,1.369,0.346,,OAH,21.48649,16.74147
+CORAL,Encrusting Pavona,PAEN,Pavona sp,PAVS,Encrusting Mounding,EM,GENUS,0.898,0.165,2.223,0.144,,OAH,21.48649,16.74147
+CORAL,Encrusting Porites,POEN,Porites sp,POSP,Encrusting Mounding,EM,GENUS,0.88,0.12,1.32,0.057,,OAH,21.48649,21.48649
+CORAL,Foliose Montipora,MOFO,Montipora sp,MOSP,Foliose,FO,GENUS,2.986,0.527,1.14,0,,OAH,21.48649,21.48649
+CORAL,Free-living corals,FREE,Fungia sp,FUSP,Free-living,FR,GENUS,0.798,0.285,2.257,0,,OAH,21.48649,16.74147
+CORAL,Laminar columnar Porites,POLC,Porites sp,POSP,Laminar Columnar,LC,GENUS,1.52,0.14,1.292,0.054,0.214,OAH,21.48649,21.48649
+CORAL,Massive hard coral,MASS,Massive hard coral,MASS,Massive,MD,MORPHOLOGY,0.934,0.055,1.313,0.036,,OAH,21.48649,21.48649
+CORAL,Massive Pavona,PAMA,Pavona sp,PAVS,Mounding lobate,ML,GENUS,0.808,0.15,1.865,0.157,,OAH,21.48649,16.74147
+CORAL,Massive Porites,POMA,Porites sp,POSP,Mounding,MD,GENUS,1.16,0.27,1.32,0.057,,OAH,21.48649,21.48649
+CORAL,Other encrusting corals,ENC,Cyphastrea sp,CYPS,Encrusting Mounding,EM,GENUS,0.3,0.064,1.132,0.236,,OAH,21.48649,21.48649
+CORAL,Other encrusting corals,ENC,Leptastrea sp,LEPT,Encrusting Mounding,EM,GENUS,0.35,0.05,1.63,0.317,,OAH,21.48649,21.48649
+CORAL,Other encrusting corals,ENC,Leptoseris sp,LESP,Encrusting Mounding,EM,GENUS,1.031,0.162,1.403,0.032,,OAH,21.48649,21.48649
+CORAL,Other encrusting corals,ENC,Psammocora sp,PSSP,Encrusting Mounding,EM,GENUS,0.545,0.025,1.452,0.123,,OAH,21.48649,21.48649
+CORAL,Table Acropora,ACTA,Acropora sp,ACSP,Table,TB,GENUS,11.843,0.34,1.376,0.01,,OAH,21.48649,23.79099
+CCA,Crustose Coralline Algae,CCA,Crustose Coralline Algae,CCA,,,,0.016,0.001,1,,,PHR,27.85629,27.85629
+CORAL,Branching Acropora,ACBR,Acropora sp,ACSP,Branching - Fast Growth,BRFA,GENUS,3.929,0.34,1.594,0.01,0.059,PHR,27.85629,23.79099
+CORAL,Branching Acropora,ACBR,Acropora sp,ACSP,Branching - Slow Growth,BRSL,GENUS,0.998,2.032,1.939,0.402,0.253,PHR,27.85629,16.74147
+CORAL,Branching Acropora,ACBR,Acropora sp,ACSP,Encrusting Mounding,EM,GENUS,0.998,2.032,1.939,0.402,,PHR,27.85629,16.74147
+CORAL,Branching hard coral,BR,Branching hard coral,BR,Branching,BR,MORPHOLOGY,0.954,0.451,1.575,0.037,0.272,PHR,27.85629,21.48649
+CORAL,Branching Montipora,MOBR,Montipora sp,MOSP,Branching,BR,GENUS,0.991,0.527,1.321,0,0.256,PHR,27.85629,21.48649
+CORAL,Branching Pocillopora,POCS,Pocillopora sp,POCS,Branching,BR,GENUS,0.535,0.509,1.59,0.03,0.364,PHR,27.85629,16.74147
+CORAL,Branching Pocillopora,POCS,Pocillopora sp,POCS,Encrusting Mounding,EM,GENUS,0.535,0.509,1.59,0.03,,PHR,27.85629,16.74147
+CORAL,Branching Porites,POBR,Porites sp,POSP,Branching,BR,GENUS,0.481,0.28,1.662,0,0.221,PHR,27.85629,21.48649
+CORAL,Encrusting hard coral,ENC,Encrusting hard coral,ENC,Encrusting,EM,MORPHOLOGY,0.342,0.162,1.626,0.032,,PHR,27.85629,21.48649
+CORAL,Encrusting Montipora,MOEN,Montipora sp,MOSP,Encrusting Mounding,EM,GENUS,0.36,0.095,1.586,0.346,,PHR,27.85629,16.74147
+CORAL,Encrusting Pavona,PAEN,Pavona sp,PAVS,Encrusting Mounding,EM,GENUS,0.298,0.165,2.576,0.144,,PHR,27.85629,16.74147
+CORAL,Encrusting Porites,POEN,Porites sp,POSP,Encrusting Mounding,EM,GENUS,0.292,0.12,1.53,0.057,,PHR,27.85629,21.48649
+CORAL,Foliose Montipora,MOFO,Montipora sp,MOSP,Foliose,FO,GENUS,0.991,0.527,1.321,0,,PHR,27.85629,21.48649
+CORAL,Free-living corals,FREE,Fungia sp,FUSP,Free-living,FR,GENUS,0.265,0.285,2.616,0,,PHR,27.85629,16.74147
+CORAL,Laminar columnar Porites,POLC,Porites sp,POSP,Laminar Columnar,LC,GENUS,0.504,0.14,1.497,0.054,0.214,PHR,27.85629,21.48649
+CORAL,Massive hard coral,MASS,Massive hard coral,MASS,Massive,MD,MORPHOLOGY,0.31,0.055,1.522,0.036,,PHR,27.85629,21.48649
+CORAL,Massive Pavona,PAMA,Pavona sp,PAVS,Mounding lobate,ML,GENUS,0.268,0.15,2.161,0.157,,PHR,27.85629,16.74147
+CORAL,Massive Porites,POMA,Porites sp,POSP,Mounding,MD,GENUS,0.385,0.27,1.53,0.057,,PHR,27.85629,21.48649
+CORAL,Other encrusting corals,ENC,Cyphastrea sp,CYPS,Encrusting Mounding,EM,GENUS,0.1,0.064,1.312,0.236,,PHR,27.85629,21.48649
+CORAL,Other encrusting corals,ENC,Leptastrea sp,LEPT,Encrusting Mounding,EM,GENUS,0.116,0.05,1.889,0.317,,PHR,27.85629,21.48649
+CORAL,Other encrusting corals,ENC,Leptoseris sp,LESP,Encrusting Mounding,EM,GENUS,0.342,0.162,1.626,0.032,,PHR,27.85629,21.48649
+CORAL,Other encrusting corals,ENC,Psammocora sp,PSSP,Encrusting Mounding,EM,GENUS,0.181,0.025,1.683,0.123,,PHR,27.85629,21.48649
+CORAL,Table Acropora,ACTA,Acropora sp,ACSP,Table,TB,GENUS,3.929,0.34,1.594,0.01,,PHR,27.85629,23.79099

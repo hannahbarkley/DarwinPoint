@@ -1,0 +1,13 @@
+"REGIONCODE","REGION","LOCATIONCODE","LOCATION","MACROBIOEROSION_RATE_KG_M2_YR","MACROBIOEROSION_RATE_KG_M2_YR_CI"
+"MHI","Main Hawaiian Islands","HAW","Hawaii",0.085139,0.027998
+"MHI","Main Hawaiian Islands","KAH","Kahoolawe",0.085139,0.027998
+"MHI","Main Hawaiian Islands","KAU","Kauai",0.085139,0.027998
+"MHI","Main Hawaiian Islands","LAN","Lanai",0.085139,0.027998
+"MHI","Main Hawaiian Islands","MAI","Maui",0.085139,0.027998
+"MHI","Main Hawaiian Islands","MOL","Molokai",0.085139,0.027998
+"MHI","Main Hawaiian Islands","NII","Niihau",0.085139,0.027998
+"MHI","Main Hawaiian Islands","OAH","Oahu",0.085139,0.027998
+"NWHI","Northwestern Hawaiian Islands","FFS","French Frigate",0.011764,0.012606
+"NWHI","Northwestern Hawaiian Islands","KUR","Kure",0.011764,0.012606
+"NWHI","Northwestern Hawaiian Islands","LIS","Lisianski",0.011764,0.012606
+"NWHI","Northwestern Hawaiian Islands","PHR","Pearl & Hermes",0.011764,0.012606

@@ -1,0 +1,22 @@
+================================================================================
+STATISTICAL VALIDATION REPORT: SfM vs. CoralNet Gross Production
+================================================================================
+Sample size: 25 matched sites
+
+1. Paired Differences (CoralNet - SfM):
+   - Mean Difference: -0.122 +/- 1.541 kg m^-2 yr^-1 (mean +/- SD)
+   - Paired t-test:   t(24) = -0.396, p = 0.6954
+   - 95% CI:          [-0.758, 0.514]
+
+2. Non-Parametric Signed-Rank Test:
+   - Wilcoxon:        W = 158.0, p = 0.9143
+
+3. OLS Linear Model (CoralNet = beta_1 * SfM + beta_0):
+   - Slope:           0.824 (95% CI: [0.685, 0.963])
+   - Intercept:       0.492 (95% CI: [-0.259, 1.244])
+   - R^2:             0.867
+
+4. Joint Hypothesis Test of 1:1 Parity (H0: beta_0 = 0 and beta_1 = 1):
+   - F(2, 23) = 3.507, p = 0.0468
+================================================================================
+

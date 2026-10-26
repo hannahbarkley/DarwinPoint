@@ -1,0 +1,21 @@
+Response_Model,Model_Structure,Hypothesis_Term,F_stat,df_num,df_den,p_value
+Gross Production,Interaction (lat * region),Lat x Region Interaction (Slope Difference),2.3616544004408584,1,323,0.12532922692997053
+Gross Production,Additive (lat + region),Shared Latitudinal Slope,19.77744667189324,1,324,1.1971215357266321e-5
+Gross Production,Additive (lat + region),Regional Baseline Offset,10.714109465727205,1,324,0.0011779832141743348
+Gross Production,Continuous (lat only),Archipelago Latitudinal Slope,0.538034568014541,1,325,0.4637771851317988
+Net Production,Interaction (lat * region),Lat x Region Interaction (Slope Difference),2.1517269142923556,1,323,0.14338257576593655
+Net Production,Additive (lat + region),Shared Latitudinal Slope,22.36819926816682,1,324,3.364300985588138e-6
+Net Production,Additive (lat + region),Regional Baseline Offset,6.209712149823681,1,324,0.013204638479117665
+Net Production,Continuous (lat only),Archipelago Latitudinal Slope,15.763475392294152,1,325,8.84016552748499e-5
+Gross Bioerosion,Interaction (lat * region),Lat x Region Interaction (Slope Difference),0.3388231415976259,1,323,0.5609153728742853
+Gross Bioerosion,Additive (lat + region),Shared Latitudinal Slope,0.20059577519115745,1,324,0.654539702231276
+Gross Bioerosion,Additive (lat + region),Regional Baseline Offset,12.21093236514405,1,324,5.41212556456399e-4
+Gross Bioerosion,Continuous (lat only),Archipelago Latitudinal Slope,86.61693396423438,1,325,2.0190939101095943e-18
+Coral Cover (%),Interaction (lat * region),Lat x Region Interaction (Slope Difference),8.421353247011298,1,323,0.003963173583273258
+Coral Cover (%),Additive (lat + region),Shared Latitudinal Slope,12.557119819638846,1,324,4.527260406402237e-4
+Coral Cover (%),Additive (lat + region),Regional Baseline Offset,11.214107283895238,1,324,9.074628818223931e-4
+Coral Cover (%),Continuous (lat only),Archipelago Latitudinal Slope,0.1348930751990388,1,325,0.7136507561255421
+Vertical Accretion,Interaction (lat * region),Lat x Region Interaction (Slope Difference),2.2527349123574587,1,323,0.13435536317824706
+Vertical Accretion,Additive (lat + region),Shared Latitudinal Slope,22.108411118067615,1,324,3.818294829594203e-6
+Vertical Accretion,Additive (lat + region),Regional Baseline Offset,5.8014590262453165,1,324,0.01657073633734426
+Vertical Accretion,Continuous (lat only),Archipelago Latitudinal Slope,17.301656261120932,1,325,4.085951264790185e-5

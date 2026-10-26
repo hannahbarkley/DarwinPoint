@@ -1,0 +1,21 @@
+================================================================================
+STATISTICAL SENSITIVITY REPORT: All-Habitat Means vs. SW Fore-Reef 90th Percentile
+================================================================================
+Number of compared islands: 12
+
+1. GROSS PRODUCTION RATE (kg m^-2 yr^-1):
+   - Mean Archipelago All-Habitat Baseline:  1.80 kg m^-2 yr^-1
+   - Mean SW Fore-Reef 90th Percentile:      4.08 kg m^-2 yr^-1
+   - Mean Absolute Offset:                   +2.28 ± 0.80 kg m^-2 yr^-1 (mean ± SE) | ± 2.77 kg m^-2 yr^-1 (mean ± SD)
+   - Mean Percent Inflation:                 +144.7% ± 116.3% (Median: +118.9%, IQR: [100.5%, 177.8%])
+   - Mean Fold-Difference:                   2.45x (Range: 0.50x - 4.41x)
+   - Paired t-test:                          t(11) = 2.846, p = 0.0159
+
+2. HARD CORAL COVER (%):
+   - Mean Archipelago All-Habitat Baseline:  9.81%
+   - Mean SW Fore-Reef 90th Percentile:      23.03%
+   - Mean Absolute Offset:                   +13.21 ± 4.49% (mean ± SE) | ± 15.56% (mean ± SD)
+   - Mean Percent Inflation:                 +135.5% ± 105.8% (Median: +120.7%, IQR: [87.2%, 189.7%])
+   - Mean Fold-Difference:                   2.35x (Range: 0.46x - 4.33x)
+   - Paired t-test:                          t(11) = 2.942, p = 0.0134
+================================================================================

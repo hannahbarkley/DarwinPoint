@@ -1,0 +1,38 @@
+"REGIONCODE","REGION","LOCATIONCODE","LOCATION","MACROBIOEROSION_RATE_KG_M2_YR","MACROBIOEROSION_RATE_KG_M2_YR_CI"
+"SAMOA","American Samoa","OFU","Ofu & Olosega",0.053109656,0.021049296
+"SAMOA","American Samoa","ROS","Rose",0.053109656,0.021049296
+"SAMOA","American Samoa","SWA","Swains",0.053109656,0.021049296
+"SAMOA","American Samoa","TAU","Tau",0.053109656,0.021049296
+"SAMOA","American Samoa","TUT","Tutuila",0.053109656,0.021049296
+"MARIAN","Guam and Marianas Islands","AGR","Agrihan",0.02048961,0.007307848
+"MARIAN","Guam and Marianas Islands","AGU","Aguijan",0.02048961,0.007307848
+"MARIAN","Guam and Marianas Islands","ALA","Alamagan",0.02048961,0.007307848
+"MARIAN","Guam and Marianas Islands","ASC","Asuncion",0.02048961,0.007307848
+"MARIAN","Guam and Marianas Islands","FDP","Farallon de Pajaros",0.02048961,0.007307848
+"MARIAN","Guam and Marianas Islands","GUA","Guam",0.02048961,0.007307848
+"MARIAN","Guam and Marianas Islands","GUG","Guguan",0.02048961,0.007307848
+"MARIAN","Guam and Marianas Islands","MAU","Maug",0.02048961,0.007307848
+"MARIAN","Guam and Marianas Islands","PAG","Pagan",0.02048961,0.007307848
+"MARIAN","Guam and Marianas Islands","ROT","Rota",0.02048961,0.007307848
+"MARIAN","Guam and Marianas Islands","SAI","Saipan",0.02048961,0.007307848
+"MARIAN","Guam and Marianas Islands","SAR","Sarigan",0.02048961,0.007307848
+"MARIAN","Guam and Marianas Islands","TIN","Tinian",0.02048961,0.007307848
+"MHI","Main Hawaiian Islands","HAW","Hawaii",0.066273093,0.023545505
+"MHI","Main Hawaiian Islands","KAH","Kahoolawe",0.066273093,0.023545505
+"MHI","Main Hawaiian Islands","KAU","Kauai",0.066273093,0.023545505
+"MHI","Main Hawaiian Islands","LAN","Lanai",0.066273093,0.023545505
+"MHI","Main Hawaiian Islands","MAI","Maui",0.066273093,0.023545505
+"MHI","Main Hawaiian Islands","MOL","Molokai",0.066273093,0.023545505
+"MHI","Main Hawaiian Islands","NII","Niihau",0.066273093,0.023545505
+"MHI","Main Hawaiian Islands","OAH","Oahu",0.066273093,0.023545505
+"NWHI","Northwestern Hawaiian Islands","FFS","French Frigate",0.010367871,0.012088853
+"NWHI","Northwestern Hawaiian Islands","KUR","Kure",0.010367871,0.012088853
+"NWHI","Northwestern Hawaiian Islands","LIS","Lisianski",0.010367871,0.012088853
+"NWHI","Northwestern Hawaiian Islands","PHR","Pearl & Hermes",0.010367871,0.012088853
+"PRIAs","Pacific Remote Island Areas","BAK","Baker",0.033646972,0.0096625
+"PRIAs","Pacific Remote Island Areas","HOW","Howland",0.033646972,0.0096625
+"PRIAs","Pacific Remote Island Areas","JAR","Jarvis",0.033646972,0.0096625
+"PRIAs","Pacific Remote Island Areas","JOH","Johnston",0.066273093,0.023545505
+"PRIAs","Pacific Remote Island Areas","KIN","Kingman",0.006033331,0.009288637
+"PRIAs","Pacific Remote Island Areas","PAL","Palmyra",0.006033331,0.009288637
+"PRIAs","Pacific Remote Island Areas","WAK","Wake",0.011007079,0.00830823
