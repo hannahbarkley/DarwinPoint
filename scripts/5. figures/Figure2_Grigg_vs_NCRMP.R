@@ -17,7 +17,18 @@ suppressPackageStartupMessages({
 main_dir <- here("outputs", "main figures")
 if (!dir.exists(main_dir)) dir.create(main_dir, recursive = TRUE)
 
-pal_lat_grad <- c("#D73027", "#F46D43", "#FDAE61", "#FFFFBF", "#74ADD1", "#4575B4")
+# Reversed Paul Tol Sunset (19N is Red, 30N is Blue)
+pal_lat_grad <- c("#A50026", "#DD3D2D", "#F67E4B", "#FDB366", "#FEDA8B", 
+                  "#EAECCC", "#C2E4EF", "#98CAE1", "#6EA6CD", "#4A7BB7", "#364B9A")
+
+# Calculate relative position for the Lat 22.75 breakpoint 
+# For limits c(19, 30): (22.75 - 19) / (30 - 19) = ~0.3409
+# Map the yellow center (#EAECCC) to 0.3409 and distribute the rest evenly
+pal_lat_vals <- c(
+  seq(0, 0.3409, length.out = 6)[1:5], 
+  0.3409, 
+  seq(0.3409, 1, length.out = 6)[2:6]
+)
 
 # ------------------------------------------------------------------------------
 # Helpers: Naming & IO
@@ -178,7 +189,7 @@ nudge_lookup <- tribble(
   "Moloka'i",            -1.0,     8.0,     -1.0,      2.5,
   "L\u0101na'i",         -1.2,    -8.0,     -1.2,     -2.5,
   "Maui",                 1.6,     8.0,      1.6,      1.0,
-  "Hawai'i",              -1.6,    -13.5,   -1.2,      -3.0
+  "Hawai'i",             -1.6,   -13.5,     -1.2,     -3.0
 )
 
 delta_cov_data <- shared_p90_deltas %>%
@@ -217,7 +228,7 @@ build_plot_f2 <- function(data, y_var, y_se = NULL, y_label, y_lim, y_brk,
   }
   
   p <- p + geom_point(aes(fill = LATITUDE), shape = 21, size = 2.4, color = "gray20", stroke = 0.5, alpha = 0.85) +
-    scale_fill_gradientn(colors = pal_lat_grad, limits = c(18, 30), guide = "none") +
+    scale_fill_gradientn(colors = pal_lat_grad, values = pal_lat_vals, limits = c(19, 30), guide = "none") +
     labs(y = y_label)
   
   if (add_lbl) {
@@ -255,7 +266,7 @@ main_plots_f2 <- ggarrange(
 # Top Legend Construction (Aligned to 19-30 Latitude Range)
 # ------------------------------------------------------------------------------
 legend_nudges <- tribble(
-  ~PLOT_LABEL,           ~leg_nx, ~leg_ny,
+  ~PLOT_LABEL,             ~leg_nx, ~leg_ny,
   "H\u014dlanik\u016b",  -0.3,    0.6,
   "Kuaihelani",          -0.1,    0.6,
   "Manawai",             -0.1,    0.6,
@@ -302,7 +313,7 @@ p_legend_f2 <- ggplot() +
   
   annotate("text", x = 30.2, y = 0, label = "Latitude (°N)", fontface = "bold", size = 3.5, hjust = 1, color = "black") +
   
-  scale_fill_gradientn(colors = pal_lat_grad, limits = c(18, 30), guide = "none") +
+  scale_fill_gradientn(colors = pal_lat_grad, values = pal_lat_vals, limits = c(19, 30), guide = "none") +
   scale_x_reverse(limits = c(30.2, 18.6), breaks = seq(19, 30, by = 1), expand = c(0.01, 0.01)) + 
   scale_y_continuous(limits = c(-0.6, 5.8), expand = c(0, 0)) + 
   coord_cartesian(clip = "off") +
@@ -341,4 +352,4 @@ p_legend_f2 <- ggplot() +
 fig2_final <- ggarrange(p_legend_f2, main_plots_f2, nrow = 2, heights = c(0.42, 1))
 
 ggsave(file.path(main_dir, "Figure2_Grigg_vs_NCRMP.png"), fig2_final, width = 28, height = 16.0, units = "cm", dpi = 300, bg = "white") 
-ggsave(file.path(main_dir, "Figure2_Grigg_vs_NCRMP.tiff"), fig2_final, width = 28, height = 16.0, units = "cm", dpi = 300, compression = "lzw", bg = "white") 
+ggsave(file.path(main_dir, "Figure2_Grigg_vs_NCRMP.tiff"), fig2_final, width = 28, height = 16.0, units = "cm", dpi = 300, compression = "lzw", bg = "white")

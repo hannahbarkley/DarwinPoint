@@ -26,7 +26,18 @@ suppressPackageStartupMessages({
 main_dir <- here("outputs", "main figures")
 if (!dir.exists(main_dir)) dir.create(main_dir, recursive = TRUE)
 
-pal_lat_grad <- c("#D73027", "#F46D43", "#FDAE61", "#FFFFBF", "#74ADD1", "#4575B4")
+# Reversed Paul Tol Sunset (19N is Red, 30N is Blue)
+pal_lat_grad <- c("#A50026", "#DD3D2D", "#F67E4B", "#FDB366", "#FEDA8B", 
+                  "#EAECCC", "#C2E4EF", "#98CAE1", "#6EA6CD", "#4A7BB7", "#364B9A")
+
+# Calculate relative position for the Lat 22.75 breakpoint 
+# For limits c(19, 30): (22.75 - 19) / (30 - 19) = ~0.3409
+# Map the yellow center (#EAECCC) to 0.3409 and distribute the rest evenly
+pal_lat_vals <- c(
+  seq(0, 0.3409, length.out = 6)[1:5], 
+  0.3409, 
+  seq(0.3409, 1, length.out = 6)[2:6]
+)
 
 # ------------------------------------------------------------------------------
 # Helpers: Hawaiian Archipelago Names & Theme
@@ -317,7 +328,7 @@ build_plot_f3 <- function(data, y_var, y_se, y_label, y_lim, y_brk, add_zero = F
       color = "gray55", width = 0, linewidth = 0.5
     ) +
     geom_point(aes(fill = LATITUDE), shape = 21, size = 2.4, color = "gray20", stroke = 0.5, alpha = 0.85) +
-    scale_fill_gradientn(colors = pal_lat_grad, limits = c(18, 30), guide = "none") +
+    scale_fill_gradientn(colors = pal_lat_grad, values = pal_lat_vals, limits = c(19, 30), guide = "none") +
     labs(y = y_label)
   
   return(p)
@@ -344,7 +355,7 @@ main_plots_f3 <- ggarrange(
 # 4. TOP HORIZONTAL LEGEND (Balanced Spacing)
 # ------------------------------------------------------------------------------
 legend_nudges <- tribble(
-  ~PLOT_LABEL,           ~leg_nx, ~leg_ny,
+  ~PLOT_LABEL,             ~leg_nx, ~leg_ny,
   "H\u014dlanik\u016b",  -0.3,    0.6,
   "Kuaihelani",          -0.1,    0.6,
   "Manawai",             -0.1,    0.6,
@@ -391,7 +402,7 @@ p_legend_f3 <- ggplot() +
   
   annotate("text", x = 30.2, y = 0, label = "Latitude (°N)", fontface = "bold", size = 3.5, hjust = 1, color = "black") +
   
-  scale_fill_gradientn(colors = pal_lat_grad, limits = c(18, 30), guide = "none") +
+  scale_fill_gradientn(colors = pal_lat_grad, values = pal_lat_vals, limits = c(19, 30), guide = "none") +
   scale_x_reverse(limits = c(30.2, 18.6), breaks = seq(19, 30, by = 1), expand = c(0.01, 0.01)) + 
   scale_y_continuous(limits = c(-0.6, 4.5), expand = c(0, 0)) + 
   coord_cartesian(clip = "off") +

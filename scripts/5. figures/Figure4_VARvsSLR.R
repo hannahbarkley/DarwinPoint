@@ -1,26 +1,12 @@
 # ==============================================================================
-# Script:  Figure4_VARvsSLR.R
-# Purpose: Vertical Reef Accretion Rate (VAR) vs. 2050 Sea-Level Rise (SLR)
-#          Formatted to Proceedings of the National Academy of Sciences (PNAS)
-#          specifications (2-column width: 17.8 cm, Helvetica/Arial typography,
-#          0.5 pt line hierarchy, and official IPCC AR6 scenario palettes).
-#          Statistical trendlines follow the survey GLM model hierarchy:
-#            1. Separate slopes for significant Lat x Region interactions.
-#            2. Parallel slopes for significant additive Lat + Region effects.
-#            3. Regional baselines if only Region is significant.
-#            4. Continuous slope if only archipelago-wide Latitude is significant.
-# Inputs:  - data/strs data/processed data/HA_2024_StRS_IslandLevel.csv
-#          - HA_2024_StRS_SiteLevel_Weighted.csv
-#          - data/strs data/processed data/HA_2024_StRS_SurveyDesign.rds
-#          - data/supporting data/IPCC_AR6_SLR_Rates_2040_2060.csv
-# Outputs: - outputs/main figures/Figure4_VARvsSLR.tiff (600 DPI LZW raster)
-#          - outputs/main figures/Figure4_VARvsSLR.png
+# Figure4_VARvsSLR.R
+# Vertical Accretion Rate (VAR) vs. 2050 Sea-Level Rise (SLR)
+# Formatted to PNAS 2-column specifications (17.8 cm width, 600 DPI)
 # ==============================================================================
 
 suppressPackageStartupMessages({
   library(tidyverse)
   library(here)
-  library(ggrepel)
   library(survey)
   library(scales)
 })
@@ -30,22 +16,41 @@ options(survey.lonely.psu = "adjust")
 main_dir <- here("outputs", "main figures")
 if (!dir.exists(main_dir)) dir.create(main_dir, recursive = TRUE)
 
-# --- 1. PNAS COLOR PALETTES & IPCC STANDARDS ---
-pal_lat_grad <- c("#D73027", "#F46D43", "#FDAE61", "#FFFFBF", "#74ADD1", "#4575B4")
+# ------------------------------------------------------------------------------
+# 1. COLOR PALETTES & STYLING
+# ------------------------------------------------------------------------------
 
-# IPCC AR6 Working Group I Official Scenario Colors
-col_ssp126    <- "#003466"  # SSP1-2.6 (Deep Navy)
-col_ssp245    <- "#F69320"  # SSP2-4.5 (Amber / Gold)
-col_ssp370    <- "#DF0000"  # SSP3-7.0 (Red)
-col_ssp585    <- "#980002"  # SSP5-8.5 (Dark Crimson)
-slr_band_fill <- "#EBF4FA"  # Pale ocean-blue envelope
+# Reversed Paul Tol Sunset: 19N = red, 30N = blue
+pal_lat_grad <- c(
+  "#A50026", "#DD3D2D", "#F67E4B", "#FDB366", "#FEDA8B",
+  "#EAECCC", "#C2E4EF", "#98CAE1", "#6EA6CD", "#4A7BB7", "#364B9A"
+)
+
+pal_lat_vals <- c(
+  seq(0, 0.3409, length.out = 6)[1:5],
+  0.3409,
+  seq(0.3409, 1, length.out = 6)[2:6]
+)
+
+# Scenario & element styling
+col_ssp126       <- "#52525B"
+col_ssp245       <- "#52525B"
+col_ssp370       <- "#52525B"
+col_ssp585       <- "#52525B"
+
+col_site_outline <- "#52525B"
+col_mean_outline <- "#09090B"
+col_trend        <- "#0F172A"
+col_trend_band   <- "#64748B"
+slr_band_fill    <- "#D8D1E8"
 
 # ------------------------------------------------------------------------------
-# 2. HELPERS: ARCHIPELAGO NOMENCLATURE & PNAS THEME
+# 2. ISLAND NOMENCLATURE
 # ------------------------------------------------------------------------------
+
 island_lookup <- c(
-  "kure"                  = "H\u014dlanik\u016b",
-  "kure atoll"            = "H\u014dlanik\u016b",
+  "kure"                  = "Hōlanikū",
+  "kure atoll"            = "Hōlanikū",
   "midway"                = "Kuaihelani",
   "midway atoll"          = "Kuaihelani",
   "pearl & hermes"        = "Manawai",
@@ -58,9 +63,9 @@ island_lookup <- c(
   "laysan island"         = "Kamole",
   "maro"                  = "Kamokuokamohoali'i",
   "maro reef"             = "Kamokuokamohoali'i",
-  "gardner"               = "P\u016bh\u0101honu",
-  "gardner pinnacles"     = "P\u016bh\u0101honu",
-  "gardner_pinnacles"     = "P\u016bh\u0101honu",
+  "gardner"               = "Pūhāhonu",
+  "gardner pinnacles"     = "Pūhāhonu",
+  "gardner_pinnacles"     = "Pūhāhonu",
   "french frigate"        = "Lalo",
   "french frigate shoals" = "Lalo",
   "french_frigate"        = "Lalo",
@@ -74,7 +79,7 @@ island_lookup <- c(
   "niihau"                = "Ni'ihau",
   "oahu"                  = "O'ahu",
   "molokai"               = "Moloka'i",
-  "lanai"                 = "L\u0101na'i",
+  "lanai"                 = "Lāna'i",
   "maui"                  = "Maui",
   "kahoolawe"             = "Kaho'olawe",
   "hawaii"                = "Hawai'i"
@@ -83,9 +88,13 @@ island_lookup <- c(
 format_islands <- function(x) {
   clean_key <- tolower(trimws(as.character(x)))
   clean_key <- gsub("_", " ", clean_key)
-  mapped    <- island_lookup[clean_key]
+  mapped <- island_lookup[clean_key]
   coalesce(unname(mapped), as.character(x))
 }
+
+# ------------------------------------------------------------------------------
+# 3. PNAS THEME
+# ------------------------------------------------------------------------------
 
 theme_pnas <- function(base_size = 8, base_family = "sans") {
   theme_minimal(base_size = base_size, base_family = base_family) +
@@ -105,6 +114,10 @@ theme_pnas <- function(base_size = 8, base_family = "sans") {
     )
 }
 
+# ------------------------------------------------------------------------------
+# 4. DATA INGESTION
+# ------------------------------------------------------------------------------
+
 saferead_csv <- function(candidates) {
   search_dirs <- c(
     here("data", "supporting data"),
@@ -121,9 +134,6 @@ saferead_csv <- function(candidates) {
   stop(paste("None of the candidate files found:", paste(candidates, collapse = " | ")))
 }
 
-# ------------------------------------------------------------------------------
-# 3. DATA INGESTION & GEOGRAPHIC DODGING
-# ------------------------------------------------------------------------------
 slr_raw <- saferead_csv(c(
   "IPCC_AR6_SLR_Rates_2040_2060.csv",
   "ipcc_ar6_sea_level_projection_psmsl_id_523.csv"
@@ -151,8 +161,8 @@ if ("Median_q50" %in% names(slr_raw)) {
     )
 }
 
-slr_box_min <- min(df_slr$Lower_17th_q17, na.rm = TRUE)  # 4.2 mm/yr
-slr_box_max <- max(df_slr$Upper_83rd_q83, na.rm = TRUE)  # 11.8 mm/yr
+slr_box_min <- min(df_slr$Lower_17th_q17, na.rm = TRUE)
+slr_box_max <- max(df_slr$Upper_83rd_q83, na.rm = TRUE)
 
 rate_ssp126 <- df_slr %>% filter(grepl("126|1-2.6", Scenario)) %>% pull(Median_q50) %>% first()
 rate_ssp245 <- df_slr %>% filter(grepl("245|2-4.5", Scenario)) %>% pull(Median_q50) %>% first()
@@ -160,83 +170,53 @@ rate_ssp370 <- df_slr %>% filter(grepl("370|3-7.0", Scenario)) %>% pull(Median_q
 rate_ssp585 <- df_slr %>% filter(grepl("585|5-8.5", Scenario)) %>% pull(Median_q50) %>% first()
 
 # Island-level data
-df_strs_darwin <- saferead_csv("HA_2024_StRS_IslandLevel.csv") %>%
+df_strs_f4 <- saferead_csv("HA_2024_StRS_IslandLevel.csv") %>%
   mutate(
-    LOCATION                 = coalesce(if ("LOCATION" %in% names(.)) LOCATION else NULL,
-                                        if ("ISLAND" %in% names(.)) ISLAND else NULL),
-    PLOT_LABEL               = format_islands(LOCATION),
-    VERTICAL_ACCRETION_MM_YR = coalesce(if ("VERTICAL_ACCRETION_MM_YR" %in% names(.)) VERTICAL_ACCRETION_MM_YR else NULL, 0)
+    LOCATION = coalesce(
+      if ("LOCATION" %in% names(.)) LOCATION else NULL,
+      if ("ISLAND" %in% names(.)) ISLAND else NULL
+    ),
+    PLOT_LABEL = format_islands(LOCATION),
+    VERTICAL_ACCRETION_MM_YR = coalesce(
+      if ("VERTICAL_ACCRETION_MM_YR" %in% names(.)) VERTICAL_ACCRETION_MM_YR else NULL, 0
+    ),
+    VISUAL_LAT = case_when(
+      PLOT_LABEL == "Lāna'i"  ~ LATITUDE + 0.14,
+      PLOT_LABEL == "Maui"    ~ LATITUDE - 0.05,
+      PLOT_LABEL == "Kaua'i"  ~ LATITUDE + 0.08,
+      PLOT_LABEL == "Ni'ihau" ~ LATITUDE - 0.08,
+      TRUE ~ LATITUDE
+    )
   )
 
-# Exact customized repelling coordinate offsets
-df_strs_f4 <- df_strs_darwin %>% mutate(
-  nudge_x = case_when(
-    PLOT_LABEL == "Hawai'i"            ~  0.6,  
-    PLOT_LABEL == "Kaho'olawe"         ~  0.2, 
-    PLOT_LABEL == "Maui"               ~ -0.1,  # Shift label slightly left with box
-    PLOT_LABEL == "L\u0101na'i"        ~ -0.6, 
-    PLOT_LABEL == "Moloka'i"           ~  0.1, 
-    PLOT_LABEL == "O'ahu"              ~ -0.1,
-    PLOT_LABEL == "Kaua'i"             ~ -0.6,  
-    PLOT_LABEL == "Ni'ihau"            ~ -0.4, 
-    PLOT_LABEL == "Lalo"               ~ -0.6,  
-    PLOT_LABEL == "Kapou"              ~ -0.6,  
-    PLOT_LABEL == "Manawai"            ~  0.5,  
-    PLOT_LABEL == "H\u014dlanik\u016b" ~ -0.5, 
-    TRUE ~ 0
-  ),
-  nudge_y = case_when(
-    PLOT_LABEL == "Hawai'i"            ~ -0.5,  
-    PLOT_LABEL == "Kaho'olawe"         ~ -2.9, 
-    PLOT_LABEL == "Maui"               ~ -2.5,  
-    PLOT_LABEL == "L\u0101na'i"        ~  2.0,  
-    PLOT_LABEL == "Moloka'i"           ~ -3.4,  
-    PLOT_LABEL == "O'ahu"              ~ -2.2,  
-    PLOT_LABEL == "Kaua'i"             ~  1.2,  
-    PLOT_LABEL == "Ni'ihau"            ~ -1.8,  
-    PLOT_LABEL == "Lalo"               ~  0.6,  
-    PLOT_LABEL == "Kapou"              ~  0.6,  
-    PLOT_LABEL == "Manawai"            ~ -1.5,  
-    PLOT_LABEL == "H\u014dlanik\u016b" ~ -1.5, 
-    TRUE ~ 0
-  )
-)
-
-# Site-level data with latitudinal alignment
+# Site-level data
 df_strs_site <- saferead_csv("HA_2024_StRS_SiteLevel_Weighted.csv") %>%
   mutate(
-    LOCATION                 = coalesce(if ("LOCATION" %in% names(.)) LOCATION else NULL,
-                                        if ("ISLAND" %in% names(.)) ISLAND else NULL),
-    PLOT_LABEL               = format_islands(LOCATION),
-    VERTICAL_ACCRETION_MM_YR = coalesce(if ("VERTICAL_ACCRETION_MM_YR" %in% names(.)) VERTICAL_ACCRETION_MM_YR else NULL, 0)
+    LOCATION = coalesce(
+      if ("LOCATION" %in% names(.)) LOCATION else NULL,
+      if ("ISLAND" %in% names(.)) ISLAND else NULL
+    ),
+    PLOT_LABEL = format_islands(LOCATION),
+    VERTICAL_ACCRETION_MM_YR = coalesce(
+      if ("VERTICAL_ACCRETION_MM_YR" %in% names(.)) VERTICAL_ACCRETION_MM_YR else NULL, 0
+    )
   ) %>%
   select(-any_of("LATITUDE")) %>%
   left_join(df_strs_f4 %>% select(PLOT_LABEL, LATITUDE), by = "PLOT_LABEL") %>%
-  filter(!is.na(LATITUDE))
-
-# Geographic dodge to visually separate islands with overlapping latitudes
-# Maui adjusted to LATITUDE - 0.05 to clear Kaho'olawe and stay spaced from Lana'i
-df_strs_site <- df_strs_site %>%
+  filter(!is.na(LATITUDE)) %>%
   mutate(
     VISUAL_LAT = case_when(
-      PLOT_LABEL == "L\u0101na'i" ~ LATITUDE + 0.14,
-      PLOT_LABEL == "Maui"        ~ LATITUDE - 0.09,
-      PLOT_LABEL == "Kaua'i"      ~ LATITUDE + 0.08,
-      PLOT_LABEL == "Ni'ihau"     ~ LATITUDE - 0.08,
-      TRUE                        ~ LATITUDE
+      PLOT_LABEL == "Lāna'i"  ~ LATITUDE + 0.14,
+      PLOT_LABEL == "Maui"    ~ LATITUDE - 0.09,
+      PLOT_LABEL == "Kaua'i"  ~ LATITUDE + 0.08,
+      PLOT_LABEL == "Ni'ihau" ~ LATITUDE - 0.08,
+      TRUE ~ LATITUDE
     )
   )
 
-df_strs_f4 <- df_strs_f4 %>%
-  mutate(
-    VISUAL_LAT = case_when(
-      PLOT_LABEL == "L\u0101na'i" ~ LATITUDE + 0.14,
-      PLOT_LABEL == "Maui"        ~ LATITUDE - 0.05,
-      PLOT_LABEL == "Kaua'i"      ~ LATITUDE + 0.08,
-      PLOT_LABEL == "Ni'ihau"     ~ LATITUDE - 0.08,
-      TRUE                        ~ LATITUDE
-    )
-  )
+# ------------------------------------------------------------------------------
+# 5. SURVEY DESIGN & GLM MODEL
+# ------------------------------------------------------------------------------
 
 des_file <- here("data", "strs data", "processed data", "HA_2024_StRS_SurveyDesign.rds")
 des <- if (file.exists(des_file)) readRDS(des_file) else NULL
@@ -246,9 +226,6 @@ if (!is.null(des)) {
   des <- update(des, LOCATION_LAT_c = LOCATION_LAT - mean_lat)
 }
 
-# ------------------------------------------------------------------------------
-# 4. STATISTICAL MODEL FITS (SURVEY-WEIGHTED GLM HIERARCHY)
-# ------------------------------------------------------------------------------
 get_model_fit <- function(y_var, des_obj, df_island, mean_lat_ref = mean_lat) {
   if (is.null(des_obj) || !y_var %in% names(des_obj$variables)) return(NULL)
   
@@ -257,218 +234,171 @@ get_model_fit <- function(y_var, des_obj, df_island, mean_lat_ref = mean_lat) {
   nwhi_min <- min(df_island$LATITUDE[df_island$LATITUDE > 23], na.rm = TRUE)
   nwhi_max <- max(df_island$LATITUDE[df_island$LATITUDE > 23], na.rm = TRUE)
   
-  mhi_lats   <- seq(mhi_min, mhi_max, length.out = 150)
-  nwhi_lats  <- seq(nwhi_min, nwhi_max, length.out = 180)
+  mhi_lats  <- seq(mhi_min, mhi_max, length.out = 150)
+  nwhi_lats <- seq(nwhi_min, nwhi_max, length.out = 180)
   reg_levels <- if (is.factor(des_obj$variables$REGIONCODE)) levels(des_obj$variables$REGIONCODE) else unique(des_obj$variables$REGIONCODE)
   
-  # Step 1: Interaction Model (y ~ LOCATION_LAT_c * REGIONCODE)
   fit_inter <- tryCatch(
     svyglm(as.formula(paste(y_var, "~ LOCATION_LAT_c * REGIONCODE")), design = des_obj, family = gaussian()),
     error = function(e) NULL
   )
-  
   p_inter <- 1
-  if (!is.null(fit_inter)) {
-    wald_int <- regTermTest(fit_inter, ~LOCATION_LAT_c:REGIONCODE)
-    p_inter  <- as.numeric(wald_int$p)
-  }
+  if (!is.null(fit_inter)) p_inter <- as.numeric(regTermTest(fit_inter, ~LOCATION_LAT_c:REGIONCODE)$p)
   
   if (!is.na(p_inter) && p_inter < 0.05) {
-    cat(sprintf("   ✓ %s: Significant REGIONAL INTERACTION (p = %.3f). Fitting separate slopes.\n", y_var, p_inter))
     pred_mhi  <- predict(fit_inter, newdata = data.frame(LOCATION_LAT_c = mhi_lats - mean_lat_ref, REGIONCODE = factor("MHI", levels = reg_levels)), se.fit = TRUE)
     pred_nwhi <- predict(fit_inter, newdata = data.frame(LOCATION_LAT_c = nwhi_lats - mean_lat_ref, REGIONCODE = factor("NWHI", levels = reg_levels)), se.fit = TRUE)
-    
     return(bind_rows(
       data.frame(LATITUDE = mhi_lats,  fit = as.numeric(pred_mhi),  se = as.numeric(SE(pred_mhi)),  group = "MHI"),
       data.frame(LATITUDE = nwhi_lats, fit = as.numeric(pred_nwhi), se = as.numeric(SE(pred_nwhi)), group = "NWHI")
     ) %>% mutate(ymin = fit - 1.96 * se, ymax = fit + 1.96 * se))
   }
   
-  # Step 2: Additive Model (y ~ LOCATION_LAT_c + REGIONCODE)
-  fit_add <- tryCatch(
-    svyglm(as.formula(paste(y_var, "~ LOCATION_LAT_c + REGIONCODE")), design = des_obj, family = gaussian()),
-    error = function(e) NULL
-  )
-  
-  p_lat_add <- 1
-  p_reg_add <- 1
-  if (!is.null(fit_add)) {
-    wald_lat  <- regTermTest(fit_add, ~LOCATION_LAT_c)
-    wald_reg  <- regTermTest(fit_add, ~REGIONCODE)
-    p_lat_add <- as.numeric(wald_lat$p)
-    p_reg_add <- as.numeric(wald_reg$p)
-  }
-  
-  # Condition 2A: Significant Parallel Regional Slopes
-  if (!is.na(p_lat_add) && p_lat_add < 0.05 && !is.na(p_reg_add) && p_reg_add < 0.05) {
-    cat(sprintf("   ✓ %s: Significant PARALLEL REGIONAL SLOPES (lat p = %.3e, reg p = %.3e).\n", y_var, p_lat_add, p_reg_add))
-    pred_mhi  <- predict(fit_add, newdata = data.frame(LOCATION_LAT_c = mhi_lats - mean_lat_ref, REGIONCODE = factor("MHI", levels = reg_levels)), se.fit = TRUE)
-    pred_nwhi <- predict(fit_add, newdata = data.frame(LOCATION_LAT_c = nwhi_lats - mean_lat_ref, REGIONCODE = factor("NWHI", levels = reg_levels)), se.fit = TRUE)
-    
-    return(bind_rows(
-      data.frame(LATITUDE = mhi_lats,  fit = as.numeric(pred_mhi),  se = as.numeric(SE(pred_mhi)),  group = "MHI"),
-      data.frame(LATITUDE = nwhi_lats, fit = as.numeric(pred_nwhi), se = as.numeric(SE(pred_nwhi)), group = "NWHI")
-    ) %>% mutate(ymin = fit - 1.96 * se, ymax = fit + 1.96 * se))
-  }
-  
-  # Condition 2B: Significant Region Step-Shift Only
-  if (!is.na(p_reg_add) && p_reg_add < 0.05 && (is.na(p_lat_add) || p_lat_add >= 0.05)) {
-    cat(sprintf("   ✓ %s: Significant REGIONAL STEP-SHIFT ONLY (reg p = %.3e). Fitting horizontal baselines.\n", y_var, p_reg_add))
-    fit_reg   <- svyglm(as.formula(paste(y_var, "~ REGIONCODE")), design = des_obj, family = gaussian())
-    pred_mhi  <- predict(fit_reg, newdata = data.frame(REGIONCODE = factor("MHI", levels = reg_levels)), se.fit = TRUE)
-    pred_nwhi <- predict(fit_reg, newdata = data.frame(REGIONCODE = factor("NWHI", levels = reg_levels)), se.fit = TRUE)
-    
-    return(bind_rows(
-      data.frame(LATITUDE = mhi_lats,  fit = as.numeric(pred_mhi),  se = as.numeric(SE(pred_mhi)),  group = "MHI"),
-      data.frame(LATITUDE = nwhi_lats, fit = as.numeric(pred_nwhi), se = as.numeric(SE(pred_nwhi)), group = "NWHI")
-    ) %>% mutate(ymin = fit - 1.96 * se, ymax = fit + 1.96 * se))
-  }
-  
-  # Step 3: Single Continuous Model (y ~ LOCATION_LAT_c)
   fit_main <- tryCatch(
     svyglm(as.formula(paste(y_var, "~ LOCATION_LAT_c")), design = des_obj, family = gaussian()),
     error = function(e) NULL
   )
-  
   p_main <- 1
-  if (!is.null(fit_main)) {
-    wald_main <- regTermTest(fit_main, ~LOCATION_LAT_c)
-    p_main    <- as.numeric(wald_main$p)
-  }
+  if (!is.null(fit_main)) p_main <- as.numeric(regTermTest(fit_main, ~LOCATION_LAT_c)$p)
   
   if (!is.na(p_main) && round(p_main, 3) <= 0.055) {
-    cat(sprintf("   ✓ %s: Significant ARCHIPELAGO SLOPE (p = %.3f). Fitting continuous line.\n", y_var, p_main))
     arch_lats <- seq(min(df_island$LATITUDE, na.rm = TRUE), max(df_island$LATITUDE, na.rm = TRUE), length.out = 150)
     pred_arch <- predict(fit_main, newdata = data.frame(LOCATION_LAT_c = arch_lats - mean_lat_ref), se.fit = TRUE)
-    
     return(data.frame(
-      LATITUDE = arch_lats,
-      fit      = as.numeric(pred_arch),
-      se       = as.numeric(SE(pred_arch)),
-      group    = "Archipelago"
+      LATITUDE = arch_lats, fit = as.numeric(pred_arch), se = as.numeric(SE(pred_arch)), group = "Archipelago"
     ) %>% mutate(ymin = fit - 1.96 * se, ymax = fit + 1.96 * se))
   }
-  
-  cat(sprintf("   - %s: No significant latitudinal or regional trend. No fit added.\n", y_var))
   return(NULL)
 }
 
-cat("Evaluating survey GLM fit for Vertical Accretion...\n")
 fit_df_full <- get_model_fit("VERTICAL_ACCRETION_MM_YR", des, df_strs_f4)
 
 # ------------------------------------------------------------------------------
-# 5. FIGURE COMPOSITION
+# 6. FIGURE COMPOSITION
 # ------------------------------------------------------------------------------
+
 fig4_final <- ggplot() +
   
   # A. Sea-Level Rise Shaded Reference Envelope
   annotate(
-    "rect", xmin = -Inf, xmax = Inf, ymin = slr_box_min, ymax = slr_box_max, 
-    fill = slr_band_fill, alpha = 0.95
+    "rect", xmin = -Inf, xmax = Inf, ymin = slr_box_min, ymax = slr_box_max,
+    fill = slr_band_fill, alpha = 0.55
+  ) +
+  # Header Label: Top-left of lavender envelope
+  annotate(
+    "text", x = 30.1, y = slr_box_max - 0.5,
+    label = "Range of sea level rise projections by 2050",
+    color = "#52525B", size = 2.4, fontface = "italic", hjust = 0
   ) +
   
-  # B. Net Neutral Accretion Baseline (0 mm/yr)
-  geom_hline(yintercept = 0, linetype = "dashed", color = "#71717A", linewidth = 0.45) +
+  # B. Accretion Baseline (0 mm/yr dashed line)
+  geom_hline(
+    yintercept = 0,
+    linetype = "dashed",
+    color = "#71717A",
+    linewidth = 0.45
+  ) +
   
-  # C. Edge-to-Edge IPCC AR6 Scenario Projection Benchmarks
-  geom_hline(yintercept = rate_ssp585, linetype = "dotted", color = col_ssp585, linewidth = 0.55) +
-  geom_hline(yintercept = rate_ssp370, linetype = "dotted", color = col_ssp370, linewidth = 0.55) +
-  geom_hline(yintercept = rate_ssp245, linetype = "dotted", color = col_ssp245, linewidth = 0.55) +
-  geom_hline(yintercept = rate_ssp126, linetype = "dotted", color = col_ssp126, linewidth = 0.55) +
+  # C. IPCC AR6 Scenario Benchmarks (Dotted Lines in line with text)
+  # Left segments (left axis to label start)
+  annotate("segment", x = 30.2, xend = 29.85, y = rate_ssp585, yend = rate_ssp585, linetype = "dotted", color = col_ssp585, linewidth = 0.40) +
+  annotate("segment", x = 30.2, xend = 29.85, y = rate_ssp370, yend = rate_ssp370, linetype = "dotted", color = col_ssp370, linewidth = 0.40) +
+  annotate("segment", x = 30.2, xend = 29.85, y = rate_ssp245, yend = rate_ssp245, linetype = "dotted", color = col_ssp245, linewidth = 0.40) +
+  annotate("segment", x = 30.2, xend = 29.85, y = rate_ssp126, yend = rate_ssp126, linetype = "dotted", color = col_ssp126, linewidth = 0.40) +
   
-  # D. Scenario Badges
-  annotate("label", x = 29.8, y = rate_ssp585, 
-           label = "SSP5\u20138.5", color = col_ssp585, 
-           size = 2.3, fontface = "bold", hjust = 0, 
-           fill = slr_band_fill, label.size = NA, label.padding = unit(0.12, "lines")) +
+  # Right segments (cleanly matched to 28.95)
+  annotate("segment", x = 28.95, xend = 18.6, y = rate_ssp585, yend = rate_ssp585, linetype = "dotted", color = col_ssp585, linewidth = 0.40) +
+  annotate("segment", x = 28.95, xend = 18.6, y = rate_ssp370, yend = rate_ssp370, linetype = "dotted", color = col_ssp370, linewidth = 0.40) +
+  annotate("segment", x = 28.95, xend = 18.6, y = rate_ssp245, yend = rate_ssp245, linetype = "dotted", color = col_ssp245, linewidth = 0.40) +
+  annotate("segment", x = 28.95, xend = 18.6, y = rate_ssp126, yend = rate_ssp126, linetype = "dotted", color = col_ssp126, linewidth = 0.40) +
   
-  annotate("label", x = 29.8, y = rate_ssp370, 
-           label = "SSP3\u20137.0", color = col_ssp370, 
-           size = 2.3, fontface = "bold", hjust = 0, 
-           fill = slr_band_fill, label.size = NA, label.padding = unit(0.12, "lines")) +
-  
-  annotate("label", x = 29.8, y = rate_ssp245, 
-           label = "SSP2\u20134.5", color = col_ssp245, 
-           size = 2.3, fontface = "bold", hjust = 0, 
-           fill = slr_band_fill, label.size = NA, label.padding = unit(0.12, "lines")) +
-  
-  annotate("label", x = 29.8, y = rate_ssp126, 
-           label = "SSP1\u20132.6", color = col_ssp126, 
-           size = 2.3, fontface = "bold", hjust = 0, 
-           fill = slr_band_fill, label.size = NA, label.padding = unit(0.12, "lines"))
+  # D. Scenario Text Labels (In line with the dotted lines, no box, no fill)
+  annotate(
+    "text", x = 29.8, y = rate_ssp585, label = "SSP5–8.5", color = col_ssp585,
+    size = 2.3, fontface = "bold", hjust = 0, vjust = 0.5
+  ) +
+  annotate(
+    "text", x = 29.8, y = rate_ssp370, label = "SSP3–7.0", color = col_ssp370,
+    size = 2.3, fontface = "bold", hjust = 0, vjust = 0.5
+  ) +
+  annotate(
+    "text", x = 29.8, y = rate_ssp245, label = "SSP2–4.5", color = col_ssp245,
+    size = 2.3, fontface = "bold", hjust = 0, vjust = 0.5
+  ) +
+  annotate(
+    "text", x = 29.8, y = rate_ssp126, label = "SSP1–2.6", color = col_ssp126,
+    size = 2.3, fontface = "bold", hjust = 0, vjust = 0.5
+  )
 
-# E. Statistical Trend & 95% Confidence Interval Band
+# E. Statistical Trendline & 95% Confidence Interval Ribbon
 if (!is.null(fit_df_full)) {
   fig4_final <- fig4_final +
     geom_ribbon(
       data = fit_df_full,
       aes(x = LATITUDE, ymin = ymin, ymax = ymax, group = group),
-      fill = "#64748B", alpha = 0.18, inherit.aes = FALSE
+      fill = col_trend_band, alpha = 0.16, inherit.aes = FALSE
     ) +
     geom_line(
       data = fit_df_full,
       aes(x = LATITUDE, y = fit, group = group),
-      color = "#1E293B", linewidth = 0.65, linetype = "solid", inherit.aes = FALSE
+      color = col_trend, linewidth = 0.70, inherit.aes = FALSE
     )
 }
 
-# F. Site-Level Stratified Variance & Island Weighted Means
+# F. Data Points: Site Jitter & Survey-Weighted Means
 fig4_final <- fig4_final +
-  geom_boxplot(
-    data = df_strs_site,
-    aes(x = VISUAL_LAT, y = VERTICAL_ACCRETION_MM_YR, group = PLOT_LABEL, fill = LATITUDE),
-    color = "#3F3F46", alpha = 0.85, width = 0.18, linewidth = 0.38, position = "identity",
-    fatten = 0, outlier.shape = 21, outlier.size = 1.0, outlier.color = "#3F3F46", outlier.alpha = 0.7
+  # 1. Sites below SLR envelope (Context: semi-transparent, size = 1.25)
+  geom_jitter(
+    data = df_strs_site %>% filter(VERTICAL_ACCRETION_MM_YR < slr_box_min),
+    aes(x = VISUAL_LAT, y = VERTICAL_ACCRETION_MM_YR, fill = LATITUDE),
+    shape = 21, color = col_site_outline, alpha = 0.35, size = 1.5, stroke = 0.25,
+    width = 0.04, height = 0, seed = 42
   ) +
-  stat_summary(
-    data = df_strs_site,
-    aes(x = VISUAL_LAT, y = VERTICAL_ACCRETION_MM_YR, group = PLOT_LABEL, fill = LATITUDE),
-    fun = mean, geom = "point", shape = 23, color = "#09090B", size = 2.6, stroke = 0.55,
-    position = "identity"
+  # 2. Sites inside lavender SLR envelope (High visibility: opaque, sharp border, same size = 1.25)
+  geom_jitter(
+    data = df_strs_site %>% filter(VERTICAL_ACCRETION_MM_YR >= slr_box_min),
+    aes(x = VISUAL_LAT, y = VERTICAL_ACCRETION_MM_YR, fill = LATITUDE),
+    shape = 21, color = "#18181B", alpha = 0.85, size = 1.5, stroke = 0.25,
+    width = 0.04, height = 0, seed = 42
   ) +
-  scale_fill_gradientn(colors = pal_lat_grad, limits = c(18, 30), guide = "none") +
-  geom_text_repel(
+  # 3. Survey-weighted island means (Foreground diamonds)
+  geom_point(
     data = df_strs_f4,
-    aes(x = VISUAL_LAT, y = VERTICAL_ACCRETION_MM_YR, label = PLOT_LABEL), 
-    nudge_x = df_strs_f4$nudge_x, 
-    nudge_y = df_strs_f4$nudge_y, 
-    size = 2.6, fontface = "bold", color = "#09090B", 
-    box.padding = 0.25, point.padding = 0.35, force = 3, max.overlaps = Inf, seed = 42, 
-    segment.color = "#71717A", segment.alpha = 0.75, segment.linewidth = 0.35, min.segment.length = 0
+    aes(x = VISUAL_LAT, y = VERTICAL_ACCRETION_MM_YR, fill = LATITUDE),
+    shape = 23, size = 3.0, color = col_mean_outline, stroke = 0.45, alpha = 1.0
+  ) +
+  scale_fill_gradientn(
+    colors = pal_lat_grad, values = pal_lat_vals, limits = c(19, 30),
+    oob = scales::squish, guide = "none"
   ) +
   
-  # G. PNAS Axis Scales & SI Typography
+  # G. PNAS Coordinates & Typography
   scale_x_reverse(
-    limits = c(30.2, 18.6), 
-    breaks = seq(19, 30, by = 1), 
+    limits = c(30.2, 18.6),
+    breaks = seq(19, 30, by = 1),
     expand = c(0.01, 0.01)
   ) +
   scale_y_continuous(
     breaks = breaks_width(2)
   ) +
-  coord_cartesian(clip = "off") + 
+  coord_cartesian(clip = "off") +
   theme_pnas() +
   labs(
-    x = "Latitude (°N)", 
-    y = expression(bold("Vertical accretion rate (mm" ~ yr^{ -1 } * ")"))
+    x = "Latitude (°N)",
+    y = expression(bold("Vertical accretion rate (mm" ~ yr^{-1} * ")"))
   )
 
+# Display in RStudio
+print(fig4_final)
+
 # ------------------------------------------------------------------------------
-# 6. EXPORT (PNAS 2-COLUMN STANDARD SPECIFICATIONS)
+# 7. EXPORT (PNAS 2-COLUMN STANDARD)
 # ------------------------------------------------------------------------------
+
 out_png  <- file.path(main_dir, "Figure4_VARvsSLR.png")
 out_tiff <- file.path(main_dir, "Figure4_VARvsSLR.tiff")
 
 ggsave(out_png,  fig4_final, width = 17.8, height = 9.8, units = "cm", dpi = 600, bg = "white")
 ggsave(out_tiff, fig4_final, width = 17.8, height = 9.8, units = "cm", dpi = 600, compression = "lzw", bg = "white")
 
-cat("\n✅ Figure 4 generated and exported to PNG and TIFF.\n")
-
-# ------------------------------------------------------------------------------
-# 7. SEA-LEVEL RISE ACCRETION DEFICIT CALCULATIONS
-# ------------------------------------------------------------------------------
-slr_min <- slr_box_min
-pct_unweighted <- mean(df_strs_site$VERTICAL_ACCRETION_MM_YR > slr_min, na.rm = TRUE) * 100
-
-cat(sprintf("\n🌊 2050 SEA-LEVEL RISE DEFICIT (Threshold = %.2f mm/yr):\n", slr_min))
-cat(sprintf("  • Sites exceeding SLR (unweighted): %.2f%%\n", pct_unweighted))
+cat("\nFigure 4 exported successfully to PNG and TIFF.\n")

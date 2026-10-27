@@ -18,8 +18,18 @@ suppressPackageStartupMessages({
 supp_dir <- here("outputs", "supplementary figures")
 if (!dir.exists(supp_dir)) dir.create(supp_dir, recursive = TRUE)
 
-# Color Palette preserved from Figures 2 and 4
-pal_lat_grad <- c("#D73027", "#F46D43", "#FDAE61", "#FFFFBF", "#74ADD1", "#4575B4")
+# Color Palette preserved from Figures 2 and 4 (Tol Sunset 19N to 30N)
+pal_lat_grad <- c("#A50026", "#DD3D2D", "#F67E4B", "#FDB366", "#FEDA8B", 
+                  "#EAECCC", "#C2E4EF", "#98CAE1", "#6EA6CD", "#4A7BB7", "#364B9A")
+
+# Calculate relative position for the Lat 22.75 breakpoint 
+# For limits c(19, 30): (22.75 - 19) / (30 - 19) = ~0.3409
+# Map the yellow center (#EAECCC) to 0.3409 and distribute the rest evenly
+pal_lat_vals <- c(
+  seq(0, 0.3409, length.out = 6)[1:5], 
+  0.3409, 
+  seq(0.3409, 1, length.out = 6)[2:6]
+)
 
 # ------------------------------------------------------------------------------
 # Helpers: Hawaiian Archipelago Names & Publication Theme
@@ -167,7 +177,7 @@ p_main_s3 <- ggplot(matched_s3, aes(x = SFM_PROD, y = CORALNET_PROD)) +
   geom_errorbar(aes(ymin = CORALNET_PROD - CORALNET_SE, ymax = CORALNET_PROD + CORALNET_SE), color = "gray60", width = 0, linewidth = 0.35) +
   geom_errorbarh(aes(xmin = SFM_PROD - SFM_SE, xmax = SFM_PROD + SFM_SE), color = "gray60", width = 0, linewidth = 0.35) +
   geom_point(aes(fill = LATITUDE), shape = 21, color = "gray20", stroke = 0.6, size = 3.0, alpha = 0.85) +
-  scale_fill_gradientn(colors = pal_lat_grad, limits = c(18, 30), guide = "none") +
+  scale_fill_gradientn(colors = pal_lat_grad, values = pal_lat_vals, limits = c(19, 30), guide = "none") +
   scale_x_continuous(breaks = seq(0, 16, by = 2), expand = c(0.01, 0.01)) +
   scale_y_continuous(breaks = seq(0, 16, by = 2), expand = c(0.01, 0.01)) +
   coord_fixed(ratio = 1, xlim = c(0, 16), ylim = c(0, 16), clip = "off") +
@@ -203,7 +213,7 @@ p_legend_s3 <- ggplot() +
     ymin = 19, ymax = 30, 
     color = "gray20", fill = NA, linewidth = 0.55
   ) +
-  scale_fill_gradientn(colors = pal_lat_grad, limits = c(18, 30), guide = "none") +
+  scale_fill_gradientn(colors = pal_lat_grad, values = pal_lat_vals, limits = c(19, 30), guide = "none") +
   
   # 2. Y-axis with 1° ticks running from 19 to 30 °N
   scale_y_continuous(
