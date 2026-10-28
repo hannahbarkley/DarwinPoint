@@ -192,12 +192,32 @@ execute_stage <- function(stage_info) {
 # 4. MASTER SEQUENTIAL RUNNER
 # ==============================================================================
 
+# Default execution order is the full project pipeline: code 1 -> 4.
+# Users can override by setting DARWINPOINT_STAGES to a comma-separated list,
+# e.g. "stage1,stage2" or "stage3,stage4" before sourcing this file.
+run_stage_ids <- Sys.getenv("DARWINPOINT_STAGES", unset = "")
+if (nzchar(run_stage_ids)) {
+  run_stage_ids <- trimws(strsplit(run_stage_ids, ",")[[1]])
+  if (length(run_stage_ids) == 0L) run_stage_ids <- c("stage1", "stage2", "stage3", "stage4")
+} else {
+  run_stage_ids <- c("stage1", "stage2", "stage3", "stage4")
+}
+
+# Validate requested stage ids and preserve the project execution order
+available_stage_ids <- names(pipeline_stages)
+missing_stage_ids <- setdiff(run_stage_ids, available_stage_ids)
+if (length(missing_stage_ids) > 0) {
+  stop(sprintf("Unknown stage IDs requested: %s. Available stages: %s",
+               paste(missing_stage_ids, collapse = ", "),
+               paste(available_stage_ids, collapse = ", ")))
+}
+run_stage_ids <- intersection(available_stage_ids, run_stage_ids)
+
 master_audit_log <- list()
 
-master_audit_log[[1]] <- execute_stage(pipeline_stages$stage1)
-master_audit_log[[2]] <- execute_stage(pipeline_stages$stage2)
-master_audit_log[[3]] <- execute_stage(pipeline_stages$stage3)
-master_audit_log[[4]] <- execute_stage(pipeline_stages$stage4)
+for (stage_id in run_stage_ids) {
+  master_audit_log[[length(master_audit_log) + 1L]] <- execute_stage(pipeline_stages[[stage_id]])
+}
 
 # ==============================================================================
 # 5. PIPELINE AUDIT REPORT & SUMMARY

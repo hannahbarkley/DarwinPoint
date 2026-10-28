@@ -3,7 +3,10 @@
 # Purpose: Hawaiian Archipelago - Combined StRS & Fixed Grigg-Equivalent Analysis
 #          Ingests processed StRS and Fixed net carbonate budget datasets,
 #          merges REEF_ZONE, DEPTH_BIN, and HABITAT_CODE from prod_sitelevel into
-#          strs_raw, tags survey type, de-duplicates stations, and filters to match 
+#          strs_raw, pulls site-specific framework porosity (Est_Porosity) from
+#          HA_2024_StRS_Porosity.csv (rather than assuming a flat 0.383),
+#          calculates RAPmax (maximum reef accretion potential from gross production),
+#          tags survey type, de-duplicates stations, and filters to match 
 #          Grigg's (1982) environmental criteria:
 #            1) Southwest geographic quadrant (relative to island centroid)
 #            2) Exposed Fore-reef habitat (REEF_ZONE containing "Fore" or "Slope")
@@ -11,6 +14,7 @@
 # Inputs:  - data/strs data/processed data/HA_2024_StRS_Net_SiteLevel_cnet.csv
 #          - data/strs data/field data/HA_2024_StRS_Prod_SiteLevel.csv
 #          - data/fixed data/processed data/HA_2024_Fixed_Net_SiteLevel_cnet.csv
+#          - data/HA_2024_StRS_Porosity.csv (or data/strs data/processed data/)
 # Outputs: - data/grigg data/HA_2024_Grigg_Equivalent_Sites.csv
 # ==============================================================================
 
@@ -24,6 +28,10 @@ library(crayon)
 
 region <- "HA"
 year   <- "2024"
+
+# Framework Accretion Parameters 
+rho_aragonite <- 2.93  # Aragonite mineral density (g/cm^3 or kg/m^2/mm)
+phi_default   <- 0.383 # Fallback porosity for stations without coral / missing entries
 
 base_dir       <- here()
 data_dir       <- file.path(base_dir, "data")
@@ -43,14 +51,24 @@ prod_candidates <- c(
 prod_file <- prod_candidates[file.exists(prod_candidates)][1]
 
 fixed_candidates <- c(
-  file.path(fixed_proc_dir, sprintf("%s_%s_Fixed_Net_SiteLevel_cnet_2.csv", region, year)),
   file.path(fixed_proc_dir, sprintf("%s_%s_Fixed_Net_SiteLevel_cnet.csv", region, year))
 )
 fixed_file <- fixed_candidates[file.exists(fixed_candidates)][1]
 
+# Porosity file candidates
+porosity_candidates <- c(
+  file.path(strs_proc_dir, sprintf("%s_%s_StRS_Porosity.csv", region, year)),
+  file.path(data_dir, sprintf("%s_%s_StRS_Porosity.csv", region, year)),
+  here("data", sprintf("%s_%s_StRS_Porosity.csv", region, year)),
+  here(sprintf("%s_%s_StRS_Porosity.csv", region, year)),
+  here("HA_2024_StRS_Porosity.csv")
+)
+porosity_file <- porosity_candidates[file.exists(porosity_candidates)][1]
+
 stopifnot("StRS dataset not found!"      = !is.na(strs_file) && file.exists(strs_file))
 stopifnot("StRS Prod file not found!"    = !is.na(prod_file) && file.exists(prod_file))
 stopifnot("Fixed dataset not found!"     = !is.na(fixed_file) && file.exists(fixed_file))
+stopifnot("Porosity dataset not found!"  = !is.na(porosity_file) && file.exists(porosity_file))
 
 out_subset_csv <- file.path(out_csv_dir, sprintf("%s_%s_Grigg_Equivalent_Sites.csv", region, year))
 if (!dir.exists(out_csv_dir)) dir.create(out_csv_dir, recursive = TRUE)
@@ -63,10 +81,16 @@ cat(cyan(sprintf("\n🚀 INGESTING StRS AND FIXED CARBONATE BUDGET DATA: %s %s\n
 cat(blue(sprintf("📂 Loading StRS:      %s\n", basename(strs_file))))
 cat(blue(sprintf("📂 Loading StRS Prod: %s\n", basename(prod_file))))
 cat(blue(sprintf("📂 Loading Fixed:     %s\n", basename(fixed_file))))
+cat(blue(sprintf("📂 Loading Porosity:  %s\n", basename(porosity_file))))
 
 # Ingest and isolate REEF_ZONE, DEPTH_BIN, HABITAT_CODE from prod_sitelevel
 prod_meta <- read_csv(prod_file, show_col_types = FALSE) %>%
   select(SITE, REEF_ZONE, DEPTH_BIN, HABITAT_CODE) %>%
+  distinct(SITE, .keep_all = TRUE)
+
+# Ingest site-specific porosity estimates derived from morphology covers
+df_porosity <- read_csv(porosity_file, show_col_types = FALSE) %>%
+  select(SITE, Est_Porosity) %>%
   distinct(SITE, .keep_all = TRUE)
 
 # Join metadata into strs_raw before combined_all
@@ -101,7 +125,23 @@ cat(green(sprintf("✅ Combined master dataset: %d unique sites (%d Fixed, %d St
                   nrow(combined_all), nrow(fixed_raw), nrow(combined_all) - nrow(fixed_raw))))
 
 # ==============================================================================
-# 3. APPLY GRIGG (1982) CRITERIA & EXPORT
+# 3. MERGE SITE-SPECIFIC POROSITY & CALCULATE RAPmax
+# ==============================================================================
+
+cat(blue("📐 Joining site-level porosity and calculating RAPmax (rho = 2.93)...\n"))
+
+combined_all <- combined_all %>%
+  select(-any_of("Est_Porosity")) %>%
+  left_join(df_porosity, by = "SITE") %>%
+  mutate(
+    GROSS_CARB_PROD_KG_M2_YR_MEAN = coalesce(!!!select(., any_of(c("GROSS_CARB_PROD_KG_M2_YR_MEAN", "GROSS_PROD_KG_M2_YR", "GROSS_PROD")))),
+    # Fallback to default porosity (0.383) only if site is absent from porosity CSV
+    Est_Porosity                  = if_else(is.na(Est_Porosity), phi_default, as.numeric(Est_Porosity)),
+    RAPmax                        = GROSS_CARB_PROD_KG_M2_YR_MEAN / (rho_aragonite * (1 - Est_Porosity))
+  )
+
+# ==============================================================================
+# 4. APPLY GRIGG (1982) CRITERIA & EXPORT
 # ==============================================================================
 
 cat(blue("🔍 Applying Grigg (1982) criteria (SW Quadrant, Fore-Reef, Mid Depth)...\n"))

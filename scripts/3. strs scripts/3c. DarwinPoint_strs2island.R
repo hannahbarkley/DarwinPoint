@@ -7,7 +7,6 @@
 #          (svydesign), computes survey-weighted island-level metric means, 
 #          and exports the survey design object for downstream modeling (3e).
 # Inputs:  - data/strs data/processed data/HA_2024_StRS_Net_SiteLevel_cnet.csv
-#            (or HA_2024_StRS_Net_SiteLevel_cnet_2.csv)
 #          - data/strs data/processed data/HA_2024_StRS_Porosity.csv
 #          - data/supporting data/SURVEY MASTER.csv (or data/)
 #          - data/supporting data/Sectors-Strata-Areas.csv (or data/)
@@ -28,9 +27,8 @@ library(crayon)
 region <- "HA"
 year   <- "2024"
 
-# Density of solid aragonite (g cm⁻³, which equates to 2,890 kg m⁻³)
-# Dividing (kg m⁻² yr⁻¹) by (2.89 * (1 - phi)) directly yields mm yr⁻¹
-rho_aragonite <- 2.89  
+# Density of solid aragonite (g cm⁻³, which equates to 2,930 kg m⁻³)
+rho_aragonite <- 2.93  
 
 # Baseline fallback framework porosity for unmeasured sites (Perry et al. 2025, Nature)
 phi_default <- 0.383  
