@@ -86,19 +86,21 @@ format_islands <- function(x) {
   coalesce(unname(mapped), as.character(x))
 }
 
-theme_publication <- function(base_size = 9, y_margin_r = 4, x_margin_t = 5,
-                              t_margin = 12, r_margin = 16, b_margin = 16, l_margin = 25) {
+theme_publication <- function(base_size = 11, y_margin_r = 4, x_margin_t = 5,
+                              t_margin = 12, r_margin = 22, b_margin = 2, l_margin = 25) {
   theme_minimal(base_size = base_size) +
     theme(
       panel.grid        = element_blank(),
       panel.background  = element_rect(fill = "transparent", color = NA),
       plot.background   = element_rect(fill = "transparent", color = NA),
+      panel.border      = element_rect(color = "black", fill = NA, linewidth = 0.4),
+      
       axis.text         = element_text(color = "gray30", size = base_size - 1),
       axis.title        = element_text(color = "black", size = base_size, face = "bold"),
       axis.title.y      = element_text(margin = margin(r = y_margin_r)),
       axis.title.x      = element_text(margin = margin(t = x_margin_t)),
-      axis.line         = element_line(color = "gray20", linewidth = 0.6),
-      axis.ticks        = element_line(color = "gray20", linewidth = 0.6),
+      axis.line         = element_blank(),
+      axis.ticks        = element_line(color = "black", linewidth = 0.4),
       axis.ticks.length = unit(0.15, "cm"),
       plot.margin       = margin(t = t_margin, r = r_margin, b = b_margin, l = l_margin, unit = "pt")
     )
@@ -335,9 +337,9 @@ build_plot_f3 <- function(data, y_var, y_se, y_label, y_lim, y_brk, add_zero = F
 }
 
 lbl_cov   <- "Coral cover (%)"
-lbl_gprod <- expression(bold("Gross production rate (kg" ~ m^{ -2 } ~ yr^{ -1 } * ")"))
-lbl_geros <- expression(bold("Gross erosion rate (kg" ~ m^{ -2 } ~ yr^{ -1 } * ")"))
-lbl_nprod <- expression(bold("Net production rate (kg" ~ m^{ -2 } ~ yr^{ -1 } * ")"))
+lbl_gprod <- expression(bold(G[gross] ~ "(kg" ~ m^{ -2 } ~ yr^{ -1 } * ")"))
+lbl_geros <- expression(bold(E ~ "(kg" ~ m^{ -2 } ~ yr^{ -1 } * ")"))
+lbl_nprod <- expression(bold(G[net] ~ "(kg" ~ m^{ -2 } ~ yr^{ -1 } * ")"))
 
 p_strs_cov   <- build_plot_f3(df_strs_darwin, "HARD_CORAL_COVER_PCT_MEAN", "se.HARD_CORAL_COVER_PCT_MEAN", lbl_cov, c(0, 30), seq(0, 30, 5), fit_res = fit_cov, show_x = FALSE)
 p_strs_gprod <- build_plot_f3(df_strs_darwin, "GROSS_CARB_PROD_KG_M2_YR_MEAN", "se.GROSS_CARB_PROD_KG_M2_YR_MEAN", lbl_gprod, c(0, 6), seq(0, 6, 1), fit_res = fit_gprod, show_x = FALSE)
@@ -431,7 +433,7 @@ p_legend_f3 <- ggplot() +
     axis.text.x       = element_text(size = 8, face = "bold", color = "gray20", margin = margin(t = 4)),
     axis.ticks.x      = element_line(color = "gray20"),
     axis.ticks.length = unit(0.15, "cm"),
-    plot.margin       = margin(t = 8, r = 5, b = 18, l = 75, unit = "pt")
+    plot.margin       = margin(t = 4, r = 20, b = 10, l = 100, unit = "pt")
   )
 
 # ------------------------------------------------------------------------------
@@ -439,5 +441,5 @@ p_legend_f3 <- ggplot() +
 # ------------------------------------------------------------------------------
 fig3_final <- ggarrange(p_legend_f3, main_plots_f3, nrow = 2, heights = c(0.31, 1))
 
-ggsave(file.path(main_dir, "Figure3_FullStRS.png"), fig3_final, width = 28, height = 17.5, units = "cm", dpi = 300, bg = "white")
-ggsave(file.path(main_dir, "Figure3_FullStRS.tiff"), fig3_final, width = 28, height = 17.5, units = "cm", dpi = 300, compression = "lzw", bg = "white")
+ggsave(file.path(main_dir, "Figure3_FullStRS.png"), fig3_final, width = 28, height = 17.5, units = "cm", dpi = 600, bg = "white")
+ggsave(file.path(main_dir, "Figure3_FullStRS.tiff"), fig3_final, width = 28, height = 17.5, units = "cm", dpi = 600, compression = "lzw", bg = "white")

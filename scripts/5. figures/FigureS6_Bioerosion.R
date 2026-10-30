@@ -23,8 +23,6 @@ pal_lat_grad <- c("#A50026", "#DD3D2D", "#F67E4B", "#FDB366", "#FEDA8B",
                   "#EAECCC", "#C2E4EF", "#98CAE1", "#6EA6CD", "#4A7BB7", "#364B9A")
 
 # Calculate relative position for the Lat 22.75 breakpoint 
-# For limits c(19, 30): (22.75 - 19) / (30 - 19) = ~0.3409
-# Map the yellow center (#EAECCC) to 0.3409 and distribute the rest evenly
 pal_lat_vals <- c(
   seq(0, 0.3409, length.out = 6)[1:5], 
   0.3409, 
@@ -35,40 +33,40 @@ pal_lat_vals <- c(
 # 1. HELPERS: HAWAIIAN ARCHIPELAGO LOOKUP & PUBLICATION THEME
 # ------------------------------------------------------------------------------
 island_lookup <- c(
-  "kure"                         = "H\u014dlanik\u016b",
-  "kure atoll"                   = "H\u014dlanik\u016b",
-  "midway"                       = "Kuaihelani",
-  "midway atoll"                 = "Kuaihelani",
-  "pearl & hermes"               = "Manawai",
-  "pearl and hermes"             = "Manawai",
-  "pearl & hermes atoll"         = "Manawai",
-  "pearl_hermes"                 = "Manawai",
-  "lisianski"                    = "Kapou",
-  "lisianski island"             = "Kapou",
-  "laysan"                       = "Kamole",
-  "laysan island"                = "Kamole",
-  "maro"                         = "Kamokuokamohoali'i",
-  "maro reef"                    = "Kamokuokamohoali'i",
-  "gardner"                      = "P\u016bh\u0101honu",
-  "gardner pinnacles"            = "P\u016bh\u0101honu",
-  "gardner_pinnacles"            = "P\u016bh\u0101honu",
-  "french frigate"               = "Lalo",
-  "french frigate shoals"        = "Lalo",
-  "french_frigate"               = "Lalo",
-  "french_frigate_shoals"        = "Lalo",
-  "ffs"                          = "Lalo",
-  "necker"                       = "Mokumanamana",
-  "necker island"                = "Mokumanamana",
-  "nihoa"                        = "Nihoa",
-  "nihoa island"                 = "Nihoa",
-  "kauai"                        = "Kaua'i",
-  "niihau"                       = "Ni'ihau",
-  "oahu"                         = "O'ahu",
-  "molokai"                      = "Moloka'i",
-  "lanai"                        = "L\u0101na'i",
-  "maui"                         = "Maui",
-  "kahoolawe"                    = "Kaho'olawe",
-  "hawaii"                       = "Hawai'i"
+  "kure"                   = "H\u014dlanik\u016b",
+  "kure atoll"             = "H\u014dlanik\u016b",
+  "midway"                 = "Kuaihelani",
+  "midway atoll"           = "Kuaihelani",
+  "pearl & hermes"         = "Manawai",
+  "pearl and hermes"       = "Manawai",
+  "pearl & hermes atoll"   = "Manawai",
+  "pearl_hermes"           = "Manawai",
+  "lisianski"              = "Kapou",
+  "lisianski island"       = "Kapou",
+  "laysan"                 = "Kamole",
+  "laysan island"          = "Kamole",
+  "maro"                   = "Kamokuokamohoali'i",
+  "maro reef"              = "Kamokuokamohoali'i",
+  "gardner"                = "P\u016bh\u0101honu",
+  "gardner pinnacles"      = "P\u016bh\u0101honu",
+  "gardner_pinnacles"      = "P\u016bh\u0101honu",
+  "french frigate"         = "Lalo",
+  "french frigate shoals"  = "Lalo",
+  "french_frigate"         = "Lalo",
+  "french_frigate_shoals"  = "Lalo",
+  "ffs"                    = "Lalo",
+  "necker"                 = "Mokumanamana",
+  "necker island"          = "Mokumanamana",
+  "nihoa"                  = "Nihoa",
+  "nihoa island"           = "Nihoa",
+  "kauai"                  = "Kaua'i",
+  "niihau"                 = "Ni'ihau",
+  "oahu"                   = "O'ahu",
+  "molokai"                = "Moloka'i",
+  "lanai"                  = "L\u0101na'i",
+  "maui"                   = "Maui",
+  "kahoolawe"              = "Kaho'olawe",
+  "hawaii"                 = "Hawai'i"
 )
 
 format_islands <- function(x) {
@@ -85,12 +83,18 @@ theme_publication <- function(base_size = 9, y_margin_r = 3, x_margin_t = 5,
       panel.grid        = element_blank(),
       panel.background  = element_rect(fill = "transparent", color = NA),
       plot.background   = element_rect(fill = "transparent", color = NA),
+      
+      # 0.4 linewidth black panel border
+      panel.border      = element_rect(color = "black", fill = NA, linewidth = 0.4),
+      
       axis.text         = element_text(color = "gray30", size = base_size - 1),
       axis.title        = element_text(color = "black", size = base_size, face = "bold"),
       axis.title.y      = element_text(margin = margin(r = y_margin_r)),
       axis.title.x      = element_text(margin = margin(t = x_margin_t)),
-      axis.line         = element_line(color = "gray20", linewidth = 0.6),
-      axis.ticks        = element_line(color = "gray20", linewidth = 0.6),
+      
+      # Remove individual axis lines in favor of panel.border
+      axis.line         = element_blank(),
+      axis.ticks        = element_line(color = "black", linewidth = 0.4),
       axis.ticks.length = unit(0.15, "cm"),
       plot.margin       = margin(t = t_margin, r = r_margin, b = b_margin, l = l_margin, unit = "pt")
     )
@@ -164,8 +168,9 @@ build_plot_s5 <- function(data, y_var, y_se, y_label, y_lim, y_brk) {
     theme_publication()
 }
 
-lbl_urchin <- expression(bold("Urchin erosion rate (kg" ~ m^{ -2 } ~ yr^{ -1 } * ")"))
-lbl_fish   <- expression(bold("Parrotfish erosion rate (kg" ~ m^{ -2 } ~ yr^{ -1 } * ")"))
+# Standardized E notation for bioerosion components
+lbl_urchin <- expression(bold(E[urchin] ~ "(kg" ~ m^{ -2 } ~ yr^{ -1 } * ")"))
+lbl_fish   <- expression(bold(E[parrotfish] ~ "(kg" ~ m^{ -2 } ~ yr^{ -1 } * ")"))
 
 p_urchin <- build_plot_s5(df_urchin_island, "URCHIN_EROSION_AVG", "se.URCHIN_EROSION", lbl_urchin, c(0, 4), seq(0, 4, 1))
 p_fish   <- build_plot_s5(df_strs_darwin, "FISH_EROSION_KG_M2_YR_ALL", "se.FISH_EROSION_KG_M2_YR_ALL", lbl_fish, c(0, 2), seq(0, 2, 0.5))
@@ -185,7 +190,7 @@ island_locs_s5 <- df_strs_darwin %>%
   arrange(LATITUDE)
 
 legend_nudges <- tribble(
-  ~PLOT_LABEL,             ~leg_nx, ~leg_ny,
+  ~PLOT_LABEL,              ~leg_nx, ~leg_ny,
   "H\u014dlanik\u016b",  -0.3,    0.6,
   "Kuaihelani",          -0.1,    0.6,
   "Manawai",             -0.1,    0.6,
@@ -272,5 +277,5 @@ figS6_final <- ggarrange(p_legend_s5, main_plots_s5, nrow = 2, heights = c(0.42,
 out_png  <- file.path(supp_dir, "FigureS6_Bioerosion.png")
 out_tiff <- file.path(supp_dir, "FigureS6_Bioerosion.tiff")
 
-ggsave(out_png,  figS6_final, width = 28, height = 13.5, units = "cm", dpi = 300, bg = "white")
-ggsave(out_tiff, figS6_final, width = 28, height = 13.5, units = "cm", dpi = 300, compression = "lzw", bg = "white")
+ggsave(out_png,  figS6_final, width = 28, height = 13.5, units = "cm", dpi = 600, bg = "white")
+ggsave(out_tiff, figS6_final, width = 28, height = 13.5, units = "cm", dpi = 600, compression = "lzw", bg = "white")

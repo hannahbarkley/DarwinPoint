@@ -77,8 +77,9 @@ theme_pnas <- function(base_size = 8, base_family = "sans") {
       panel.grid.major.y = element_line(linetype = "dotted", color = "#CBD5E1", linewidth = 0.5),
       panel.background   = element_rect(fill = "#FFFFFF", color = NA),
       plot.background    = element_rect(fill = "#FFFFFF", color = NA),
-      axis.line          = element_line(color = "#18181B", linewidth = 0.5),
-      axis.ticks         = element_line(color = "#18181B", linewidth = 0.5),
+      panel.border       = element_rect(color = "#18181B", fill = NA, linewidth = 0.2),
+      axis.line          = element_blank(),
+      axis.ticks         = element_line(color = "#18181B", linewidth = 0.2),
       axis.ticks.length  = unit(0.12, "cm"),
       axis.text          = element_text(color = "#27272A", size = 7),
       axis.text.x        = element_text(color = "#27272A", size = 7.5, face = "bold", angle = 45, hjust = 1, vjust = 1),
@@ -199,7 +200,7 @@ fig_s3 <- ggplot(island_stats, aes(x = PLOT_LABEL, y = Mean, fill = Model)) +
   ) +
   labs(
     x = NULL,
-    y = expression(bold("Gross production rate (kg" ~ m^{-2} ~ yr^{-1} * ")"))
+    y = expression(bold(G[gross] ~ "(kg" ~ m^{-2} ~ yr^{-1} * ")"))
   ) +
   coord_cartesian(clip = "off") +
   theme_pnas()

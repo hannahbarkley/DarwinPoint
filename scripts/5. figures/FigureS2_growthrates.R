@@ -16,19 +16,19 @@ suppressPackageStartupMessages({
 supp_dir <- here("outputs", "supplementary figures")
 if (!dir.exists(supp_dir)) dir.create(supp_dir, recursive = TRUE)
 
-# Publication theme matching Figure 4 styling
 theme_publication <- function(base_size = 9, y_margin_r = 4, x_margin_t = 6) {
   theme_minimal(base_size = base_size) +
     theme(
       panel.grid        = element_blank(),
       panel.background  = element_rect(fill = "transparent", color = NA),
       plot.background   = element_rect(fill = "transparent", color = NA),
+      panel.border      = element_rect(color = "black", fill = NA, linewidth = 0.4),
       axis.text         = element_text(color = "gray30", size = base_size - 1),
       axis.title        = element_text(color = "black", size = base_size, face = "bold"),
       axis.title.y      = element_text(margin = margin(r = y_margin_r)),
       axis.title.x      = element_text(margin = margin(t = x_margin_t)),
-      axis.line         = element_line(color = "gray20", linewidth = 0.6),
-      axis.ticks        = element_line(color = "gray20", linewidth = 0.6),
+      axis.line         = element_blank(),
+      axis.ticks        = element_line(color = "black", linewidth = 0.4),
       axis.ticks.length = unit(0.15, "cm"),
       plot.margin       = margin(t = 10, r = 8, b = 4, l = 14, unit = "pt")
     )

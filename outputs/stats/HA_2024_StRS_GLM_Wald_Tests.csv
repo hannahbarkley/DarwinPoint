@@ -15,7 +15,7 @@ Coral Cover (%),Interaction (lat * region),Lat x Region Interaction (Slope Diffe
 Coral Cover (%),Additive (lat + region),Shared Latitudinal Slope,12.557119819638846,1,324,4.527260406402237e-4
 Coral Cover (%),Additive (lat + region),Regional Baseline Offset,11.214107283895238,1,324,9.074628818223931e-4
 Coral Cover (%),Continuous (lat only),Archipelago Latitudinal Slope,0.1348930751990388,1,325,0.7136507561255421
-Vertical Accretion,Interaction (lat * region),Lat x Region Interaction (Slope Difference),2.2527349123574587,1,323,0.13435536317824706
-Vertical Accretion,Additive (lat + region),Shared Latitudinal Slope,22.108411118067615,1,324,3.818294829594203e-6
-Vertical Accretion,Additive (lat + region),Regional Baseline Offset,5.8014590262453165,1,324,0.01657073633734426
-Vertical Accretion,Continuous (lat only),Archipelago Latitudinal Slope,17.301656261120932,1,325,4.085951264790185e-5
+Vertical Accretion,Interaction (lat * region),Lat x Region Interaction (Slope Difference),2.2527349123574667,1,323,0.13435536317824637
+Vertical Accretion,Additive (lat + region),Shared Latitudinal Slope,22.108411118067657,1,324,3.818294829594115e-6
+Vertical Accretion,Additive (lat + region),Regional Baseline Offset,5.801459026245333,1,324,0.016570736337344103
+Vertical Accretion,Continuous (lat only),Archipelago Latitudinal Slope,17.301656261120947,1,325,4.0859512647901536e-5

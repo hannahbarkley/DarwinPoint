@@ -211,7 +211,7 @@ if (length(missing_stage_ids) > 0) {
                paste(missing_stage_ids, collapse = ", "),
                paste(available_stage_ids, collapse = ", ")))
 }
-run_stage_ids <- intersection(available_stage_ids, run_stage_ids)
+run_stage_ids <- intersect(available_stage_ids, run_stage_ids)
 
 master_audit_log <- list()
 

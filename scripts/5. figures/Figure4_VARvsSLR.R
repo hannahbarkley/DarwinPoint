@@ -103,18 +103,19 @@ format_islands <- function(x) {
 }
 
 # ------------------------------------------------------------------------------
-# 3. PNAS THEME
+# 3. PLOT THEME
 # ------------------------------------------------------------------------------
 
-theme_pnas <- function(base_size = 8, base_family = "sans") {
+theme_pnas <- function(base_size = 12, base_family = "sans") {
   theme_minimal(base_size = base_size, base_family = base_family) +
     theme(
       panel.grid.major  = element_blank(),
       panel.grid.minor  = element_blank(),
       panel.background  = element_rect(fill = "#FFFFFF", color = NA),
       plot.background   = element_rect(fill = "#FFFFFF", color = NA),
-      axis.line         = element_line(color = "#18181B", linewidth = 0.5),
-      axis.ticks        = element_line(color = "#18181B", linewidth = 0.5),
+      panel.border      = element_rect(color = "#18181B", fill = NA, linewidth = 0.2),
+      axis.line         = element_blank(),
+      axis.ticks        = element_line(color = "#18181B", linewidth = 0.2),
       axis.ticks.length = unit(0.12, "cm"),
       axis.text         = element_text(color = "#27272A", size = 7),
       axis.title        = element_text(color = "#09090B", size = 8.5, face = "bold"),
@@ -405,7 +406,7 @@ df_labels <- df_strs_f4 %>%
       PLOT_LABEL == "Kaua'i"             ~ -0.3,
       PLOT_LABEL == "Ni'ihau"            ~ -0.2,
       PLOT_LABEL == "O'ahu"              ~ -0.2,
-      PLOT_LABEL == "Moloka'i"           ~ -0.3,
+      PLOT_LABEL == "Moloka'i"           ~ -0.4,
       PLOT_LABEL == "Lāna'i"             ~ 0.0,
       PLOT_LABEL == "Maui"               ~ 0.2,
       PLOT_LABEL == "Kaho'olawe"         ~ 0.6,
@@ -430,7 +431,7 @@ df_labels <- df_strs_f4 %>%
       PLOT_LABEL == "Moloka'i"           ~ 1.6,
       PLOT_LABEL == "Lāna'i"             ~ -3.6,
       PLOT_LABEL == "Maui"               ~ -2.3,
-      PLOT_LABEL == "Kaho'olawe"         ~ -3.4,
+      PLOT_LABEL == "Kaho'olawe"         ~ -3.0,
       PLOT_LABEL == "Hawai'i"            ~ 1.0,
       TRUE ~ 1.0
     )
@@ -517,7 +518,7 @@ fig4_final <- fig4_final +
   geom_point(
     data = df_strs_f4,
     aes(x = VISUAL_LAT, y = VERTICAL_ACCRETION_MM_YR, fill = LATITUDE),
-    shape = 23, size = 2.5, color = col_mean_outline, stroke = 0.45, alpha = 1.0
+    shape = 23, size = 2.4, color = col_mean_outline, stroke = 0.45, alpha = 1.0
   ) +
   scale_fill_gradientn(
     colors = pal_lat_grad, values = pal_lat_vals, limits = c(19, 30),
@@ -549,7 +550,7 @@ fig4_final <- fig4_final +
   theme_pnas() +
   labs(
     x = "Latitude (°N)",
-    y = expression(bold("Vertical accretion rate (mm" ~ yr^{-1} * ")"))
+    y = expression(bold(RAP[net] ~ "(mm" ~ yr^{-1} * ")"))
   )
 
 print(fig4_final)
@@ -563,5 +564,3 @@ out_tiff <- file.path(main_dir, "Figure4_VARvsSLR.tiff")
 
 ggsave(out_png,  fig4_final, width = 17.8, height = 9.8, units = "cm", dpi = 600, bg = "white")
 ggsave(out_tiff, fig4_final, width = 17.8, height = 9.8, units = "cm", dpi = 600, compression = "lzw", bg = "white")
-
-cat("\nFigure 4 exported successfully to PNG and TIFF.\n")

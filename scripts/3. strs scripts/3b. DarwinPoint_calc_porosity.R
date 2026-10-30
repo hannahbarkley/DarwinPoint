@@ -1,9 +1,9 @@
 # ==============================================================================
 # Script:  3b. DarwinPoint_calc_porosity.R
 # Purpose: Hawaiian Archipelago - Site-Level Framework Porosity Calculation
-#          Calculates weighted structural framework porosity for StRS sites
-#          using 3 end-member morphological benchmarks (Massive = 30%, 
-#          Encrusting = 25%, Branching = 47%, Other/Baseline = 38.3%).
+#          Calculates structural framework porosity for StRS sites using a
+#          >50% majority dominance rule (Massive = 30%, Encrusting = 25%, 
+#          Branching = 47%, Mixed/Baseline = 38.3%).
 # Inputs:  - data/strs data/field data/2024_HA_StRS_Cover_Tier3.csv
 #          - data/dbase/HA_Benthic_Codes.csv (or data/supporting data/)
 # Outputs: - data/strs data/processed data/HA_2024_StRS_Porosity.csv
@@ -25,10 +25,10 @@ data_dir <- file.path(base_dir, "data")
 proc_dir <- file.path(data_dir, "strs data", "processed data")
 
 # Framework Porosity Benchmarks (Perry et al. 2025, Nature)
-phi_massive    <- 0.30   # Massive framework (25–35% range)
-phi_encrusting <- 0.25   # Encrusting framework (25% baseline)
-phi_branching  <- 0.47   # Branching framework (47.3% for branching Porites)
-phi_default    <- 0.383  # Empirical mean (38.3%) across all assemblages
+phi_massive    <- 0.30   # Massive framework (>50% massive)
+phi_encrusting <- 0.25   # Encrusting framework (>50% encrusting)
+phi_branching  <- 0.47   # Branching framework (>50% branching Porites)
+phi_default    <- 0.383  # Mixed assemblage baseline (no single morph >50%)
 
 # Pad 4-digit StRS fish/benthic SITEs to 5 digits (e.g., FFS-4723 -> FFS-04723)
 pad_strs_site <- function(site_vec) {
@@ -49,26 +49,26 @@ get_location_code <- function(loc) {
   u_loc     <- toupper(loc_clean)
   
   case_when(
-    is.na(loc) | loc_clean == ""       ~ NA_character_,
-    grepl("FRENCH|FFS", u_loc)         ~ "FFS",
-    grepl("PEARL|PHR",  u_loc)         ~ "PHR",
-    grepl("LIS",        u_loc)         ~ "LIS",
-    grepl("KUR",        u_loc)         ~ "KUR",
-    grepl("HAW",        u_loc)         ~ "HAW",
-    grepl("MAU|MAI",    u_loc)         ~ "MAI",
-    grepl("MOL",        u_loc)         ~ "MOL",
-    grepl("LAN",        u_loc)         ~ "LAN",
-    grepl("KAH",        u_loc)         ~ "KAH",
-    grepl("OAH",        u_loc)         ~ "OAH",
-    grepl("KAU",        u_loc)         ~ "KAU",
-    grepl("NII",        u_loc)         ~ "NII",
-    grepl("MID",        u_loc)         ~ "MID",
-    grepl("MAR",        u_loc)         ~ "MAR",
-    grepl("LAY",        u_loc)         ~ "LAY",
-    grepl("GAR",        u_loc)         ~ "GAR",
-    grepl("NEC",        u_loc)         ~ "NEC",
-    grepl("NIH",        u_loc)         ~ "NIH",
-    TRUE                               ~ loc_clean
+    is.na(loc) | loc_clean == ""        ~ NA_character_,
+    grepl("FRENCH|FFS", u_loc)          ~ "FFS",
+    grepl("PEARL|PHR",  u_loc)          ~ "PHR",
+    grepl("LIS",        u_loc)          ~ "LIS",
+    grepl("KUR",        u_loc)          ~ "KUR",
+    grepl("HAW",        u_loc)          ~ "HAW",
+    grepl("MAU|MAI",    u_loc)          ~ "MAI",
+    grepl("MOL",        u_loc)          ~ "MOL",
+    grepl("LAN",        u_loc)          ~ "LAN",
+    grepl("KAH",        u_loc)          ~ "KAH",
+    grepl("OAH",        u_loc)          ~ "OAH",
+    grepl("KAU",        u_loc)          ~ "KAU",
+    grepl("NII",        u_loc)          ~ "NII",
+    grepl("MID",        u_loc)          ~ "MID",
+    grepl("MAR",        u_loc)          ~ "MAR",
+    grepl("LAY",        u_loc)          ~ "LAY",
+    grepl("GAR",        u_loc)          ~ "GAR",
+    grepl("NEC",        u_loc)          ~ "NEC",
+    grepl("NIH",        u_loc)          ~ "NIH",
+    TRUE                                ~ loc_clean
   )
 }
 
@@ -130,7 +130,12 @@ coral_code_map <- lookup_df %>%
   )
 
 # Harmonize metadata: LOCATION, LOCATIONCODE, and padded SITE (excluding OCC stations)
-site_col <- intersect(c("SITE", "OCC_SITEID", "REA_SITEID"), names(cover_df))[1]
+candidate_site_cols <- c("SITE", "OCC_SITEID", "REA_SITEID")
+site_col <- intersect(candidate_site_cols, names(cover_df))[1]
+
+if (is.na(site_col)) {
+  stop("Input dataset lacks an identifiable site column (checked: SITE, OCC_SITEID, REA_SITEID).")
+}
 
 cover_df <- cover_df %>%
   mutate(
@@ -158,10 +163,10 @@ cover_df <- cover_df %>%
   filter(!grepl("^OCC", trimws(SITE)))
 
 # ==============================================================================
-# 3. CALCULATE MORPHOLOGICAL COVER & WEIGHTED POROSITY
+# 3. CALCULATE MORPHOLOGICAL COVER & MAJORITY DOMINANCE POROSITY
 # ==============================================================================
 
-cat(blue("🧮 Calculating morphological cover proportions and weighted framework porosity...\n"))
+cat(blue("🧮 Calculating morphological cover proportions and majority-rule framework porosity...\n"))
 
 meta_cols <- c(
   "REGION", "REGIONCODE", "LOCATION", "LOCATIONCODE", "SITE", 
@@ -171,6 +176,10 @@ meta_present <- intersect(meta_cols, names(cover_df))
 
 # Only pivot columns corresponding to scleractinian hard coral codes
 coral_cols_present <- intersect(coral_code_map$CODE, names(cover_df))
+
+if (length(coral_cols_present) == 0) {
+  stop("None of the benthic coral codes match column names in the cover table.")
+}
 
 porosity_df <- cover_df %>%
   select(all_of(meta_present), all_of(coral_cols_present)) %>%
@@ -194,16 +203,27 @@ porosity_df <- porosity_df %>%
     HARD_CORAL_COVER_PCT_MEAN = Total_Coral,
     
     # Relative proportion of each morphology
-    Rel_BR    = if_else(Total_Coral > 0, Cover_Branching / Total_Coral, 0),
-    Rel_MASS  = if_else(Total_Coral > 0, Cover_Massive / Total_Coral, 0),
-    Rel_ENC   = if_else(Total_Coral > 0, Cover_Encrusting / Total_Coral, 0),
+    Rel_BR    = if_else(Total_Coral > 0, Cover_Branching   / Total_Coral, 0),
+    Rel_MASS  = if_else(Total_Coral > 0, Cover_Massive     / Total_Coral, 0),
+    Rel_ENC   = if_else(Total_Coral > 0, Cover_Encrusting  / Total_Coral, 0),
     Rel_OTHER = if_else(Total_Coral > 0, Cover_Other_Coral / Total_Coral, 0),
     
-    # 3-end-member linear weighted framework porosity
-    Est_Porosity = if_else(
-      Total_Coral > 0,
-      (Rel_MASS * phi_massive) + (Rel_ENC * phi_encrusting) + (Rel_BR * phi_branching) + (Rel_OTHER * phi_default),
-      phi_default
+    # Audit column classifying the majority morphology (>50%)
+    Dominant_Morphology = case_when(
+      Total_Coral == 0 ~ "None",
+      Rel_MASS > 0.50  ~ "Massive",
+      Rel_BR   > 0.50  ~ "Branching",
+      Rel_ENC  > 0.50  ~ "Encrusting",
+      TRUE             ~ "Mixed"
+    ),
+    
+    # Majority-rule framework porosity (>50% dominance)
+    Est_Porosity = case_when(
+      Total_Coral == 0 ~ NA_real_,
+      Rel_MASS > 0.50  ~ phi_massive,
+      Rel_BR   > 0.50  ~ phi_branching,
+      Rel_ENC  > 0.50  ~ phi_encrusting,
+      TRUE             ~ phi_default
     )
   )
 
@@ -212,4 +232,4 @@ porosity_df <- porosity_df %>%
 # ==============================================================================
 
 write_csv(porosity_df, out_porosity_csv)
-cat(green(sprintf("✅ Porosity dataset successfully exported (%d sites):\n   -> %s\n", nrow(porosity_df), out_porosity_csv)))
+cat(green(sprintf("✅ Porosity dataset successfully exported (%d sites):\n    -> %s\n", nrow(porosity_df), out_porosity_csv)))

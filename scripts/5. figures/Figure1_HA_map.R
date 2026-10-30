@@ -100,11 +100,11 @@ monument_sf_clean <- st_sf(geometry = st_sfc(st_line_merge(st_union(st_sfc(segme
 label_data <- data.frame(
   lon = c(-178.3, -177.3, -175.8, -173.9, -171.7, -170.5, -167.9, -166.1, -164.7, -161.9, -159.5, -160.1, -158.0, -157.0, -156.9, -156.3, -156.6, -155.5),
   lat = c(28.4, 28.2, 27.8, 26.0, 25.7, 25.4, 25.0, 23.8, 23.5, 23.0, 22.1, 21.9, 21.4, 21.1, 20.8, 20.8, 20.5, 19.5),
-  lbl_lon = c(-179.5, -177.3, -176.8, -174.5, -171.7, -171.3, -167.9, -165.5, -164.9, -161.9, -159.5, -160.7, -158.0, -156.3, -157.7, -155.5, -157.6, -156.8),
-  lbl_lat = c(27.5, 29.5, 26.50, 25.0, 26.8, 23.8, 23.35, 25.0, 22.0, 24.20, 22.7, 21.5, 22.0, 21.5, 20.75, 21.1, 20.3, 19.4),
-  seg_xend = c(-179.5, -177.3, -176.8, -174.4, -171.7, -170.8, -167.9, -165.5, -164.9, -161.9, rep(NA, 8)),
-  seg_yend = c(28, 29.0, 27.0, 25.5, 26.30, 24.30, 23.85, 24.5, 22.5, 23.70, rep(NA, 8)),
-  haw = c("H\u014dlanik\u016b", "Kuaihelani", "Manawai", "Kapou", "Kamole", "Kamokuokamohoali\u02BBi", "P\u016bh\u0101honu", "Lalo", "Mokumanamana", "Nihoa", "Kaua\u02BBi", "Ni\u02BBihau", "O\u02BBahu", "Moloka\u02BBi", "L\u0101na\u02BBi", "Maui", "Kaho\u02BBolawe", "Hawai\u02BBi"),
+  lbl_lon = c(-179.5, -177.3, -176.8, -174.5, -171.7, -171.3, -167.9, -165.0, -164.9, -161.9, -159.5, -160.7, -158.0, -156.3, -157.7, -155.5, -157.6, -156.8),
+  lbl_lat = c(27.5, 29.5, 26.50, 25.0, 26.8, 23.8, 23.20, 25.0, 22.0, 24.20, 22.7, 21.5, 22.0, 21.5, 20.75, 21.1, 20.3, 19.4),
+  seg_xend = c(-179.5, -177.3, -176.8, -174.4, -171.7, -170.8, -167.9, -165.0, -164.9, -161.9, rep(NA, 8)),
+  seg_yend = c(28, 29.0, 27.0, 25.5, 26.30, 24.30, 23.70, 24.5, 22.5, 23.70, rep(NA, 8)),
+  haw = c("H\u014dlanik\u016b", "Kuaihelani", "Manawai", "Kapou", "Kamole", "Kamokuokamohoali\u02BBi", "\u02BB\u014Cn\u016Bnui, \u02BB\u014Cn\u016Biki", "Lalo", "Mokumanamana", "Nihoa", "Kaua\u02BBi", "Ni\u02BBihau", "O\u02BBahu", "Moloka\u02BBi", "L\u0101na\u02BBi", "Maui", "Kaho\u02BBolawe", "Hawai\u02BBi"),
   eng = c("Kure Atoll", "Midway Atoll", "Pearl & Hermes Atoll", "Lisianski Island", "Laysan Island", "Maro Reef", "Gardner Pinnacles", "French Frigate Shoals", "Necker Island", rep("", 9)),
   draw_line = c(rep(TRUE, 10), rep(FALSE, 8))
 ) %>% mutate(
@@ -198,4 +198,3 @@ fig1_final <- fig1_map + inset_element(globe_inset, left = 0.76, bottom = 0.68, 
 
 ggsave(file.path(main_dir, "Figure1_HA_map.png"), fig1_final, width = 17.8, height = 9.6, units = "cm", dpi = 600)
 ggsave(file.path(main_dir, "Figure1_HA_map.tiff"), fig1_final, width = 17.8, height = 9.6, units = "cm", dpi = 600, compression = "lzw")
-cat("✅ Figure 1 saved successfully.\n")

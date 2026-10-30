@@ -134,11 +134,17 @@ build_sens_plot <- function(df_wide, y_lab, y_lim, y_brk) {
       panel.grid.major.x = element_blank(),
       panel.grid.minor   = element_blank(),
       panel.grid.major.y = element_line(linetype = "dotted", color = "gray70"),
+      
+      # 0.4 black panel border matching manuscript standard
+      panel.border       = element_rect(color = "black", fill = NA, linewidth = 0.4),
+      
       axis.text.y        = element_text(color = "black", size = 10, face = "bold"),
       axis.text.x        = element_text(color = "black", size = 10, face = "bold", angle = 45, hjust = 1, vjust = 1),
       axis.title         = element_text(color = "black", size = 11, face = "bold"),
-      axis.line          = element_line(color = "black", linewidth = 0.6),
-      axis.ticks         = element_line(color = "black", linewidth = 0.6),
+      
+      # Remove axis line in favor of panel.border
+      axis.line          = element_blank(),
+      axis.ticks         = element_line(color = "black", linewidth = 0.4),
       axis.ticks.length  = unit(0.15, "cm"),
       legend.title       = element_blank(),
       legend.text        = element_text(size = 10, face = "bold"),
@@ -168,11 +174,17 @@ build_dumbbell_plot <- function(df_wide, y_lab, y_lim, y_brk) {
       panel.grid.major.x = element_blank(),
       panel.grid.minor   = element_blank(),
       panel.grid.major.y = element_line(linetype = "dotted", color = "gray70"),
+      
+      # 0.4 black panel border matching manuscript standard
+      panel.border       = element_rect(color = "black", fill = NA, linewidth = 0.4),
+      
       axis.text.y        = element_text(color = "black", size = 10, face = "bold"),
       axis.text.x        = element_text(color = "black", size = 10, face = "bold", angle = 45, hjust = 1, vjust = 1),
       axis.title         = element_text(color = "black", size = 11, face = "bold"),
-      axis.line          = element_line(color = "black", linewidth = 0.6),
-      axis.ticks         = element_line(color = "black", linewidth = 0.6),
+      
+      # Remove axis line in favor of panel.border
+      axis.line          = element_blank(),
+      axis.ticks         = element_line(color = "black", linewidth = 0.4),
       axis.ticks.length  = unit(0.15, "cm"),
       legend.title       = element_blank(),
       legend.text        = element_text(size = 10, face = "bold"),
@@ -180,11 +192,14 @@ build_dumbbell_plot <- function(df_wide, y_lab, y_lim, y_brk) {
     )
 }
 
-p_sens_cov  <- build_sens_plot(coral_stats, "Coral Cover (%)", c(0, 100), seq(0, 100, 20))
-p_sens_prod <- build_sens_plot(prod_stats, expression(bold("Gross Production Rate (kg" ~ m^{ -2 } ~ yr^{ -1 } * ")")), c(0, 20), seq(0, 20, 5))
+lbl_cov   <- "Coral cover (%)"
+lbl_gprod <- expression(bold(G[gross] ~ "(kg" ~ m^{-2} ~ yr^{-1} * ")"))
 
-p_dumb_cov  <- build_dumbbell_plot(coral_stats, "Coral Cover (%)", c(0, 100), seq(0, 100, 20))
-p_dumb_prod <- build_dumbbell_plot(prod_stats, expression(bold("Gross Production Rate (kg" ~ m^{ -2 } ~ yr^{ -1 } * ")")), c(0, 20), seq(0, 20, 5))
+p_sens_cov  <- build_sens_plot(coral_stats, lbl_cov, c(0, 100), seq(0, 100, 20))
+p_sens_prod <- build_sens_plot(prod_stats, lbl_gprod, c(0, 20), seq(0, 20, 5))
+
+p_dumb_cov  <- build_dumbbell_plot(coral_stats, lbl_cov, c(0, 100), seq(0, 100, 20))
+p_dumb_prod <- build_dumbbell_plot(prod_stats, lbl_gprod, c(0, 20), seq(0, 20, 5))
 
 # ggarrange keeps a single 5-item legend at the top and places tags without overlap
 figS5_combined <- ggarrange(
@@ -201,7 +216,5 @@ figS5_combined <- ggarrange(
   legend        = "top"
 )
 
-ggsave(file.path(supp_dir, "FigureS5_Sensitivity.png"), figS5_combined, width = 28.0, height = 20.0, units = "cm", dpi = 300, bg = "white")
-ggsave(file.path(supp_dir, "FigureS5_Sensitivity.tiff"), figS5_combined, width = 28.0, height = 20.0, units = "cm", dpi = 300, compression = "lzw", bg = "white")
-
-cat("✅ Figure S5 saved successfully.\n")
+ggsave(file.path(supp_dir, "FigureS5_Sensitivity.png"), figS5_combined, width = 28.0, height = 20.0, units = "cm", dpi = 600, bg = "white")
+ggsave(file.path(supp_dir, "FigureS5_Sensitivity.tiff"), figS5_combined, width = 28.0, height = 20.0, units = "cm", dpi = 600, compression = "lzw", bg = "white")
