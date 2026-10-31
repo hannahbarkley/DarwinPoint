@@ -165,7 +165,7 @@ create_inset <- function(lon_c, lat_c, span = 0.20, l_30 = NULL, l_100 = NULL, t
   span_lon <- (span * target_ar) / cos(lat_c * pi / 180)
   
   p <- ggplot()
-  # Lightened bathymetric tints to ensure maximum point visibility
+  
   if (!is.null(l_100)) p <- p + geom_sf(data = l_100, fill = "#F1F5F9", color = "#CBD5E1", linewidth = 0.15)
   if (!is.null(l_30))  p <- p + geom_sf(data = l_30,  fill = "#E2E8F0", color = "#94A3B8", linewidth = 0.15)
   
@@ -206,10 +206,8 @@ if (!is.null(mhi_bathy_sf)) {
     scale_fill_manual(values = c("1" = "#FFFFFF", "2" = "#F8FAFC", "3" = "#F1F5F9", "4" = "#E2E8F0"), na.value = "transparent")
 }
 
-# Islands filled with light neutral slate (#CBD5E1) and dark outline (#0F172A)
-# so points on both the landward and seaward edges pop with full clarity
 main_map_s1 <- main_map_s1 + 
-  geom_sf(data = mhi_islands, fill = "#CBD5E1", color = "#0F172A", linewidth = 0.3) +
+  geom_sf(data = mhi_islands, fill = "#CBD5E1", color = "#B6BDC3", linewidth = 0.3) +
   
   # 1. Base Layer: StRS Circles
   geom_point(data = subset(df_strs_other, LONGITUDE > 198.0), aes(x = LONGITUDE, y = LATITUDE), 
@@ -245,7 +243,6 @@ design_s1 <- c(
   patchwork::area(3, 1, 3, 7)  # Main map E
 )
 
-# Automated panel tagging via plot_annotation(tag_levels = 'A')
 figS1_final <- inset_kure + inset_manawai + inset_lisian + inset_ffs + main_map_s1 + 
   plot_layout(
     design  = design_s1,

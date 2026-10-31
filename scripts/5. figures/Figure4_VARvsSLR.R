@@ -2,13 +2,6 @@
 # Script:  Figure4_VARvsSLR.R
 # Purpose: Vertical Accretion Rate (VAR) vs. 2050 Sea-Level Rise (SLR) across
 #          Latitude with Survey-Weighted Statistically Significant Regression Fits.
-#          Hierarchical model selection:
-#            1. Separate regional slopes if Lat x Region interaction is significant (p < 0.05).
-#            2. Parallel regional slopes if additive terms (Lat + Region) are significant (p < 0.05).
-#            3. Regional horizontal baselines if Region is significant but Lat is not (p_reg < 0.05, p_lat >= 0.05).
-#            4. Single continuous slope if only Latitude is significant across the archipelago.
-#            5. No line if non-significant.
-#          Formatted to PNAS 2-column specifications (17.8 cm width, 600 DPI).
 # Inputs:  - data/supporting data/IPCC_AR6_SLR_Rates_2040_2060.csv (or psmsl_id_523)
 #          - data/strs data/processed data/HA_2024_StRS_IslandLevel.csv
 #          - data/strs data/processed data/HA_2024_StRS_SiteLevel_Weighted.csv
@@ -106,7 +99,7 @@ format_islands <- function(x) {
 # 3. PLOT THEME
 # ------------------------------------------------------------------------------
 
-theme_pnas <- function(base_size = 12, base_family = "sans") {
+plot_theme <- function(base_size = 12, base_family = "sans") {
   theme_minimal(base_size = base_size, base_family = base_family) +
     theme(
       panel.grid.major  = element_blank(),
@@ -547,7 +540,7 @@ fig4_final <- fig4_final +
     breaks = breaks_width(2)
   ) +
   coord_cartesian(clip = "off") +
-  theme_pnas() +
+  plot_theme() +
   labs(
     x = "Latitude (°N)",
     y = expression(bold(RAP[net] ~ "(mm" ~ yr^{-1} * ")"))

@@ -1,11 +1,11 @@
 # ==============================================================================
-# Script:  FigureS4_SfM_vs_CoralNet.R
+# Script:  FigureS3_SfM_vs_CoralNet.R
 # Purpose: Methodological Validation of SfM vs. CoralNet Gross Production
 # Inputs:  data/fixed data/processed data/HA_2024_Fixed_Net_SiteLevel_sfm.csv
 #            (or HA_2024_Fixed_Net_SiteLevel_cnet.csv / HA_2024_Fixed_Net_SiteLevel.csv)
 #          data/strs data/field data/HA_2024_StRS_Prod_SiteLevel.csv
-# Outputs: outputs/supplementary figures/FigureS4_SfM_vs_CoralNet.png
-#          outputs/supplementary figures/FigureS4_SfM_vs_CoralNet.tiff
+# Outputs: outputs/supplementary figures/FigureS3_SfM_vs_CoralNet.png
+#          outputs/supplementary figures/FigureS3_SfM_vs_CoralNet.tiff
 # ==============================================================================
 
 suppressPackageStartupMessages({
@@ -18,7 +18,7 @@ suppressPackageStartupMessages({
 supp_dir <- here("outputs", "supplementary figures")
 if (!dir.exists(supp_dir)) dir.create(supp_dir, recursive = TRUE)
 
-# Color Palette preserved from Figures 2 and 4 (Tol Sunset 19N to 30N)
+# Color Palette (Tol Sunset 19N to 30N)
 pal_lat_grad <- c("#A50026", "#DD3D2D", "#F67E4B", "#FDB366", "#FEDA8B", 
                   "#EAECCC", "#C2E4EF", "#98CAE1", "#6EA6CD", "#4A7BB7", "#364B9A")
 
@@ -76,7 +76,7 @@ format_islands <- function(x) {
   coalesce(unname(mapped), as.character(x))
 }
 
-theme_publication <- function(base_size = 9, y_margin_r = 4, x_margin_t = 6) {
+plot_theme <- function(base_size = 9, y_margin_r = 4, x_margin_t = 6) {
   theme_minimal(base_size = base_size) +
     theme(
       panel.grid        = element_blank(),
@@ -195,13 +195,13 @@ p_main_s3 <- ggplot(matched_s3, aes(x = SFM_PROD, y = CORALNET_PROD)) +
   scale_x_continuous(breaks = seq(0, 18, by = 2), expand = c(0, 0)) +
   scale_y_continuous(breaks = seq(0, 18, by = 2), expand = c(0, 0)) +
   coord_fixed(ratio = 1, xlim = c(0, 18), ylim = c(0, 18), clip = "on") +
-  theme_publication(base_size = 9, y_margin_r = 4, x_margin_t = 6) +
+  plot_theme(base_size = 9, y_margin_r = 4, x_margin_t = 6) +
   labs(
     x = expression(bold("SfM" ~ G[gross] ~ "(kg" ~ m^{ -2 } ~ yr^{ -1 } * ")")),
     y = expression(bold("CoralNet" ~ G[gross] ~ "(kg" ~ m^{ -2 } ~ yr^{ -1 } * ")"))
   )
 
-# Shorter Vertical Legend aligned to Scatter Plot Box
+# Vertical Legend 
 bar_w  <- 0.16
 half_w <- bar_w / 2
 
@@ -270,8 +270,7 @@ p_legend_s3 <- ggplot() +
 # ------------------------------------------------------------------------------
 # 4. ASSEMBLY & EXPORT
 # ------------------------------------------------------------------------------
-# Removed align = "h" to prevent the square aspect-ratio plot from collapsing
-figS4_final <- ggarrange(p_main_s3, p_legend_s3, ncol = 2, widths = c(1, 0.36))
+figS3_final <- ggarrange(p_main_s3, p_legend_s3, ncol = 2, widths = c(1, 0.36))
 
-ggsave(file.path(supp_dir, "FigureS4_SfM_vs_CoralNet.png"), figS4_final, width = 17.8, height = 13.5, units = "cm", dpi = 600, bg = "white")
-ggsave(file.path(supp_dir, "FigureS4_SfM_vs_CoralNet.tiff"), figS4_final, width = 17.8, height = 13.5, units = "cm", dpi = 600, compression = "lzw", bg = "white")
+ggsave(file.path(supp_dir, "FigureS3_SfM_vs_CoralNet.png"), figS3_final, width = 17.8, height = 13.5, units = "cm", dpi = 600, bg = "white")
+ggsave(file.path(supp_dir, "FigureS3_SfM_vs_CoralNet.tiff"), figS3_final, width = 17.8, height = 13.5, units = "cm", dpi = 600, compression = "lzw", bg = "white")

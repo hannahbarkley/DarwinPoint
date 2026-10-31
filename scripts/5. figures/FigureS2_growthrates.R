@@ -16,7 +16,7 @@ suppressPackageStartupMessages({
 supp_dir <- here("outputs", "supplementary figures")
 if (!dir.exists(supp_dir)) dir.create(supp_dir, recursive = TRUE)
 
-theme_publication <- function(base_size = 9, y_margin_r = 4, x_margin_t = 6) {
+plot_theme <- function(base_size = 9, y_margin_r = 4, x_margin_t = 6) {
   theme_minimal(base_size = base_size) +
     theme(
       panel.grid        = element_blank(),
@@ -103,7 +103,6 @@ growth_df_s2 <- coeffs_dbase_s2 %>%
 
 growth_df_s2$CORAL_GROUP <- factor(growth_df_s2$CORAL_GROUP, levels = target_codes)
 
-# Preserved original color palette
 group_pal_s2 <- c("#003087", "#E41A1C", "#1EBEC7", "#0085CA", "#FF8400")
 
 growth_df_s2 <- growth_df_s2 %>%
@@ -131,7 +130,7 @@ p_ext_s2 <- ggplot(growth_df_s2, aes(x = LATITUDE, y = Ext_plot)) +
   scale_y_continuous(limits = c(0, 2.4), breaks = seq(0, 2.4, 0.4)) +
   coord_cartesian(ylim = c(0, 2.4), clip = "off") +
   labs(x = "Latitude (°N)", y = expression(bold("Linear extension rate (cm" ~ yr^{ -1 } * ")"))) +
-  theme_publication() +
+  plot_theme() +
   theme(legend.position = "none")
 
 # Panel B: Skeletal Density
@@ -148,7 +147,7 @@ p_den_s2 <- ggplot(growth_df_s2, aes(x = LATITUDE, y = Den_plot)) +
   scale_y_continuous(limits = c(1.2, 1.8), breaks = seq(1.2, 1.8, 0.1)) +
   coord_cartesian(ylim = c(1.2, 1.8), clip = "off") +
   labs(x = "Latitude (°N)", y = expression(bold("Skeletal density (g" ~ cm^{ -3 } * ")"))) +
-  theme_publication() +
+  plot_theme() +
   theme(legend.position = "none")
 
 # Panel C: Colony Production Rate
@@ -165,7 +164,7 @@ p_prod_s2 <- ggplot(growth_df_s2, aes(x = LATITUDE, y = Prod_plot)) +
   scale_y_continuous(limits = c(0, 25), breaks = seq(0, 25, 5)) +
   coord_cartesian(ylim = c(0, 25), clip = "off") +
   labs(x = "Latitude (°N)", y = expression(bold("Colony production rate (g" ~ yr^{ -1 } * ")"))) +
-  theme_publication() +
+  plot_theme() +
   theme(legend.position = "none")
 
 # Shared Right-Side Legend
@@ -177,7 +176,7 @@ p_legend_s2_growth <- get_legend(
       ncol = 1, 
       override.aes = list(shape = 21, size = 2.8, stroke = 0.6, color = "gray20")
     )) +
-    theme_publication() +
+    plot_theme() +
     theme(
       legend.position = "right", 
       legend.title    = element_blank(), 

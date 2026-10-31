@@ -3,7 +3,7 @@
 # Purpose: Historical (Grigg 1982) vs. Modern (NCRMP) P90 Carbonate Budgets
 #          & Maximum Reef Accretion Potential (RAPmax)
 # Inputs:  data/grigg data/HA_1982_Grigg.csv
-#          data/grigg data/HA_2024_Grigg_Equivalent_Sites.csv (or HA_2024_StRS_Net_SiteLevel_GriggSubset.csv)
+#          data/grigg data/HA_2024_Grigg_Equivalent_Sites.csv
 # Outputs: outputs/main figures/Figure2_Grigg_vs_NCRMP.png
 #          outputs/main figures/Figure2_Grigg_vs_NCRMP.tiff
 # ==============================================================================
@@ -92,7 +92,7 @@ boot_q90_se <- function(x, B = 1000) {
   sd(apply(samples, 2, quantile, probs = 0.90, names = FALSE))
 }
 
-theme_publication <- function(base_size = 11, y_margin_r = -2, x_margin_t = 4) {
+plot_theme <- function(base_size = 11, y_margin_r = -2, x_margin_t = 4) {
   theme_minimal(base_size = base_size) +
     theme(
       panel.grid         = element_blank(),
@@ -114,7 +114,7 @@ theme_publication <- function(base_size = 11, y_margin_r = -2, x_margin_t = 4) {
 # ------------------------------------------------------------------------------
 # Data Import & Calculation
 # ------------------------------------------------------------------------------
-# 1. Historical Grigg (1982): RAPmax computed using phi = 0.50
+# 1. Historical Grigg (1982)
 df_grigg <- saferead_csv("HA_1982_Grigg.csv") %>%
   mutate(
     PLOT_LABEL = format_islands(LOCATION),
@@ -134,8 +134,6 @@ df_strs_sw <- saferead_csv(c("HA_2024_Grigg_Equivalent_Sites.csv", "HA_2024_StRS
 if (!"RAPmax" %in% names(df_strs_sw)) {
   if (!"Est_Porosity" %in% names(df_strs_sw)) {
     porosity_cand <- c(
-      here("data", "HA_2024_StRS_Porosity.csv"),
-      here("HA_2024_StRS_Porosity.csv"),
       here("data", "strs data", "processed data", "HA_2024_StRS_Porosity.csv")
     )
     p_file <- porosity_cand[file.exists(porosity_cand)][1]
@@ -243,7 +241,7 @@ build_plot_f2 <- function(data, y_var, y_se = NULL, y_label, y_lim, y_brk,
   p <- ggplot(data, aes(x = LATITUDE, y = .data[[y_var]])) +
     scale_x_reverse(limits = c(30.2, 18.6), breaks = seq(19, 30, by = 1), expand = c(0.01, 0.01)) +
     coord_cartesian(ylim = y_lim, clip = "off") +
-    theme_publication()
+    plot_theme()
   
   if (!is.null(sec_y_trans) && !is.null(sec_y_label)) {
     p <- p + scale_y_continuous(breaks = y_brk, 

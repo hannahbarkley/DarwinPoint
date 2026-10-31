@@ -1,11 +1,11 @@
 # ==============================================================================
-# Script:  FigureS5_Sensitivity.R
+# Script:  FigureS4_Sensitivity.R
 # Purpose: Sensitivity Analysis Comparing All StRS Habitats vs. SW Fore-Reef Subset
 # Inputs:  data/strs data/processed data/HA_2024_StRS_IslandLevel.csv
 #          data/grigg data/HA_2024_Grigg_Equivalent_Sites.csv 
 #            (or HA_2024_StRS_Net_SiteLevel_GriggSubset.csv)
-# Outputs: outputs/supplementary figures/FigureS5_Sensitivity.png
-#          outputs/supplementary figures/FigureS5_Sensitivity.tiff
+# Outputs: outputs/supplementary figures/FigureS4_Sensitivity.png
+#          outputs/supplementary figures/FigureS4_Sensitivity.tiff
 # ==============================================================================
 
 suppressPackageStartupMessages({
@@ -202,7 +202,7 @@ p_dumb_cov  <- build_dumbbell_plot(coral_stats, lbl_cov, c(0, 100), seq(0, 100, 
 p_dumb_prod <- build_dumbbell_plot(prod_stats, lbl_gprod, c(0, 20), seq(0, 20, 5))
 
 # ggarrange keeps a single 5-item legend at the top and places tags without overlap
-figS5_combined <- ggarrange(
+figS4_combined <- ggarrange(
   no_x_title(p_sens_cov),
   no_x_title(p_dumb_cov),
   p_sens_prod,
@@ -216,5 +216,5 @@ figS5_combined <- ggarrange(
   legend        = "top"
 )
 
-ggsave(file.path(supp_dir, "FigureS5_Sensitivity.png"), figS5_combined, width = 28.0, height = 20.0, units = "cm", dpi = 600, bg = "white")
-ggsave(file.path(supp_dir, "FigureS5_Sensitivity.tiff"), figS5_combined, width = 28.0, height = 20.0, units = "cm", dpi = 600, compression = "lzw", bg = "white")
+ggsave(file.path(supp_dir, "FigureS4_Sensitivity.png"), figS4_combined, width = 28.0, height = 20.0, units = "cm", dpi = 600, bg = "white")
+ggsave(file.path(supp_dir, "FigureS4_Sensitivity.tiff"), figS4_combined, width = 28.0, height = 20.0, units = "cm", dpi = 600, compression = "lzw", bg = "white")

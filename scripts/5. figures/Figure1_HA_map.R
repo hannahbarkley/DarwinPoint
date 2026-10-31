@@ -122,13 +122,11 @@ nwhi_label <- data.frame(
   angle  = -18
 )
 
-# Curved arc path for the Main Hawaiian Islands (offset northeast of the island chain)
+# Curved arc path for the Main Hawaiian Islands
 mhi_curve <- tibble(
   lon = seq(200.5, 206.2, length.out = 30)
 ) %>%
   mutate(
-    # Quadratic curve tracking the bend: starts ~23.8°N above Oahu/Molokai,
-    # arches over Maui, and bends down to ~21.5°N alongside Hawaii Island
     lat = 23.2 - 0.35 * (lon - 201.8) - 0.035 * (lon - 201.8)^2,
     label = "Main Hawaiian Islands"
   )

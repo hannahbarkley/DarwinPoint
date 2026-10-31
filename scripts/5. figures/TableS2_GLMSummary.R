@@ -1,9 +1,12 @@
 # ==============================================================================
 # Script:  TableS2_GLMSummary.R
 # Purpose: Publication Summary Table of Carbonate Budget Latitudinal Survey GLMs
-#          (Full Archipelago vs. Lisianski Excluded Sensitivity Analysis)
-# Outputs: outputs/main figures/TableS2.docx
-#          outputs/main figures/TableS2.rtf
+#          (Full Archipelago Models Only)
+#          Rows: Latitude, Region, and Latitude × Region (3 rows per metric)
+#          Columns: Model Effect | Estimate | SE | df | p-value
+#          Erases the OpenXML SEQ Table field (no "Table 1:" prefix)
+#          Subscripted RAP_net and Times New Roman font styling.
+# Outputs: outputs/supplementary figures/TableS2_GLMSummary.docx
 # ==============================================================================
 
 suppressPackageStartupMessages({
@@ -12,65 +15,79 @@ suppressPackageStartupMessages({
   library(gt)
 })
 
-main_dir <- here("outputs", "main figures")
-if (!dir.exists(main_dir)) dir.create(main_dir, recursive = TRUE)
+# Install zip package if not available for cross-platform archive repacking
+if (!requireNamespace("zip", quietly = TRUE)) {
+  install.packages("zip", repos = "https://cloud.r-project.org")
+}
+
+supp_dir <- here("outputs", "supplementary figures")
+if (!dir.exists(supp_dir)) dir.create(supp_dir, recursive = TRUE)
 
 # ------------------------------------------------------------------------------
-# 1. HELPER FUNCTIONS: METRIC ORDERING, FORMATTING & SAFE INGESTION
+# 1. HELPER FUNCTIONS: METRIC & TERM ORDERING, VECTORIZED FORMATTING
 # ------------------------------------------------------------------------------
 
-# Define strict publication metric order:
-# 1. Coral Cover, 2. Gross Production, 3. Gross Erosion, 4. Net Production, 5. Vertical Accretion
 metric_order <- c(
   "Coral Cover (%)",
   "Gross Production (kg m⁻² yr⁻¹)",
-  "Gross Erosion (kg m⁻² yr⁻¹)",
+  "Gross Bioerosion (kg m⁻² yr⁻¹)",
   "Net Production (kg m⁻² yr⁻¹)",
-  "Vertical Accretion (mm yr⁻¹)"
+  "RAPnet (mm yr⁻¹)"
+)
+
+term_order <- c(
+  "Latitude",
+  "Region",
+  "Latitude \u00D7 Region"
 )
 
 format_metric <- function(x) {
   case_match(
     as.character(x),
-    c("Coral Cover (%)", "HARD_CORAL_COVER_PCT_MEAN", "Coral Cover")                     ~ "Coral Cover (%)",
-    c("Gross Production", "GROSS_CARB_PROD_KG_M2_YR_MEAN", "Gross Production (Interaction)") ~ "Gross Production (kg m⁻² yr⁻¹)",
+    c("Coral Cover (%)", "HARD_CORAL_COVER_PCT_MEAN", "Coral Cover", 
+      "CORAL_COVER_PERC")                                                   ~ "Coral Cover (%)",
+    c("Gross Production", "GROSS_CARB_PROD_KG_M2_YR_MEAN", 
+      "Gross Production (Interaction)", "GROSS_PROD_KG_M2_YR")              ~ "Gross Production (kg m⁻² yr⁻¹)",
     c("Gross Bioerosion", "Gross Erosion", "GROSS_EROSION_KG_M2_YR_MEAN", 
-      "Gross Bioerosion (Interaction)")                                                  ~ "Gross Erosion (kg m⁻² yr⁻¹)",
-    c("Net Production", "NET_CARB_PROD_KG_M2_YR_MEAN", "Net Production (Interaction)")     ~ "Net Production (kg m⁻² yr⁻¹)",
+      "Gross Bioerosion (Interaction)", "GROSS_EROSION_KG_M2_YR")           ~ "Gross Bioerosion (kg m⁻² yr⁻¹)",
+    c("Net Production", "NET_CARB_PROD_KG_M2_YR_MEAN", 
+      "Net Production (Interaction)", "NET_PROD_KG_M2_YR")                  ~ "Net Production (kg m⁻² yr⁻¹)",
     c("Vertical Accretion", "VERTICAL_ACCRETION_MM_YR", 
-      "Vertical Accretion (Interaction)")                                                ~ "Vertical Accretion (mm yr⁻¹)",
+      "Vertical Accretion (Interaction)", "RAP_NET", "RAPnet", 
+      "RAPNET", "RAP_NET_MM_YR", "RAPnet (mm yr⁻¹)",
+      "RAP<sub>net</sub> (mm yr⁻¹)")                                        ~ "RAPnet (mm yr⁻¹)",
     .default = as.character(x)
   )
 }
 
-fmt_val_se <- function(val, se = NULL, digits = 3, add_stars = FALSE, pval = NULL) {
-  map2_chr(val, if (is.null(se)) list(NULL) else se, function(v, s) {
-    if (is.na(v)) return("—")
-    v_str <- sprintf(paste0("%.", digits, "f"), v)
-    if (is.null(s) || is.na(s)) {
-      return(v_str)
-    } else {
-      s_str <- sprintf(paste0("%.", digits, "f"), s)
-      return(paste0(v_str, " (", s_str, ")"))
-    }
-  })
+format_term <- function(t) {
+  t_low <- tolower(as.character(t))
+  case_when(
+    grepl(":", t_low) | grepl("interaction", t_low)          ~ "Latitude \u00D7 Region",
+    grepl("intercept", t_low) | grepl("slope", t_low)        ~ NA_character_,
+    grepl("lat", t_low)                                      ~ "Latitude",
+    grepl("region|nwhi", t_low)                              ~ "Region",
+    TRUE                                                     ~ NA_character_
+  )
+}
+
+fmt_stat <- function(val, digits = 3) {
+  ifelse(is.na(val), "—", sprintf(paste0("%.", digits, "f"), val))
 }
 
 fmt_pval <- function(p) {
-  map_chr(p, function(x) {
-    if (is.na(x)) return("—")
-    if (x < 0.001) return("< 0.001***")
-    if (x < 0.01)  return(sprintf("%.3f**", x))
-    if (x < 0.05)  return(sprintf("%.3f*", x))
-    if (x < 0.10)  return(sprintf("%.3f†", x))
-    sprintf("%.3f", x)
-  })
+  case_when(
+    is.na(p)  ~ "—",
+    p < 0.001 ~ "< 0.001",
+    TRUE      ~ sprintf("%.3f", p)
+  )
 }
 
 saferead_csv <- function(candidates) {
   search_dirs <- c(
     here("outputs", "stats"),
     here("data", "strs data", "processed data"),
+    here("outputs", "supplementary figures"),
     here("outputs", "main figures"),
     here("data"),
     here()
@@ -85,112 +102,207 @@ saferead_csv <- function(candidates) {
 }
 
 # ------------------------------------------------------------------------------
-# 2. DATA INGESTION & RESHAPING
+# 2. DATA INGESTION & ISOLATING FULL INTERACTION MODELS ONLY
 # ------------------------------------------------------------------------------
 
-# Ingest output produced by Script 6b
 df_glm_raw <- saferead_csv(c(
   "HA_2024_StRS_GLM_Model_Summary.csv", 
   "Table1_GLM_Publication_Summary.csv"
 ))
 
-# Clean, pivot, and enforce factor levels for ordered grouping
+col_names <- names(df_glm_raw)
+
+resp_col  <- col_names[grepl("^(response|model|metric)", col_names, ignore.case = TRUE)][1]
+if (is.na(resp_col)) resp_col <- col_names[1]
+
+scope_col <- col_names[grepl("(scope|subset|dataset)", col_names, ignore.case = TRUE)][1]
+
+term_col  <- col_names[grepl("^term$", col_names, ignore.case = TRUE)][1]
+if (is.na(term_col)) term_col <- col_names[grepl("term|parameter|coef", col_names, ignore.case = TRUE)][1]
+
+est_col   <- col_names[grepl("^(est|estimate)", col_names, ignore.case = TRUE)][1]
+se_col    <- col_names[grepl("^(std|se|std_error|std\\.error)", col_names, ignore.case = TRUE)][1]
+p_col     <- col_names[grepl("^(p|pval|p_val|p_value|p\\.value|pr)", col_names, ignore.case = TRUE)][1]
+df_col    <- col_names[grepl("^(df|deg_freedom|deg\\.freedom)", col_names, ignore.case = TRUE)][1]
+
 table_summary_df <- df_glm_raw %>%
-  mutate(
-    Metric_Clean = format_metric(Response_Model),
-    Scope_Clean  = case_match(
-      as.character(Dataset_Scope),
-      "All_Islands"    ~ "All Islands",
-      "Excl_Lisianski" ~ "Excl. Lisianski (Kapou)",
-      .default         = as.character(Dataset_Scope)
-    )
+  # Exclude sensitivity subsets (full archipelago models only)
+  filter(
+    if (!is.na(scope_col)) {
+      !grepl("lisianski|kapou", as.character(.data[[scope_col]]), ignore.case = TRUE)
+    } else {
+      TRUE
+    }
   ) %>%
-  # Filter to the requested metrics and pivot terms wide
+  mutate(
+    Metric_Clean = format_metric(.data[[resp_col]]),
+    Term_Raw     = as.character(.data[[term_col]]),
+    Term_Clean   = format_term(Term_Raw),
+    Estimate_Val = as.numeric(.data[[est_col]]),
+    SE_Val       = as.numeric(.data[[se_col]]),
+    P_Val        = as.numeric(.data[[p_col]]),
+    DF_Val       = if (!is.na(df_col)) as.character(.data[[df_col]]) else "—"
+  ) %>%
   filter(Metric_Clean %in% metric_order) %>%
-  pivot_wider(
-    id_cols     = c(Metric_Clean, Scope_Clean, Deg_Freedom),
-    names_from  = Term,
-    values_from = c(Estimate, Std_Error, p_value)
+  # Isolate degrees of freedom for the interaction model
+  group_by(Metric_Clean) %>%
+  filter(
+    if (any(grepl(":", Term_Raw) | grepl("interaction", Term_Raw, ignore.case = TRUE))) {
+      DF_Val == DF_Val[grepl(":", Term_Raw) | grepl("interaction", Term_Raw, ignore.case = TRUE)][1]
+    } else {
+      DF_Val == min(DF_Val, na.rm = TRUE)
+    }
   ) %>%
+  ungroup() %>%
+  # Retain only Latitude, Region, and Latitude × Region
+  filter(!is.na(Term_Clean)) %>%
   mutate(
-    # Net slope in NWHI = MHI slope (beta1) + interaction slope (beta3)
-    NWHI_Slope = `Estimate_LOCATION_LAT_c` + `Estimate_LOCATION_LAT_c:REGIONCODENWHI`,
-    # Enforce exact response variable sequence
-    Metric_Clean = factor(Metric_Clean, levels = metric_order),
-    Scope_Clean  = factor(Scope_Clean, levels = c("All Islands", "Excl. Lisianski (Kapou)"))
+    Metric_Clean   = factor(Metric_Clean, levels = metric_order),
+    `Model Effect` = factor(Term_Clean, levels = term_order)
   ) %>%
-  arrange(Metric_Clean, Scope_Clean) %>%
+  arrange(Metric_Clean, `Model Effect`) %>%
   transmute(
-    Metric           = as.character(Metric_Clean),
-    Scope            = as.character(Scope_Clean),
-    `Intercept`      = fmt_val_se(`Estimate_(Intercept)`, `Std_Error_(Intercept)`),
-    `Lat_MHI`        = fmt_val_se(`Estimate_LOCATION_LAT_c`, `Std_Error_LOCATION_LAT_c`),
-    `Region_NWHI`    = fmt_val_se(`Estimate_REGIONCODENWHI`, `Std_Error_REGIONCODENWHI`),
-    `Lat_x_Region`   = fmt_val_se(`Estimate_LOCATION_LAT_c:REGIONCODENWHI`, `Std_Error_LOCATION_LAT_c:REGIONCODENWHI`),
-    `Int_P`          = fmt_pval(`p_value_LOCATION_LAT_c:REGIONCODENWHI`),
-    `NWHI_Net_Slope` = sprintf("%.3f", NWHI_Slope),
-    df               = as.character(Deg_Freedom)
+    Metric         = as.character(Metric_Clean),
+    `Model Effect` = as.character(`Model Effect`),
+    Estimate       = fmt_stat(Estimate_Val, digits = 3),
+    SE             = fmt_stat(SE_Val, digits = 3),
+    df             = DF_Val,
+    `p-value`      = fmt_pval(P_Val)
   )
 
 # ------------------------------------------------------------------------------
 # 3. GT TABLE CONSTRUCTION
 # ------------------------------------------------------------------------------
 
+table_title <- paste(
+  "**Table S2.** Survey-weighted generalized linear models (svyglm) evaluating",
+  "latitudinal, regional (MHI = Main Hawaiian Islands, NWHI = Northwestern",
+  "Hawaiian Islands), and interaction effects on carbonate budget metrics in 2024.",
+  "Latitude is centered at the archipelago mean (23.07°N); MHI is the reference region."
+)
+
 gt_journal_table <- gt(table_summary_df, groupname_col = "Metric") %>%
   tab_header(
-    title    = md("**Table S2. Hawaiian Archipelago Latitudinal Carbonate Budget Survey GLMs**"),
-    subtitle = md("*Survey-weighted linear models (svyglm) evaluating regional slope interactions across all islands and sensitivity subset excluding Lisianski (Kapou)*")
+    title = md(table_title)
   ) %>%
   cols_label(
-    Scope            = "Dataset Scope",
-    `Intercept`      = html("Intercept (&beta;₀)<br><small>MHI Ref at 23.1°N (SE)</small>"),
-    `Lat_MHI`        = html("Latitude (&beta;₁)<br><small>MHI Slope /°N (SE)</small>"),
-    `Region_NWHI`    = html("Region (&beta;₂)<br><small>NWHI Offset (SE)</small>"),
-    `Lat_x_Region`   = html("Lat &times; Region (&beta;₃)<br><small>Interaction (SE)</small>"),
-    `Int_P`          = html("Interaction<br>p-value"),
-    `NWHI_Net_Slope` = html("NWHI Net Slope<br><small>(&beta;₁ + &beta;₃)</small>"),
-    df               = "df"
+    `Model Effect` = "Model Effect",
+    Estimate       = "Estimate",
+    SE             = "SE",
+    df             = "df",
+    `p-value`      = "p-value"
   ) %>%
-  cols_align(align = "left", columns = c(Scope)) %>%
-  cols_align(align = "center", columns = c(Int_P, NWHI_Net_Slope, df)) %>%
-  cols_align(align = "right", columns = c(Intercept, Lat_MHI, Region_NWHI, Lat_x_Region)) %>%
-  tab_footnote(
-    footnote = md("Models fit using stratified random survey (StRS) weights with solitary sampling units handled via lonely PSU variance adjustments. Latitude is centered at the archipelago mean (23.07°N); MHI is the reference region. Significance codes: *p* < 0.001 (***), *p* < 0.01 (**), *p* < 0.05 (*), *p* < 0.10 (†)."),
-    locations = cells_title(groups = "title")
+  fmt_markdown(columns = everything()) %>%
+  cols_align(align = "left", columns = `Model Effect`) %>%
+  cols_align(align = "right", columns = c(Estimate, SE)) %>%
+  cols_align(align = "center", columns = c(df, `p-value`)) %>%
+  opt_table_font(
+    font = list(
+      "Times New Roman",
+      default_fonts()
+    )
+  ) %>%
+  tab_style(
+    style = cell_text(font = "Times New Roman"),
+    locations = list(
+      cells_title(),
+      cells_column_labels(),
+      cells_row_groups(),
+      cells_body()
+    )
   ) %>%
   tab_options(
-    table.font.size           = px(11),
-    column_labels.font.weight = "bold",
-    row_group.font.weight     = "bold",
-    data_row.padding          = px(3),
-    table.border.top.color    = "black",
-    table.border.bottom.color = "black",
-    row_group.border.top.color = "gray80"
+    table.font.names            = "Times New Roman",
+    table.font.size             = px(10.5),
+    heading.align               = "left",
+    heading.border.bottom.color = "transparent",
+    column_labels.font.weight   = "bold",
+    row_group.font.weight       = "bold",
+    data_row.padding            = px(3),
+    table.border.top.color      = "black",
+    table.border.top.width      = px(1.5),
+    table_body.border.top.color = "black",
+    table_body.border.top.width = px(1),
+    table.border.bottom.color   = "black",
+    table.border.bottom.width   = px(1.5),
+    table_body.hlines.color     = "transparent",
+    row_group.border.top.color  = "gray85"
   )
 
 # ------------------------------------------------------------------------------
-# 4. EXPORT TO DOCX (WITH RTF FALLBACK)
+# 4. EXPORT TO DOCX & OPENXML POST-PROCESSING
 # ------------------------------------------------------------------------------
 
-target_docx <- file.path(main_dir, "TableS2.docx")
+target_docx <- file.path(supp_dir, "TableS2_GLMSummary.docx")
 if (file.exists(target_docx)) unlink(target_docx, force = TRUE)
 
-table_saved <- FALSE
-tryCatch(
-  {
-    gtsave(gt_journal_table, filename = "TableS2.docx", path = main_dir)
-    table_saved <- file.exists(target_docx) && file.info(target_docx)$size > 0
-  },
-  error = function(e) {
-    message("Notice: Pandoc DOCX export encountered an issue; switching to native Word RTF.")
-  }
-)
+gtsave(gt_journal_table, filename = "TableS2_GLMSummary.docx", path = supp_dir)
 
-if (!table_saved) {
-  target_rtf <- file.path(main_dir, "TableS2.rtf")
-  if (file.exists(target_rtf)) unlink(target_rtf, force = TRUE)
-  gtsave(gt_journal_table, filename = "TableS2.rtf", path = main_dir)
-  cat(sprintf("✅ Saved Table S2 (RTF) to: %s\n", target_rtf))
-} else {
-  cat(sprintf("✅ Saved Table S2 (DOCX) to: %s\n", target_docx))
+# Unzip, modify XML, and repack
+exdir <- tempfile("docx_tnr_")
+dir.create(exdir)
+utils::unzip(target_docx, exdir = exdir)
+
+# 1. Update font defaults to Times New Roman in styles.xml
+styles_xml <- file.path(exdir, "word", "styles.xml")
+if (file.exists(styles_xml)) {
+  raw_xml <- paste(readLines(styles_xml, warn = FALSE, encoding = "UTF-8"), collapse = "\n")
+  raw_xml <- gsub(
+    "<w:rFonts\\b[^>]*/>",
+    "<w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:cs=\"Times New Roman\" w:eastAsia=\"Times New Roman\"/>",
+    raw_xml
+  )
+  writeLines(raw_xml, styles_xml, useBytes = TRUE)
 }
+
+# 2. Modify document.xml
+doc_xml <- file.path(exdir, "word", "document.xml")
+if (file.exists(doc_xml)) {
+  raw_doc <- paste(readLines(doc_xml, warn = FALSE, encoding = "UTF-8"), collapse = "\n")
+  
+  # Change caption paragraph style to Normal so Word will not auto-number it
+  raw_doc <- gsub("<w:pStyle\\s+w:val=\"[^\"]*caption[^\"]*\"[^>]*/>", "<w:pStyle w:val=\"Normal\"/>", raw_doc, ignore.case = TRUE)
+  
+  # Eradicate the entire OpenXML sequence field block ("Table " + SEQ Table + ": ")
+  raw_doc <- gsub(
+    "<w:r>\\s*<w:rPr>.*?<\\/w:rPr>\\s*<w:t[^>]*>Table\\s*<\\/w:t>\\s*<\\/w:r>.*?<w:r>\\s*<w:rPr>.*?<\\/w:rPr>\\s*<w:t[^>]*>:\\s*<\\/w:t>\\s*<\\/w:r>",
+    "",
+    raw_doc,
+    perl = TRUE
+  )
+  
+  # Strip any residual literal table prefixes
+  raw_doc <- gsub("(<w:t[^>]*>)Table\\s*1:\\s*", "\\1", raw_doc, perl = TRUE)
+  raw_doc <- gsub("(<w:t[^>]*>)Table1:\\s*", "\\1", raw_doc, perl = TRUE)
+  
+  # Format RAPnet with explicit OpenXML subscript tags
+  sub_replacement <- paste0(
+    "<w:t xml:space=\"preserve\">RAP</w:t></w:r>",
+    "<w:r><w:rPr><w:rFonts w:ascii=\"'Times New Roman'\" w:hAnsi=\"'Times New Roman'\"/><w:sz w:val=\"20\"/><w:vertAlign w:val=\"subscript\"/></w:rPr><w:t>net</w:t></w:r>",
+    "<w:r><w:rPr><w:rFonts w:ascii=\"'Times New Roman'\" w:hAnsi=\"'Times New Roman'\"/><w:sz w:val=\"20\"/></w:rPr><w:t xml:space=\"preserve\"> (mm yr⁻¹)</w:t>"
+  )
+  raw_doc <- gsub(
+    "<w:t[^>]*>RAP(?:&lt;sub&gt;|<sub>)?net(?:&lt;/sub&gt;|</sub>)?\\s*\\(mm yr⁻¹\\)</w:t>",
+    sub_replacement,
+    raw_doc,
+    perl = TRUE
+  )
+  
+  writeLines(raw_doc, doc_xml, useBytes = TRUE)
+}
+
+# 3. Clean repacking with zipr to guarantee preservation of file structure
+unlink(target_docx, force = TRUE)
+orig_wd <- getwd()
+setwd(exdir)
+all_files <- list.files(".", recursive = TRUE, all.files = TRUE, no.. = TRUE)
+
+if (requireNamespace("zip", quietly = TRUE)) {
+  zip::zipr(zipfile = target_docx, files = all_files)
+} else {
+  utils::zip(zipfile = target_docx, files = all_files, flags = "-q -r")
+}
+setwd(orig_wd)
+unlink(exdir, recursive = TRUE)
+
+cat(sprintf("✅ Saved Table S2 (DOCX, Separate Estimate & SE, No 'Table 1:' Prefix) to: %s\n", target_docx))

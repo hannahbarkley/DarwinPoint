@@ -2,13 +2,6 @@
 # Script:  Figure3_FullStRS.R
 # Purpose: Archipelago-Wide StRS Metric Scaling across Latitude with 
 #          Survey-Weighted Statistically Significant Regression Fits.
-#          Hierarchical model selection:
-#            1. Separate regional slopes if Lat x Region interaction is significant (p < 0.05).
-#            2. Parallel regional slopes if additive terms (Lat + Region) are significant (p < 0.05).
-#            3. Regional horizontal baselines if Region is significant but Lat is not (p_reg < 0.05, p_lat >= 0.05).
-#            4. Single continuous slope if only Latitude is significant across the archipelago.
-#            5. No line if non-significant.
-#          Error bars, ribbons, and fits are bounded flush to plot limits.
 # Inputs:  - data/strs data/processed data/HA_2024_StRS_IslandLevel.csv
 #          - data/strs data/processed data/HA_2024_StRS_SurveyDesign.rds
 # Outputs: - outputs/main figures/Figure3_FullStRS.png
@@ -30,9 +23,7 @@ if (!dir.exists(main_dir)) dir.create(main_dir, recursive = TRUE)
 pal_lat_grad <- c("#A50026", "#DD3D2D", "#F67E4B", "#FDB366", "#FEDA8B", 
                   "#EAECCC", "#C2E4EF", "#98CAE1", "#6EA6CD", "#4A7BB7", "#364B9A")
 
-# Calculate relative position for the Lat 22.75 breakpoint 
-# For limits c(19, 30): (22.75 - 19) / (30 - 19) = ~0.3409
-# Map the yellow center (#EAECCC) to 0.3409 and distribute the rest evenly
+# Place yellow break between MHI and NWHI
 pal_lat_vals <- c(
   seq(0, 0.3409, length.out = 6)[1:5], 
   0.3409, 
@@ -86,7 +77,7 @@ format_islands <- function(x) {
   coalesce(unname(mapped), as.character(x))
 }
 
-theme_publication <- function(base_size = 11, y_margin_r = 4, x_margin_t = 5,
+plot_theme <- function(base_size = 11, y_margin_r = 4, x_margin_t = 5,
                               t_margin = 12, r_margin = 22, b_margin = 2, l_margin = 25) {
   theme_minimal(base_size = base_size) +
     theme(
@@ -277,7 +268,7 @@ build_plot_f3 <- function(data, y_var, y_se, y_label, y_lim, y_brk, add_zero = F
     scale_x_reverse(limits = c(30.2, 18.6), breaks = seq(19, 30, by = 1), expand = c(0.01, 0.01)) +
     scale_y_continuous(breaks = y_brk) +
     coord_cartesian(ylim = y_lim, clip = "on") +
-    theme_publication()
+    plot_theme()
   
   if (!show_x) {
     p <- p + labs(x = NULL) + theme(axis.title.x = element_blank())
@@ -286,15 +277,14 @@ build_plot_f3 <- function(data, y_var, y_se, y_label, y_lim, y_brk, add_zero = F
   }
   
   if (!is.null(fit_res$fit_data)) {
-    # 1. Shading dataframe: bounded cleanly flush to y_lim (e.g. 0)
+    # 1. Shading dataframe
     fit_ribbon <- fit_res$fit_data %>%
       mutate(
         ymin = pmax(y_lim[1], ymin),
         ymax = pmax(ymin, pmin(y_lim[2], ymax))
       )
     
-    # 2. Central fit line: filter out points below y_lim[1] so line terminates 
-    #    naturally without bending horizontally along the axis
+    # 2. Central fit line
     fit_line <- fit_res$fit_data %>%
       filter(fit >= y_lim[1] - 0.02, fit <= y_lim[2] + 0.02)
     
@@ -320,7 +310,6 @@ build_plot_f3 <- function(data, y_var, y_se, y_label, y_lim, y_brk, add_zero = F
     p <- p + geom_hline(yintercept = 0, linetype = "dashed", color = "gray60", linewidth = 0.6)
   }
   
-  # Error bars clamped within axis boundaries to prevent margin overshoots
   p <- p + 
     geom_errorbar(
       aes(
@@ -354,7 +343,7 @@ main_plots_f3 <- ggarrange(
 )
 
 # ------------------------------------------------------------------------------
-# 4. TOP HORIZONTAL LEGEND (Balanced Spacing)
+# 4. TOP HORIZONTAL LEGEND 
 # ------------------------------------------------------------------------------
 legend_nudges <- tribble(
   ~PLOT_LABEL,             ~leg_nx, ~leg_ny,
